@@ -1,4 +1,4 @@
-# gitlab-gantt
+# GitLab Gantt
 
 > A Gantt chart for GitLab
 
