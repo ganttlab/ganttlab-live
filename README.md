@@ -66,6 +66,8 @@ npm run build
 
 Without any obligation nor due date, one could expect to be done this non-exhaustive [list of improvements grouped on issues labeled `Feature`](https://gitlab.com/clorichel/gitlab-gantt/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature).
 
+You can read on the [Changelog](CHANGELOG.md) too, for historical and upcoming new features, changes, deprecations, removed features, bug and security fixes.
+
 ## Support
 
 Your are free to [open an issue](https://gitlab.com/clorichel/gitlab-gantt/issues/new) right in this GitLab repository whether you should be facing a problem or a bug. Please advise this is not a commercial product, so one could experience random response time. Positive, friendly and productive conversations are expected on the issues. Screenshots and steps to reproduce are highly appreciated. Chances are you may get your issue solved if you follow these simple guidelines.
