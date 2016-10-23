@@ -10,6 +10,9 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "d3": "^3.5.17",
+    "font-awesome": "^4.6.3",
+    "moment": "^2.15.1",
     "vue": "^2.0.1",
     "vue-resource": "^1.0.3"
   },

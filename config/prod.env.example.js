@@ -1,6 +1,16 @@
 module.exports = {
   NODE_ENV: '"production"',
+
+  // Place your GitLab instance URL here
   GITLAB_URL: '"https://gitlab.com"',
+  // Your GitLab private token
   GITLAB_PRIVATE_TOKEN: '"place your GitLab private token here"',
-  MOMENTJS_LOCALE: '"en"'
+  
+  // Moment.js locale configuration
+  MOMENTJS_LOCALE: '"en"',
+  
+  // You are free to configure any string for gantt start/due dates,
+  // which are read in your issues descriptions
+  GANTT_START_STRING: '"GanttStart: "',
+  GANTT_DUE_STRING: '"GanttDue: "',
 }
