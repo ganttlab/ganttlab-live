@@ -24,4 +24,4 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - README includes a preview, and describes main topics to get started
 - Initial vue-cli scaffolding with webpack plugin
 
-[Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.1.0...HEAD
+[Unreleased]: https://gitlab.com/clorichel/gitlab-gantt/compare/v0.1.0...HEAD
