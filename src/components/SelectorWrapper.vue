@@ -170,7 +170,7 @@ export default {
           params: {
             'per_page': '100',
             'all_available': 1,
-            'search': 'gitlab-org' // this.currentUser.username // TODO remove this while implementing an efficient select with search
+            'search': this.currentUser.username // TODO remove this while implementing an efficient select with search
           }
         }
       ).then((response) => {
