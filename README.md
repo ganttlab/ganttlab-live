@@ -64,15 +64,7 @@ npm run build
 
 ## What's next?
 
-Without any obligation nor due date, one could expect this non-exhaustive list of improvements:
-
-- refining of the overall application presentation and initial behavior
-- specific visible axis indicating "today"
-- unlimited issues on the gantt graph
-- exhaustive select pickers with search for groups and projects
-- links to issues from the gantt chart
-- filtering on issues tags and assigned users
-
+Without any obligation nor due date, one could expect to be done this non-exhaustive [list of improvements grouped on issues labeled `Feature`](https://gitlab.com/clorichel/gitlab-gantt/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature).
 
 ## Support
 
