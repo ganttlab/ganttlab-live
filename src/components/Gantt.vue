@@ -486,6 +486,26 @@ export default {
             })
           }
 
+          var todayDate = new Date()
+          todayDate.setHours(0, 0, 0, 0)
+          // today emphasis
+          d3.selectAll('g.tick').each(function (d, i) {
+            if (d.getTime() === todayDate.getTime()) {
+              d3.select(this)
+                  .attr({
+                    'class': 'x_tick_today'
+                  })
+            }
+          })
+          d3.selectAll('.vert_grid').each(function (d, i) {
+            if (d.getTime() === todayDate.getTime()) {
+              d3.select(this)
+                  .attr({
+                    'class': 'vert_grid_today'
+                  })
+            }
+          })
+
           // create title
           if (drawTitle) {
             svg.select('#g_title')
@@ -658,6 +678,14 @@ div.tooltip {
     font-weight: bold;
 }
 
+.x_tick_today {
+    font-weight: bold;
+}
+
+.x_tick_today text {
+    fill: #ff0000 !important;
+}
+
 .ytitle {
     /* y axis labels */
     dominant-baseline: middle;
@@ -687,6 +715,12 @@ div.tooltip {
 .vert_grid_emph {
     fill: none;
     stroke: #dddddd;
+    stroke-width: 2px;
+}
+
+.vert_grid_today {
+    fill: none;
+    stroke: #ff0000;
     stroke-width: 2px;
 }
 
