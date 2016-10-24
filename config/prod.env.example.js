@@ -4,7 +4,7 @@ module.exports = {
   // Place your GitLab instance URL here
   GITLAB_URL: '"https://gitlab.com"',
   // Your GitLab private token
-  GITLAB_PRIVATE_TOKEN: '"your GitLab private token"',
+  GITLAB_PRIVATE_TOKEN: '""',
   
   // Moment.js locale configuration
   MOMENTJS_LOCALE: '"en"',
