@@ -1,6 +1,6 @@
 <template>
   <div id="gantt">
-    <p v-if="issues.length == 0">No issues out there...</p>
+    <p v-if="issues.length == 0">No opened issues out there...</p>
     <div v-if="issues.length > 0" id="chart"></div>
   </div>
 </template>
