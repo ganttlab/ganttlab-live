@@ -4,6 +4,7 @@ pages:
   stage: deploy
   script:
   - npm install
+  - mv ./config/prod.env.example.js ./config/prod.env.js
   - npm run build
   - mv dist public
   artifacts:
