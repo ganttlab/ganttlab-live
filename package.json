@@ -1,5 +1,5 @@
 {
-  "name": "gitlab-gantt",
+  "name": "ganttlab",
   "version": "1.0.0",
   "description": "A Gantt chart for GitLab",
   "author": "clorichel <clorichel@users.noreply.github.com>",

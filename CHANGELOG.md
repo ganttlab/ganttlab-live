@@ -5,8 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
-- Bold red for today label and vertical axis on the gantt graph [clorichel/gitlab-gantt#3](https://gitlab.com/clorichel/gitlab-gantt/issues/3)
-- work in progress on [clorichel/gitlab-gantt issues](https://gitlab.com/clorichel/gitlab-gantt/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
+- Project has been renamed from "GitLab Gantt" to "GanttLab"
+- Bold red for today label and vertical axis on the gantt graph [clorichel/ganttlab#3](https://gitlab.com/clorichel/ganttlab/issues/3)
+- work in progress on [clorichel/ganttlab issues](https://gitlab.com/clorichel/ganttlab/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
 
 ## 0.1.0 - 2016-10-23
 ### Added
@@ -25,4 +26,4 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - README includes a preview, and describes main topics to get started
 - Initial vue-cli scaffolding with webpack plugin
 
-[Unreleased]: https://gitlab.com/clorichel/gitlab-gantt/compare/v0.1.0...master
+[Unreleased]: https://gitlab.com/clorichel/ganttlab/compare/v0.1.0...master

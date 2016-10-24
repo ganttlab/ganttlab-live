@@ -1,26 +1,26 @@
-# GitLab Gantt
+# GanttLab
 
 An easy to use, painless and fully functional Gantt chart for GitLab.
 
-![GitLab Gantt](preview.png)
+![GanttLab](preview.png)
 
 
 ## Run it now!
 
-Whether you have Docker installed on your local computer ([download and install it](https://www.docker.com/products/docker)), you can try _GitLab Gantt_ right now in four easy steps:
+Whether you have Docker installed on your local computer ([download and install it](https://www.docker.com/products/docker)), you can try _GanttLab_ right now in four easy steps:
 
-1. `git clone https://gitlab.com/clorichel/gitlab-gantt` will clone this repository
-1. `cd gitlab-gantt && ./bashInDevEnv.sh` to connect to the development environment
+1. `git clone https://gitlab.com/clorichel/ganttlab` will clone this repository
+1. `cd ganttlab && ./bashInDevEnv.sh` to connect to the development environment
 1. `./bootstrapIt.sh` within the dev environment. You will be prompted for your GitLab instance URL and your Private Token (Wanna try with your GitLab.com account? Your account Private Token [is here](https://gitlab.com/profile/account)!)
-1. `npm run dev`: run _GitLab Gantt_ right now, from the dev environment
+1. `npm run dev`: run _GanttLab_ right now, from the dev environment
 
 Enjoy it on http://localhost:8080/! You may also read about the long version through [configuring](#configuring) and [installing](#installing).
 
 ## How it works
 
-_GitLab Gantt_ is a **frontend only** application. It leverages [GitLab awesome API](https://gitlab.com/help/api/README.md) to read your issues, before simply displaying a gantt chart with it.
+_GanttLab_ is a **frontend only** application. It leverages [GitLab awesome API](https://gitlab.com/help/api/README.md) to read your issues, before simply displaying a gantt chart with it.
 
-The automatically generated [gantt chart](https://en.wikipedia.org/wiki/Gantt_chart) will display each of your issues within a "date area": from a **start date**, to the **due date**. For each issue, the **default start date** is read from the issue creation date. As with GitLab you are not forced to fill in a due date for your issues, the _GitLab Gantt_ **default due date** will be set to the day after the issue creation date, faking all your issues having to be done in one day. For sure, if you insert a due date in your issues, it will be read automatically.
+The automatically generated [gantt chart](https://en.wikipedia.org/wiki/Gantt_chart) will display each of your issues within a "date area": from a **start date**, to the **due date**. For each issue, the **default start date** is read from the issue creation date. As with GitLab you are not forced to fill in a due date for your issues, the _GanttLab_ **default due date** will be set to the day after the issue creation date, faking all your issues having to be done in one day. For sure, if you insert a due date in your issues, it will be read automatically.
 
 To give you maximum control over your issues and tasks management practices in the gantt chart, you can override this default values **right from your issue description** with two simple [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) `YYYY-MM-DD` calendar dates:
 
@@ -47,9 +47,9 @@ The `./bootstrapIt.sh` script may already have configured the values prompted fo
 
 ## Installing
 
-Even if _GitLab Gantt_ is a throw-away application **storing no data** on your hard drive, you can install it on a server to persist the gantt graph display service for your users.
+Even if _GanttLab_ is a throw-away application **storing no data** on your hard drive, you can install it on a server to persist the gantt graph display service for your users.
 
-Initial scaffolding was done with [vue-cli](https://github.com/vuejs/vue-cli) webpack template. For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader). Simply said, this makes _GitLab Gantt_ insanely powerful and ready to be run on production servers, or launched from your local computer within minutes:
+Initial scaffolding was done with [vue-cli](https://github.com/vuejs/vue-cli) webpack template. For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader). Simply said, this makes _GanttLab_ insanely powerful and ready to be run on production servers, or launched from your local computer within minutes:
 
 ``` bash
 # install dependencies
@@ -64,13 +64,13 @@ npm run build
 
 ## What's next?
 
-Without any obligation nor due date, one could expect to be done this non-exhaustive [list of improvements grouped on issues labeled `Feature`](https://gitlab.com/clorichel/gitlab-gantt/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature).
+Without any obligation nor due date, one could expect to be done this non-exhaustive [list of improvements grouped on issues labeled `Feature`](https://gitlab.com/clorichel/ganttlab/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature).
 
 You can read on the [Changelog](CHANGELOG.md) too, for historical and upcoming new features, changes, deprecations, removed features, bug and security fixes.
 
 ## Support
 
-Your are free to [open an issue](https://gitlab.com/clorichel/gitlab-gantt/issues/new) right in this GitLab repository whether you should be facing a problem or a bug. Please advise this is not a commercial product, so one could experience random response time. Positive, friendly and productive conversations are expected on the issues. Screenshots and steps to reproduce are highly appreciated. Chances are you may get your issue solved if you follow these simple guidelines.
+Your are free to [open an issue](https://gitlab.com/clorichel/ganttlab/issues/new) right in this GitLab repository whether you should be facing a problem or a bug. Please advise this is not a commercial product, so one could experience random response time. Positive, friendly and productive conversations are expected on the issues. Screenshots and steps to reproduce are highly appreciated. Chances are you may get your issue solved if you follow these simple guidelines.
 
 ## Credits
 
@@ -80,4 +80,4 @@ Your are free to [open an issue](https://gitlab.com/clorichel/gitlab-gantt/issue
 
 ## License
 
-The _GitLab Gantt_ application is distributed under the [MIT License (MIT)](LICENSE). Please have a look at the dependencies licenses if you plan on using, building, or distributing this application.
+The _GanttLab_ application is distributed under the [MIT License (MIT)](LICENSE). Please have a look at the dependencies licenses if you plan on using, building, or distributing this application.
