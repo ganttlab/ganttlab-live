@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.currentUser">
+  <div v-if="this.user">
     <!-- Main filter selector -->
     <p>List issues
     <input type="radio" id="inputListByGroup" value="group" v-model="listBy" v-on:change="listByGroup"><label for="inputListByGroup"> by groups and projects</label>,
@@ -45,7 +45,7 @@ export default {
   name: 'selectorWrapper',
   props: [
     'GitLab',
-    'currentUser'
+    'user'
   ],
   data () {
     return {
@@ -122,9 +122,9 @@ export default {
       this.downloading = true
       // user wants issues for all projects created by himself
       this.$http.get(
-        this.GitLab + '/issues',
+        this.GitLab.url + '/issues',
         {
-          headers: { 'PRIVATE-TOKEN': process.env.GITLAB_PRIVATE_TOKEN },
+          headers: { 'PRIVATE-TOKEN': this.GitLab.token },
           params: {
             'per_page': '100',
             'state': 'opened'
@@ -164,13 +164,13 @@ export default {
       this.downloading = true
       // user wants the list of groups
       this.$http.get(
-        this.GitLab + '/groups',
+        this.GitLab.url + '/groups',
         {
-          headers: { 'PRIVATE-TOKEN': process.env.GITLAB_PRIVATE_TOKEN },
+          headers: { 'PRIVATE-TOKEN': this.GitLab.token },
           params: {
             'per_page': '100',
             'all_available': 1,
-            'search': this.currentUser.username // TODO remove this while implementing an efficient select with search
+            'search': this.user.username // TODO remove this while implementing an efficient select with search
           }
         }
       ).then((response) => {
@@ -187,9 +187,9 @@ export default {
       this.downloading = true
       // user wants the list of projects in this.group
       this.$http.get(
-        this.GitLab + '/groups/' + this.group.id + '/projects',
+        this.GitLab.url + '/groups/' + this.group.id + '/projects',
         {
-          headers: { 'PRIVATE-TOKEN': process.env.GITLAB_PRIVATE_TOKEN },
+          headers: { 'PRIVATE-TOKEN': this.GitLab.token },
           params: {
             'per_page': '100'
           }
@@ -210,9 +210,9 @@ export default {
       this.downloading = true
       // user wants the list of projects
       this.$http.get(
-        this.GitLab + '/projects',
+        this.GitLab.url + '/projects',
         {
-          headers: { 'PRIVATE-TOKEN': process.env.GITLAB_PRIVATE_TOKEN },
+          headers: { 'PRIVATE-TOKEN': this.GitLab.token },
           params: {
             'per_page': '100'
           }
@@ -234,9 +234,9 @@ export default {
       this.downloading = true
       // user wants issues for all projects in the selected group
       this.$http.get(
-        this.GitLab + '/groups/' + this.group.id + '/issues',
+        this.GitLab.url + '/groups/' + this.group.id + '/issues',
         {
-          headers: { 'PRIVATE-TOKEN': process.env.GITLAB_PRIVATE_TOKEN },
+          headers: { 'PRIVATE-TOKEN': this.GitLab.token },
           params: {
             'per_page': '100',
             'state': 'opened'
@@ -259,9 +259,9 @@ export default {
       this.downloading = true
       // user wants issues for a selected project
       this.$http.get(
-        this.GitLab + '/projects/' + this.gProject.id + '/issues',
+        this.GitLab.url + '/projects/' + this.gProject.id + '/issues',
         {
-          headers: { 'PRIVATE-TOKEN': process.env.GITLAB_PRIVATE_TOKEN },
+          headers: { 'PRIVATE-TOKEN': this.GitLab.token },
           params: {
             'per_page': '100',
             'state': 'opened'
@@ -283,9 +283,9 @@ export default {
       this.downloading = true
       // user wants issues for a selected project
       this.$http.get(
-        this.GitLab + '/projects/' + this.project.id + '/issues',
+        this.GitLab.url + '/projects/' + this.project.id + '/issues',
         {
-          headers: { 'PRIVATE-TOKEN': process.env.GITLAB_PRIVATE_TOKEN },
+          headers: { 'PRIVATE-TOKEN': this.GitLab.token },
           params: {
             'per_page': '100',
             'state': 'opened'
@@ -299,6 +299,10 @@ export default {
         // error callback
       })
     }
+  },
+  mounted: function () {
+    this.listBy = 'me'
+    this.listByMe()
   }
 }
 </script>

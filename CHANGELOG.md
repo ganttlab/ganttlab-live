@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
+- All issues created by user are automatically displayed at start without any click needed
+- New top bar displaying user avatar and name on left, and GitLab instance URL with close button top right
+- Trailing slash is now automatically removed from the GitLab instance URL
+- Default token on production config is now empty, to provide better login screen experience
+- An error message is displayed with full GitLab API URL on login screen if connection failed
+- User is now able to close GitLab connection and choose another server on the login screen
+- A login screen is now asking for GitLab URL and Private Token
+- Application initial behavior has been refined
 - Project has been renamed from "GitLab Gantt" to "GanttLab"
 - Bold red for today label and vertical axis on the gantt graph [clorichel/ganttlab#3](https://gitlab.com/clorichel/ganttlab/issues/3)
 - work in progress on [clorichel/ganttlab issues](https://gitlab.com/clorichel/ganttlab/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
