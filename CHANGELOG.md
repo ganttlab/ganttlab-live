@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
+- Login screen includes a link to original repository for more readings
+- An help button is now displayed next to the close button
 - All issues created by user are automatically displayed at start without any click needed
 - New top bar displaying user avatar and name on left, and GitLab instance URL with close button top right
 - Trailing slash is now automatically removed from the GitLab instance URL

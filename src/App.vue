@@ -7,6 +7,7 @@
           <p v-if="user == -1"><strong><i class="fa fa-lock"></i> Please type in your GitLab details</strong></p>
           <p class="input"><span>GitLab instance URL</span><input v-model="url" v-on:keyup.enter="init"></p>
           <p class="input"><span>Your Private Token</span><input v-model="token" v-on:keyup.enter="init"></p>
+          <p class="more"><a href="https://gitlab.com/clorichel/ganttlab" target="_blank">Read more about GanttLab<i class="fa fa-external-link"></i></a></p>
         </div>
       </transition>
     </div>
@@ -15,7 +16,7 @@
         <div id="top" class="standardpadding">
           <div v-if="Object.keys(user).length">
             <span class="user"><img v-bind:src="user.avatar_url"> {{ user.name }}</span>
-            <span class="server"><a v-bind:href="url" target="_blank">{{ GitLab.url }}</a> <i class="fa fa-times" aria-hidden="true" v-on:click="reset" title="Close"></i></span>
+            <span class="server"><a v-bind:href="url" target="_blank">{{ GitLab.url }}</a> <a href="https://gitlab.com/clorichel/ganttlab#how-it-works" target="_blank"><i class="fa fa-question-circle" aria-hidden="true" title="Help"></i></a> <i class="fa fa-times close" aria-hidden="true" v-on:click="reset" title="Close"></i></span>
           </div>
         </div>
         <selectorWrapper class="standardpadding" v-bind:user="user" v-bind:GitLab="GitLab"></selectorWrapper>
@@ -95,6 +96,7 @@ a:hover {
   text-decoration: underline;
 }
 .status {
+  font-size: 18px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -108,19 +110,25 @@ a:hover {
 }
 .status .input span {
   font-size: 0.85em;
-  width: 120px;
+  width: 150px;
   display: inline-block;
 }
 .status .input {
   font-size: 0.9em;
 }
 .status .input input {
-  width: 160px;
+  width: 175px;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 0.9em;
   color: #2c3e50;
+}
+.more {
+  font-size: 0.75em;
+}
+.more i {
+  margin-left: 5px;
 }
 #top {
   margin: 0;
