@@ -7,14 +7,11 @@ An easy to use, painless and fully functional Gantt chart for GitLab.
 
 ## Run it now!
 
-Whether you have Docker installed on your local computer ([download and install it](https://www.docker.com/products/docker)), you can try _GanttLab_ right now in four easy steps:
+It is already running live for you at https://clorichel.gitlab.io/ganttlab/. Type-in your GitLab instance URL (works with https://gitlab.com), your GitLab account _Private Token_ and enjoy!
 
-1. `git clone https://gitlab.com/clorichel/ganttlab` will clone this repository
-1. `cd ganttlab && ./bashInDevEnv.sh` to connect to the development environment
-1. `./bootstrapIt.sh` within the dev environment. You will be prompted for your GitLab instance URL and your Private Token (Wanna try with your GitLab.com account? Your account Private Token [is here](https://gitlab.com/profile/account)!)
-1. `npm run dev`: run _GanttLab_ right now, from the dev environment
+**Safe to run:** the application do NOT store any data, and runs on YOUR browser only, using your own network as if you were running all the requests to your GitLab instance right from your local computer. Unsure of it? Have a look at [the source code](https://gitlab.com/clorichel/ganttlab/tree/master).
 
-Enjoy it on http://localhost:8080/! You may also read about the long version through [configuring](#configuring) and [installing](#installing).
+**PRO tip:** if you are running an unsecured HTTP instance of GitLab, head to http://clorichel.gitlab.io/ganttlab/ to avoid your browser blocking the request coming from an HTTPS secured site.
 
 ## How it works
 
@@ -32,6 +29,17 @@ GanttDue: 2016-10-25
 The values of `GanttStart` and `GanttDue`, each on one dedicated line of your issue description (whether on top or bottom of the description), are considered as the _single source of truth_ if present to generate the gantt chart.
 
 Only your opened issues are displayed. If an issue due date is past, the issue is marked late and **colored red**. If not, the issue is **shown green** as being on time.
+
+## Run it yourself
+
+Whether you have Docker installed on your local computer ([download and install it](https://www.docker.com/products/docker)), you can try _GanttLab_ right now in four easy steps:
+
+1. `git clone https://gitlab.com/clorichel/ganttlab` will clone this repository
+1. `cd ganttlab && ./bashInDevEnv.sh` to connect to the development environment
+1. `./bootstrapIt.sh` within the dev environment. You will be prompted for your GitLab instance URL and your Private Token (Wanna try with your GitLab.com account? Your account Private Token [is here](https://gitlab.com/profile/account)!)
+1. `npm run dev`: run _GanttLab_ right now, from the dev environment
+
+Enjoy it on http://localhost:8080/! You may also read about the long version through [configuring](#configuring) and [installing](#installing).
 
 ## Configuring
 

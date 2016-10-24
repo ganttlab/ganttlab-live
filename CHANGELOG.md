@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
+- Readme now indicates no more steps to run it now, as it is running live on GitLab page
 - Login screen includes a link to original repository for more readings
 - An help button is now displayed next to the close button
 - All issues created by user are automatically displayed at start without any click needed
