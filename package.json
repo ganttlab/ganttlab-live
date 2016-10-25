@@ -1,9 +1,9 @@
 {
   "name": "ganttlab",
-  "version": "1.0.0",
-  "description": "A Gantt chart for GitLab",
-  "author": "clorichel <clorichel@users.noreply.github.com>",
-  "private": true,
+  "version": "0.1.0",
+  "description": "An easy to use, fully functional Gantt chart for GitLab.",
+  "author": "clorichel <contact@clorichel.com>",
+  "private": false,
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
