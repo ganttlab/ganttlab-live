@@ -3,7 +3,7 @@ image: node:6
 pages:
   stage: deploy
   script:
-  - npm install
+  - npm install --silent
   - mv ./config/dev.env.example.js ./config/dev.env.js
   - mv ./config/prod.env.example.js ./config/prod.env.js
   - npm run build
