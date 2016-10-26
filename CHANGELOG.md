@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
+- A downloading spinner attached to the GitLab instance URL top right
+- Now using vue-gitlab-api to achieve cleaner code and easier improvments
 - Readme now indicates no more steps to run it now, as it is running live on GitLab page
 - Login screen includes a link to original repository for more readings
 - An help button is now displayed next to the close button
