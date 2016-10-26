@@ -1,5 +1,8 @@
 import Vue from 'vue'
 
+import Vuex from 'vuex'
+Vue.use(Vuex)
+
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
 
@@ -8,9 +11,12 @@ Vue.use(GitLabAPI)
 
 import App from './App'
 
+const store = new Vuex.Store({})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   template: '<App/>',
-  components: { App }
+  components: { App },
+  store
 })
