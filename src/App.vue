@@ -61,7 +61,7 @@ export default {
     reset: function (event) {
       this.GitLab.user = {}
       this.failed = false
-      this.GitLabAPI.setToken('')
+      this.token = ''
     }
   },
   computed: {
