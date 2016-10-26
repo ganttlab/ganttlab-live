@@ -11,5 +11,8 @@ pages:
   artifacts:
     paths:
     - public
+  environment:
+    name: GanttLab live
+    url: https://clorichel.gitlab.io/ganttlab/
   only:
   - master
