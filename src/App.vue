@@ -2,9 +2,10 @@
   <div id="app">
     <div class="status">
       <transition name="fade">
-        <div v-if="user == false || user == -1">
-          <p v-if="user == false" class="error">Unable to connect to {{ GitLab.url }}</p>
-          <p v-if="user == -1"><strong><i class="fa fa-lock"></i> Please type in your GitLab details</strong></p>
+        <div v-if="failed == true || userEmpty">
+          <p v-if="failed == true" class="error">Unable to connect to {{ url }}</p>
+          <p v-if="userEmpty && !downloading"><strong><i class="fa fa-lock"></i> Please type in your GitLab details</strong></p>
+          <p v-if="userEmpty && downloading"><strong><i v-if="downloading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Connecting to {{ url }}</strong></p>
           <p class="input"><span>GitLab instance URL</span><input v-model="url" v-on:keyup.enter="init"></p>
           <p class="input"><span>Your Private Token</span><input v-model="token" v-on:keyup.enter="init"></p>
           <p class="more"><a href="https://gitlab.com/clorichel/ganttlab" target="_blank">Read more about GanttLab<i class="fa fa-external-link"></i></a></p>
@@ -12,14 +13,14 @@
       </transition>
     </div>
     <transition name="fade">
-      <div v-if="Object.keys(user).length">
+      <div v-if="!userEmpty">
         <div id="top" class="standardpadding">
-          <div v-if="Object.keys(user).length">
-            <span class="user"><img v-bind:src="user.avatar_url"> {{ user.name }}</span>
-            <span class="server"><a v-bind:href="url" target="_blank">{{ GitLab.url }}</a> <a href="https://gitlab.com/clorichel/ganttlab#how-it-works" target="_blank"><i class="fa fa-question-circle" aria-hidden="true" title="Help"></i></a> <i class="fa fa-times close" aria-hidden="true" v-on:click="reset" title="Close"></i></span>
+          <div v-if="!userEmpty">
+            <span class="user"><img v-bind:src="GitLab.user.avatar_url"> {{ GitLab.user.name }}</span>
+            <span class="server"><transition name="fade"><i v-if="downloading" class="fa fa-circle-o-notch fa-spin downloading" aria-hidden="true"></i></transition> <a v-bind:href="url" target="_blank">{{ url }}</a> <a href="https://gitlab.com/clorichel/ganttlab#how-it-works" target="_blank"><i class="fa fa-question-circle" aria-hidden="true" title="Help"></i></a> <i class="fa fa-times close" aria-hidden="true" v-on:click="reset" title="Close"></i></span>
           </div>
         </div>
-        <selectorWrapper class="standardpadding" v-bind:user="user" v-bind:GitLab="GitLab"></selectorWrapper>
+        <selectorWrapper class="standardpadding" v-bind:user="GitLab.user" v-bind:downloading="downloading"></selectorWrapper>
       </div>
     </transition>
   </div>
@@ -35,8 +36,10 @@ export default {
     return {
       url: process.env.GITLAB_URL,
       token: process.env.GITLAB_PRIVATE_TOKEN,
-      GitLab: {},
-      user: -1
+      GitLab: {
+        user: {} // need to be defined here, or computed property won't work as expected
+      },
+      failed: false
     }
   },
   components: {
@@ -44,30 +47,37 @@ export default {
   },
   methods: {
     getGitLabUser: function (event) {
-      this.$http.get(
-        this.GitLab.url + '/user',
-        {
-          headers: { 'PRIVATE-TOKEN': this.GitLab.token }
-        }
-      ).then((response) => {
-        // Assigning response body directly to this.groups
-        this.user = response.body
-      }, (response) => {
-        this.user = false
+      this.GitLabAPI.get('/user', [], [this.GitLab, 'user'], (response) => {
+        this.failed = true
       })
     },
     init: function (event) {
-      this.user = -1
-      this.GitLab.url = this.url.replace(/\/$/, '') + '/api/v3'
-      this.GitLab.token = this.token
+      this.GitLab.user = {}
+      this.failed = false
+      this.GitLabAPI.setUrl(this.url)
+      this.GitLabAPI.setToken(this.token)
       this.getGitLabUser()
     },
     reset: function (event) {
-      this.user = -1
-      this.token = ''
+      this.GitLab.user = {}
+      this.failed = false
+      this.GitLabAPI.setToken('')
+    }
+  },
+  computed: {
+    userEmpty: function () {
+      return !(this.GitLab.hasOwnProperty('user') && this.GitLab.user.hasOwnProperty('name'))
+    },
+    downloading: function () {
+      if (typeof this.$store.state.GitLabAPI !== 'undefined') {
+        return this.$store.state.GitLabAPI.downloading
+      } else {
+        return false
+      }
     }
   },
   mounted: function () {
+    this.GitLabAPI.registerStore(this.$store)
     if (this.url && this.token) {
       this.init()
     }
@@ -164,6 +174,9 @@ a:hover {
   vertical-align: middle;
   margin-right: 10px;
   height: 26px;
+}
+.downloading {
+  color: #5cb85c;
 }
 .standardpadding {
   padding: 10px;

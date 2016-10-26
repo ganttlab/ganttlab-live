@@ -9,13 +9,13 @@
     <!-- User wants to list by groups -->
     <p v-if="this.listBy === 'group'">Groups you have access: 
       <select title="group" v-model="group" v-on:change="selectedGroup">
-        <option v-for="aGroup in groups" v-bind:value="aGroup">
+        <option v-for="aGroup in GitLab.groups" v-bind:value="aGroup">
           {{ aGroup.path }}
         </option>
       </select>
       /
       <select title="group project" v-model="gProject" v-on:change="selectedGroupProject">
-        <option v-for="aGroupProject in groupProjects" v-bind:value="aGroupProject">
+        <option v-for="aGroupProject in GitLab.groupProjects" v-bind:value="aGroupProject">
           {{ aGroupProject.path }}
         </option>
       </select>
@@ -24,17 +24,17 @@
     <!-- User wants to list by projects -->
     <p v-if="this.listBy === 'project'">
       Select a project: <select title="project" v-model="project" v-on:change="listProjectIssues">
-        <option v-for="aProject in projects" v-bind:value="aProject">
+        <option v-for="aProject in GitLab.projects" v-bind:value="aProject">
           {{ aProject.path_with_namespace }}
         </option>
       </select>
     </p>
 
     <!-- Currently downloading? -->
-    <p v-if="this.downloading === true"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Downloading from GitLab...</p>
+    <p v-if="downloading"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Downloading from GitLab...</p>
 
     <!-- The gantt component -->
-    <gantt v-bind:issues="issues" v-if="issues != null"></gantt>
+    <gantt v-bind:issues="GitLab.issues" v-if="GitLab.issues != null"></gantt>
   </div>
 </template>
 
@@ -44,11 +44,23 @@ import Gantt from './Gantt'
 export default {
   name: 'selectorWrapper',
   props: [
-    'GitLab',
-    'user'
+    'user',
+    'downloading'
   ],
   data () {
     return {
+      // main GitLab object, will be filled with data
+      GitLab: {
+        // list of groups user has access to
+        groups: null,
+        // list of projects in the group selected by the user
+        groupProjects: null,
+        // list of projects
+        projects: null,
+        // list of issues, sent to <gant> as a `props`
+        issues: null
+      },
+
       // main filter for listing issues:
       // - by 'group' (group/project),
       // - by 'project' (single project),
@@ -59,26 +71,14 @@ export default {
       defaultAllPath: { path: 'all' },
 
       // FILTERING BY 'group'
-      // list of groups
-      groups: [ this.defaultUnexistingPath ],
       // selected group
       group: this.defaultUnexistingPath,
-      // list of projects in this group
-      groupProjects: [ this.defaultAllPath ],
       // selected project in this group
       gProject: this.defaultAllPath,
 
       // FILTERING BY 'project'
-      // list of projects
-      projects: [ this.defaultUnexistingPath ],
       // selected project
-      project: this.defaultUnexistingPath,
-
-      // currently downloading from GitLab
-      dowloading: false,
-
-      // issues are sent to <gant> as a `props`
-      issues: null
+      project: this.defaultUnexistingPath
     }
   },
   components: {
@@ -87,15 +87,15 @@ export default {
   methods: {
     listByGroup: function (event) {
       // clearing the issues
-      this.issues = null
+      this.GitLab.issues = null
 
       // clearing the list of groups to default value
-      this.groups = [ this.defaultUnexistingPath ]
+      this.GitLab.groups = [ this.defaultUnexistingPath ]
       // selecting the default one
       this.group = this.defaultUnexistingPath
 
       // clearing the list of group projects to default value
-      this.groupProjects = [ this.defaultAllPath ]
+      this.GitLab.groupProjects = [ this.defaultAllPath ]
       // selecting the default one
       this.gProject = this.defaultAllPath
 
@@ -104,10 +104,10 @@ export default {
     },
     listByProject: function (event) {
       // clearing the issues
-      this.issues = null
+      this.GitLab.issues = null
 
       // clearing the list of projects to default value
-      this.projects = [ this.defaultUnexistingPath ]
+      this.GitLab.projects = [ this.defaultUnexistingPath ]
       // selecting the default one
       this.project = this.defaultUnexistingPath
 
@@ -116,32 +116,17 @@ export default {
     },
     listByMe: function (event) {
       // clearing the issues
-      this.issues = null
+      this.GitLab.issues = null
 
-      // we are downloading
-      this.downloading = true
       // user wants issues for all projects created by himself
-      this.$http.get(
-        this.GitLab.url + '/issues',
-        {
-          headers: { 'PRIVATE-TOKEN': this.GitLab.token },
-          params: {
-            'per_page': '100',
-            'state': 'opened'
-          }
-        }
-      ).then((response) => {
-        // we are no more downloading
-        this.downloading = false
-        // Assigning response body directly to this.issues
-        this.issues = response.body
-      }, (response) => {
-        // error callback
-      })
+      this.GitLabAPI.get('/issues', {
+        'per_page': '100',
+        'state': 'opened'
+      }, [this.GitLab, 'issues'])
     },
     selectedGroup: function (event) {
       // clearing the list of groups to default value
-      this.groupProjects = [ this.defaultAllPath ]
+      this.GitLab.groupProjects = [ this.defaultAllPath ]
       // selecting the default one
       this.gProject = this.defaultAllPath
 
@@ -160,144 +145,54 @@ export default {
       }
     },
     refreshGroups: function (event) {
-      // we are downloading
-      this.downloading = true
       // user wants the list of groups
-      this.$http.get(
-        this.GitLab.url + '/groups',
-        {
-          headers: { 'PRIVATE-TOKEN': this.GitLab.token },
-          params: {
-            'per_page': '100',
-            'all_available': 1,
-            'search': this.user.username // TODO remove this while implementing an efficient select with search
-          }
-        }
-      ).then((response) => {
-        // we are no more downloading
-        this.downloading = false
-        // Assigning response body directly to this.groups
-        this.groups = response.body
-      }, (response) => {
-        // error callback
-      })
+      this.GitLabAPI.get('/groups', {
+        'per_page': '100',
+        'all_available': 1,
+        'search': this.user.username // TODO remove this while implementing an efficient select with search
+      }, [this.GitLab, 'groups'])
     },
     refreshGroupProjects: function (event) {
-      // we are downloading
-      this.downloading = true
       // user wants the list of projects in this.group
-      this.$http.get(
-        this.GitLab.url + '/groups/' + this.group.id + '/projects',
-        {
-          headers: { 'PRIVATE-TOKEN': this.GitLab.token },
-          params: {
-            'per_page': '100'
-          }
-        }
-      ).then((response) => {
-        // we are no more downloading
-        this.downloading = false
-        // Assigning response body directly to this.groupProjects
-        this.groupProjects = response.body
-        // Inserting first default unexisting "All" project
-        this.groupProjects.unshift(this.defaultAllPath)
-      }, (response) => {
-        // error callback
-      })
+      this.GitLabAPI.get('/groups/' + this.group.id + '/projects', {
+        'per_page': '100'
+      }, [this.GitLab, 'groupProjects'])
     },
     refreshProjects: function (event) {
-      // we are downloading
-      this.downloading = true
       // user wants the list of projects
-      this.$http.get(
-        this.GitLab.url + '/projects',
-        {
-          headers: { 'PRIVATE-TOKEN': this.GitLab.token },
-          params: {
-            'per_page': '100'
-          }
-        }
-      ).then((response) => {
-        // we are no more downloading
-        this.downloading = false
-        // Assigning response body directly to this.projects
-        this.projects = response.body
-      }, (response) => {
-        // error callback
-      })
+      this.GitLabAPI.get('/projects', {
+        'per_page': '100'
+      }, [this.GitLab, 'projects'])
     },
     listGroupIssues: function (event) {
       // clearing the issues
-      this.issues = null
+      this.GitLab.issues = null
 
-      // we are downloading
-      this.downloading = true
       // user wants issues for all projects in the selected group
-      this.$http.get(
-        this.GitLab.url + '/groups/' + this.group.id + '/issues',
-        {
-          headers: { 'PRIVATE-TOKEN': this.GitLab.token },
-          params: {
-            'per_page': '100',
-            'state': 'opened'
-          }
-        }
-      ).then((response) => {
-        // we are no more downloading
-        this.downloading = false
-        // Assigning response body directly to this.issues
-        this.issues = response.body
-      }, (response) => {
-        // error callback
-      })
+      this.GitLabAPI.get('/groups/' + this.group.id + '/issues', {
+        'per_page': '100',
+        'state': 'opened'
+      }, [this.GitLab, 'issues'])
     },
     listGroupProjectIssues: function (event) {
       // clearing the issues
-      this.issues = null
+      this.GitLab.issues = null
 
-      // we are downloading
-      this.downloading = true
       // user wants issues for a selected project
-      this.$http.get(
-        this.GitLab.url + '/projects/' + this.gProject.id + '/issues',
-        {
-          headers: { 'PRIVATE-TOKEN': this.GitLab.token },
-          params: {
-            'per_page': '100',
-            'state': 'opened'
-          }
-        }
-      ).then((response) => {
-        // we are no more downloading
-        this.downloading = false
-        this.issues = response.body
-      }, (response) => {
-        // error callback
-      })
+      this.GitLabAPI.get('/projects/' + this.gProject.id + '/issues', {
+        'per_page': '100',
+        'state': 'opened'
+      }, [this.GitLab, 'issues'])
     },
     listProjectIssues: function (event) {
       // clearing the issues
-      this.issues = null
+      this.GitLab.issues = null
 
-      // we are downloading
-      this.downloading = true
       // user wants issues for a selected project
-      this.$http.get(
-        this.GitLab.url + '/projects/' + this.project.id + '/issues',
-        {
-          headers: { 'PRIVATE-TOKEN': this.GitLab.token },
-          params: {
-            'per_page': '100',
-            'state': 'opened'
-          }
-        }
-      ).then((response) => {
-        // we are no more downloading
-        this.downloading = false
-        this.issues = response.body
-      }, (response) => {
-        // error callback
-      })
+      this.GitLabAPI.get('/projects/' + this.project.id + '/issues', {
+        'per_page': '100',
+        'state': 'opened'
+      }, [this.GitLab, 'issues'])
     }
   },
   mounted: function () {
