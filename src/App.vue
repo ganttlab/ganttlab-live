@@ -3,13 +3,15 @@
     <div class="status">
       <transition name="fade">
         <div v-if="failed == true || userEmpty">
-          <p v-if="failed == true" class="error">Unable to connect to {{ url }}</p>
-          <p v-if="userEmpty && !downloading"><strong><i class="fa fa-lock"></i> Please type in your GitLab details</strong></p>
-          <p v-if="userEmpty && downloading"><strong><i v-if="downloading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Connecting to {{ url }}</strong></p>
+          <h1>- GanttLab -</h1>
+          <h2>An easy to use, fully functional Gantt chart for GitLab.</h2>
           <p class="input"><span>GitLab instance URL</span><input v-model="url" v-on:keyup.enter="init"></p>
           <p class="input"><span>Your Auth Token</span><input v-model="token" v-on:keyup.enter="init"></p>
           <p class="helper">Use your Private Token, or a Personal Access Token</p>
+          <p v-if="userEmpty && downloading" class="downloading"><strong><i v-if="downloading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Connecting to {{ url }}</strong></p>
+          <p v-if="failed == true" class="error">Unable to connect to {{ url }}</p>
           <p class="more"><a href="https://gitlab.com/clorichel/ganttlab" target="_blank">Read more about GanttLab<i class="fa fa-external-link"></i></a></p>
+          <p class="copyright">&copy; 2016 - <a href="http://clorichel.com/" target="_blank">Pierre-Alexandre Clorichel</a></p>
         </div>
       </transition>
     </div>
@@ -123,8 +125,25 @@ a:hover {
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
 }
+.status h1 {
+  font-size: 1.2em;
+  text-align: center;
+  margin-bottom: 0px;
+}
+.status h2 {
+  font-size: 0.7em;
+  font-style: italic;
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 24px;
+}
 .status p {
   text-align: center;
+}
+.status .error,
+.status .downloading {
+  margin-top: 30px;
+  font-size: 0.80em;
 }
 .status .error {
   color: #a94442;
@@ -157,6 +176,10 @@ a:hover {
 .more i {
   margin-left: 5px;
 }
+.copyright {
+  font-size: 0.60em;
+  margin-top: -12px;
+}
 #top {
   margin: 0;
   background-color:#fafafa;
@@ -181,9 +204,6 @@ a:hover {
   vertical-align: middle;
   margin-right: 10px;
   height: 26px;
-}
-.downloading {
-  color: #5cb85c;
 }
 .standardpadding {
   padding: 10px;
