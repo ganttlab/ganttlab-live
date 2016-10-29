@@ -7,7 +7,7 @@ An easy to use, fully functional Gantt chart for GitLab.
 
 ## Run it now!
 
-It is already running live for you at https://clorichel.gitlab.io/ganttlab/. Type-in your GitLab instance URL (works with https://gitlab.com), your GitLab account _Private Token_ and enjoy!
+It is already running live for you at https://clorichel.gitlab.io/ganttlab/. Type-in your GitLab instance URL (works with https://gitlab.com), your GitLab account _Private Token_ or a _Personal Access Token_ and enjoy!
 
 **Safe to run:** the application do NOT store any data, and runs on YOUR browser only, using your own network as if you were running all the requests to your GitLab instance right from your local computer. Unsure of it? Have a look at [the source code](https://gitlab.com/clorichel/ganttlab/tree/master).
 

@@ -6,8 +6,8 @@ module.exports = merge(prodEnv, {
 
   // Place your GitLab instance URL here
   GITLAB_URL: '"https://gitlab.com"',
-  // Your GitLab private token
-  GITLAB_PRIVATE_TOKEN: '"your GitLab private token"',
+  // Your GitLab user Private Token or Personal Access Token
+  GITLAB_TOKEN: '"your GitLab user token"',
   
   // Moment.js locale configuration
   MOMENTJS_LOCALE: '"en"',

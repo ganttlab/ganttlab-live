@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
+- Made it clear providing Private Token or Personal Access Token is the same
 - A downloading spinner attached to the GitLab instance URL top right
 - Now using vue-gitlab-api to achieve cleaner code and easier improvments
 - Readme now indicates no more steps to run it now, as it is running live on GitLab page

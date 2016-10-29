@@ -7,7 +7,8 @@
           <p v-if="userEmpty && !downloading"><strong><i class="fa fa-lock"></i> Please type in your GitLab details</strong></p>
           <p v-if="userEmpty && downloading"><strong><i v-if="downloading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Connecting to {{ url }}</strong></p>
           <p class="input"><span>GitLab instance URL</span><input v-model="url" v-on:keyup.enter="init"></p>
-          <p class="input"><span>Your Private Token</span><input v-model="token" v-on:keyup.enter="init"></p>
+          <p class="input"><span>Your Auth Token</span><input v-model="token" v-on:keyup.enter="init"></p>
+          <p class="helper">Use your Private Token, or a Personal Access Token</p>
           <p class="more"><a href="https://gitlab.com/clorichel/ganttlab" target="_blank">Read more about GanttLab<i class="fa fa-external-link"></i></a></p>
         </div>
       </transition>
@@ -35,7 +36,7 @@ export default {
   data () {
     return {
       url: process.env.GITLAB_URL,
-      token: process.env.GITLAB_PRIVATE_TOKEN,
+      token: process.env.GITLAB_TOKEN,
       GitLab: {
         user: {} // need to be defined here, or computed property won't work as expected
       },
@@ -116,7 +117,7 @@ a:hover {
   text-decoration: underline;
 }
 .status {
-  font-size: 18px;
+  font-size: 20px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -144,7 +145,13 @@ a:hover {
   font-size: 0.9em;
   color: #2c3e50;
 }
+.helper {
+  font-size: 0.60em;
+  margin-top: -12px;
+  font-style: italic;
+}
 .more {
+  margin-top: 30px;
   font-size: 0.75em;
 }
 .more i {
