@@ -6,10 +6,10 @@ if [ -z "${GITLAB_URL}" ]; then
     GITLAB_URL=https://gitlab.com
 fi
 
-echo -n "Now provide your GitLab Private Token: "
+echo -n "Now provide your GitLab token: "
 read GITLAB_TOKEN
 if [ -z "${GITLAB_TOKEN}" ]; then
-	echo "You need to provide a private token to connect to your GitLab instance API"
+	echo "You need to provide a token to connect to your GitLab instance API"
     exit 1
 fi
 
