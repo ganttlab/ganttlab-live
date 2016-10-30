@@ -19,7 +19,7 @@ cp -n config/prod.env.example.js config/prod.env.js
 
 # filling in ./config/dev.env.js with typed values
 sed -i "s/^\(.*GITLAB_URL:\s\).*$/\1'\"${GITLAB_URL//\//\\/}\"',/" ./config/dev.env.js
-sed -i "s/^\(.*GITLAB_PRIVATE_TOKEN:\s\).*$/\1'\"${GITLAB_TOKEN//\//\\/}\"',/" ./config/dev.env.js
+sed -i "s/^\(.*GITLAB_TOKEN:\s\).*$/\1'\"${GITLAB_TOKEN//\//\\/}\"',/" ./config/dev.env.js
 
 # installing node dependencies
 npm install

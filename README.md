@@ -45,13 +45,13 @@ Enjoy it on http://localhost:8080/! You may also read about the long version thr
 
 The `./bootstrapIt.sh` script may already have configured the values prompted for you. See the [config](config) folder `*.example.js` files to persist your configuration for:
 
-| Key                    | Description                                                                                                |
-|------------------------|------------------------------------------------------------------------------------------------------------|
-| `GITLAB_URL`           | your GitLab instance URL (defaults to https://gitlab.com)                                                  |
-| `GITLAB_PRIVATE_TOKEN` | your GitLab private token use to connect to the API                                                        |
-| `MOMENTJS_LOCALE`      | Moment.js [locale configuration](http://momentjs.com/docs/#/i18n/) to display dates in your usual language |
-| `GANTT_START_STRING`   | defaults to `GanttStart: `, the string to search on you issue description as the gantt start date          |
-| `GANTT_DUE_STRING`     | defaults to `GanttDue: `, the string to search on you issue description as the gantt due date              |
+| Key                  | Description                                                                                                |
+|----------------------|------------------------------------------------------------------------------------------------------------|
+| `GITLAB_URL`         | your GitLab instance URL (defaults to https://gitlab.com)                                                  |
+| `GITLAB_TOKEN`       | your GitLab user _Private Token_ or _Personal Access Token_ to use to connect to the                       |
+| `MOMENTJS_LOCALE`    | Moment.js [locale configuration](http://momentjs.com/docs/#/i18n/) to display dates in your usual language |
+| `GANTT_START_STRING` | defaults to `GanttStart: `, the string to search on you issue description as the gantt start date          |
+| `GANTT_DUE_STRING`   | defaults to `GanttDue: `, the string to search on you issue description as the gantt due date              |
 
 ## Installing
 
