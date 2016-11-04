@@ -52,18 +52,20 @@ export default {
         var dueDate = null
 
         // reading lines from this issue description to search for ganttStartString and ganttDueString
-        var lines = theIssue.description.split('\r\n')
-        for (var j = 0; j < lines.length; j++) {
-          // this description line starts with the ganttStartString
-          if (!lines[j].indexOf(this.ganttStartString)) {
-            // this issue start date for gantt view is set to the appropriate date
-            startDate = new Date(lines[j].replace(this.ganttStartString, ''))
-          }
+        if (theIssue.description != null) {
+          var lines = theIssue.description.split('\r\n')
+          for (var j = 0; j < lines.length; j++) {
+            // this description line starts with the ganttStartString
+            if (!lines[j].indexOf(this.ganttStartString)) {
+              // this issue start date for gantt view is set to the appropriate date
+              startDate = new Date(lines[j].replace(this.ganttStartString, ''))
+            }
 
-          // this description line starts with the ganttDueString
-          if (!lines[j].indexOf(this.ganttDueString)) {
-            // this issue due date for gantt view is set to the appropriate date
-            dueDate = new Date(lines[j].replace(this.ganttDueString, ''))
+            // this description line starts with the ganttDueString
+            if (!lines[j].indexOf(this.ganttDueString)) {
+              // this issue due date for gantt view is set to the appropriate date
+              dueDate = new Date(lines[j].replace(this.ganttDueString, ''))
+            }
           }
         }
 
