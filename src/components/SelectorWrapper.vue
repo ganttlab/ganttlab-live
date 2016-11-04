@@ -1,12 +1,10 @@
 <template>
   <div v-if="this.user">
-    <!-- Main filter selector -->
     <p>List issues
     <input type="radio" id="inputListByGroup" value="group" v-model="listBy" v-on:change="listByGroup"><label for="inputListByGroup"> by groups and projects</label>,
     or <input type="radio" id="inputListByProject" value="project" v-model="listBy" v-on:change="listByProject"><label for="inputListByProject"> by projects</label>,
     or <input type="radio" id="inputListByMe" value="me" v-model="listBy" v-on:change="listByMe"><label for="inputListByMe"> all issues created by me</label></p>
-    
-    <!-- User wants to list by groups -->
+
     <p v-if="this.listBy === 'group'">Groups you have access: 
       <select title="group" v-model="group" v-on:change="selectedGroup">
         <option v-for="aGroup in GitLab.groups" v-bind:value="aGroup">
@@ -21,7 +19,6 @@
       </select>
     </p>
 
-    <!-- User wants to list by projects -->
     <p v-if="this.listBy === 'project'">
       Select a project: <select title="project" v-model="project" v-on:change="listProjectIssues">
         <option v-for="aProject in GitLab.projects" v-bind:value="aProject">
@@ -30,10 +27,8 @@
       </select>
     </p>
 
-    <!-- Currently downloading? -->
     <p v-if="downloading"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Downloading from GitLab...</p>
 
-    <!-- The gantt component -->
     <gantt v-bind:issues="GitLab.issues" v-if="GitLab.issues != null"></gantt>
   </div>
 </template>
