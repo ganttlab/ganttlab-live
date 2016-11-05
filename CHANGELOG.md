@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
+- Private and Personal Access Token links are automatically generated with GitLab instance URL
 - Token links now on top of Readme for users of GanttLab Live
 - Made it clear providing Private Token or Personal Access Token is the same
 - A downloading spinner attached to the GitLab instance URL top right

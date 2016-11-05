@@ -7,7 +7,7 @@
           <h2>An easy to use, fully functional Gantt chart for GitLab.</h2>
           <p class="input"><span>GitLab instance URL</span><input v-model="url" v-on:keyup.enter="init"></p>
           <p class="input"><span>Your Auth Token</span><input v-model="token" v-on:keyup.enter="init"></p>
-          <p class="helper">Use your Private Token, or a Personal Access Token</p>
+          <p class="helper">Use your <a v-bind:href="privateTokenLink" target="_blank" title="/profile/account">Private Token</a>, or a <a v-bind:href="personalTokenLink" target="_blank" title="/profile/personal_access_tokens">Personal Access Token</a></p>
           <p v-if="userEmpty && downloading" class="downloading"><strong><i v-if="downloading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Connecting to {{ url }}</strong></p>
           <p v-if="failed == true" class="error">Unable to connect to {{ url }}</p>
           <p class="more"><a href="https://gitlab.com/clorichel/ganttlab" target="_blank">Read more about GanttLab<i class="fa fa-external-link"></i></a></p>
@@ -77,6 +77,15 @@ export default {
       } else {
         return false
       }
+    },
+    safeUrl: function () {
+      return this.url.replace(/\/$/, '')
+    },
+    privateTokenLink: function () {
+      return this.safeUrl + '/profile/account'
+    },
+    personalTokenLink: function () {
+      return this.safeUrl + '/profile/personal_access_tokens'
     }
   },
   mounted: function () {
@@ -168,6 +177,13 @@ a:hover {
   font-size: 0.60em;
   margin-top: -12px;
   font-style: italic;
+}
+.helper a {
+  border-bottom: 1px dotted #2c3e50;
+}
+.helper a:hover {
+  border-bottom: 1px solid #2c3e50;
+  text-decoration: none;
 }
 .more {
   margin-top: 30px;
