@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
+- A simple pagination system, allowing user to view all issues on the Gantt chart
+- An option to let user choose how many issues will be shown on the Gantt chart
 - Issues bars in the Gant chart are now linked to the issue on the GitLab instance
 - Issue title in the Gantt chart is now clicable with a link to the issue on the GitLab instance
 - One can provide a Google Analytics tracking code to get insights to its GanttLab instance
