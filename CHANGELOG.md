@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
+- work in progress on [clorichel/ganttlab issues](https://gitlab.com/clorichel/ganttlab/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
+
+## 0.2.0 - 2016-11-05
+### Added
 - A simple pagination system, allowing user to view all issues on the Gantt chart
 - An option to let user choose how many issues will be shown on the Gantt chart
 - Issues bars in the Gant chart are now linked to the issue on the GitLab instance
@@ -35,7 +39,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Application initial behavior has been refined
 - Project has been renamed from "GitLab Gantt" to "GanttLab"
 - Bold red for today label and vertical axis on the gantt graph [clorichel/ganttlab#3](https://gitlab.com/clorichel/ganttlab/issues/3)
-- work in progress on [clorichel/ganttlab issues](https://gitlab.com/clorichel/ganttlab/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
 
 ### Fixed
 - Issue description could be null if created by GitLab API
@@ -57,4 +60,4 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - README includes a preview, and describes main topics to get started
 - Initial vue-cli scaffolding with webpack plugin
 
-[Unreleased]: https://gitlab.com/clorichel/ganttlab/compare/v0.1.0...master
+[Unreleased]: https://gitlab.com/clorichel/ganttlab/compare/v0.2.0...master
