@@ -189,7 +189,7 @@ export default {
       this.GitLabAPI.get('/groups', {
         'per_page': '100',
         'all_available': 1,
-        'search': 'gitlab-org' // this.user.username // TODO remove this while implementing an efficient select with search
+        'search': this.user.username // TODO remove this while implementing an efficient select with search
       }, [this.GitLab, 'groups'])
     },
     refreshGroupProjects: function (event) {
