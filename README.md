@@ -7,7 +7,7 @@ An easy to use, fully functional Gantt chart for GitLab.
 
 ## Run it now!
 
-It is already running live for you at https://clorichel.gitlab.io/ganttlab/. Type-in your GitLab instance URL (works with https://gitlab.com), your GitLab account _Private Token_ or a _Personal Access Token_ and enjoy!
+It is already running live for you at https://clorichel.gitlab.io/ganttlab/. Type-in your GitLab instance URL (works with https://gitlab.com), your GitLab account [_Private Token_](https://gitlab.com/profile/account) or a [_Personal Access Token_](https://gitlab.com/profile/personal_access_tokens) and enjoy!
 
 **Safe to run:** the application do NOT store any data, and runs on YOUR browser only, using your own network as if you were running all the requests to your GitLab instance right from your local computer. Unsure of it? Have a look at [the source code](https://gitlab.com/clorichel/ganttlab/tree/master).
 
@@ -36,7 +36,7 @@ Whether you have Docker installed on your local computer ([download and install 
 
 1. `git clone https://gitlab.com/clorichel/ganttlab` will clone this repository
 1. `cd ganttlab && ./bashInDevEnv.sh` to connect to the development environment
-1. `./bootstrapIt.sh` within the dev environment. You will be prompted for your GitLab instance URL and your Private Token (Wanna try with your GitLab.com account? Your account Private Token [is here](https://gitlab.com/profile/account)!)
+1. `./bootstrapIt.sh` within the dev environment. You will be prompted for your GitLab instance URL and your Private Token (Wanna try with your GitLab.com account? Your account Private Token [is here](https://gitlab.com/profile/account), or generate a Personal Access Token [out there](https://gitlab.com/profile/personal_access_tokens)!)
 1. `npm run dev`: run _GanttLab_ right now, from the dev environment
 
 Enjoy it on http://localhost:8080/! You may also read about the long version through [configuring](#configuring) and [installing](#installing).
