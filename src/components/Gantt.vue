@@ -44,7 +44,8 @@ export default {
 
         // creating the dataset
         var aDataset = {
-          'measure': title
+          'measure': title,
+          'link': theIssue.web_url
         }
 
         // initializing issue start and due date
@@ -328,6 +329,11 @@ export default {
           svg.select('#g_axis').selectAll('text')
               .data(dataset.slice(startSet, endSet))
               .enter()
+              .append('a')
+              .attr('xlink:href', function (d) {
+                return d.link
+              })
+              .attr('xlink:show', 'new')
               .append('text')
               .attr('x', paddingLeft)
               .attr('y', lineSpacing + dataHeight / 2)

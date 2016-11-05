@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
+- Issue title in the Gantt graph is now clicable with a link to the issue on the GitLab instance
 - One can provide a Google Analytics tracking code to get insights to its GanttLab instance
 - Private and Personal Access Token links are automatically generated with GitLab instance URL
 - Token links now on top of Readme for users of GanttLab Live
