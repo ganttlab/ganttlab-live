@@ -6,6 +6,7 @@ pages:
   - npm install --silent
   - mv ./config/dev.env.example.js ./config/dev.env.js
   - mv ./config/prod.env.example.js ./config/prod.env.js
+  - sed -i "s/^\(.*GA_TRACKING_CODE:\s\).*$/\1'\"${GA_TRACKING_CODE}\"',/" ./config/prod.env.js
   - npm run build
   - mv dist public
   artifacts:
