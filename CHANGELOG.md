@@ -30,6 +30,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Bold red for today label and vertical axis on the gantt graph [clorichel/ganttlab#3](https://gitlab.com/clorichel/ganttlab/issues/3)
 - work in progress on [clorichel/ganttlab issues](https://gitlab.com/clorichel/ganttlab/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
 
+### Fixed
+- Issue description could be null if created by GitLab API
+
 ## 0.1.0 - 2016-10-23
 ### Added
 - This CHANGELOG file to hopefully serve as an evolving example of a standardized open source project CHANGELOG
