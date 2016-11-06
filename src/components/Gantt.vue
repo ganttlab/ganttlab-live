@@ -138,7 +138,7 @@ export default {
       // space for y axis titles
       var paddingLeft = -250
 
-      var width = 940 - margin.left - margin.right
+      var width = window.innerWidth - margin.left - margin.right - 20
 
       // title of chart is drawn or not (default: yes)
       var drawTitle = 0
@@ -315,7 +315,7 @@ export default {
 
           // create SVG element
           var svg = d3.select(this).append('svg')
-              .attr('width', width + margin.left + margin.right)
+              .attr('width', width + margin.left + margin.right - 20)
               .attr('height', height + margin.top + margin.bottom)
               .append('g')
               .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
