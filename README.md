@@ -85,6 +85,8 @@ Your are free to [open an issue](https://gitlab.com/clorichel/ganttlab/issues/ne
 - Florian Roscheck for his awesome work on https://github.com/flrs/visavail
 - D3.js https://d3js.org/
 - Moment.js http://momentjs.com/
+- Evan You for being so clever on developing [Vue.js](http://vuejs.org/) and [vue-cli](https://github.com/vuejs/vue-cli)
+- The [GitLab team](https://about.gitlab.com/team/) for this life changing product called [GitLab](https://about.gitlab.com/)
 
 ## License
 
