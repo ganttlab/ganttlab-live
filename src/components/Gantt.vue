@@ -499,11 +499,13 @@ export default {
             })
           }
 
-          var todayDate = new Date()
-          todayDate.setHours(0, 0, 0, 0)
           // today emphasis
+          var todayDate = new Date()
+          var emphasizedToday = false
+          todayDate.setHours(0, 0, 0, 0)
           d3.selectAll('g.tick').each(function (d, i) {
             if (d.getTime() === todayDate.getTime()) {
+              // tick exists for today, emphasizing it
               d3.select(this)
                   .attr({
                     'class': 'x_tick_today'
@@ -512,12 +514,36 @@ export default {
           })
           d3.selectAll('.vert_grid').each(function (d, i) {
             if (d.getTime() === todayDate.getTime()) {
+              // vertical line exists in the grid for today, emphasizing it
               d3.select(this)
                   .attr({
-                    'class': 'vert_grid_today'
+                    'class': 'vert_grid_today',
+                    'stroke-dasharray': '10, 5'
                   })
+              emphasizedToday = true
             }
           })
+
+          // not emphasized today yet
+          if (emphasizedToday === false) {
+            var interpolatedX = xScale.interpolate(d3.interpolate)(todayDate)
+            var lastInterpolatedX = xScale.interpolate(d3.interpolate)(endDate)
+            if (interpolatedX === lastInterpolatedX && todayDate > endDate) {
+              // today is out of range (not displayed in the chart)
+              interpolatedX += 18
+            }
+            // adding the emphasized today vertical line
+            svg.select('#g_axis')
+                .append('line')
+                .attr({
+                  'class': 'vert_grid_today',
+                  'stroke-dasharray': '10, 5',
+                  'x1': interpolatedX,
+                  'x2': interpolatedX,
+                  'y1': 0,
+                  'y2': dataHeight * noOfDatasets + lineSpacing * noOfDatasets - 1 + paddingBottom
+                })
+          }
 
           // create title
           if (drawTitle) {
