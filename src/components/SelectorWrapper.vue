@@ -1,58 +1,57 @@
 <template>
   <div v-if="this.user">
-    <p>
-      Showing
-      <select v-model="GitLab._paginationPerPage" v-on:change="paginationRefresh">
-        <option v-for="value in [10,20,50,75,100]" v-bind:value="value">{{ value }}</option>
-      </select>
-      per page, list issues
-      <input type="radio" id="inputListByGroup" value="group" v-model="listBy" v-on:change="listByGroup">
-      <label for="inputListByGroup"> by groups and projects</label>,
-      or
-      <input type="radio" id="inputListByProject" value="project" v-model="listBy" v-on:change="listByProject">
-      <label for="inputListByProject"> by projects</label>,
-      or
-      <input type="radio" id="inputListByMe" value="me" v-model="listBy" v-on:change="clearAndListByMe">
-      <label for="inputListByMe"> all issues created by me</label>.
-    </p>
+    <div id="mainfilter">
+      <input type="radio" id="inputListByGroup" value="group" v-model="listBy" v-on:change="listByGroup"><label for="inputListByGroup">By group/project</label><input type="radio" id="inputListByProject" value="project" v-model="listBy" v-on:change="listByProject"><label for="inputListByProject">By projects</label><input type="radio" id="inputListByMe" value="me" v-model="listBy" v-on:change="clearAndListByMe"><label for="inputListByMe">Created by me</label>
+    </div>
 
-    <p v-if="this.listBy === 'group'">Groups you have access: 
-      <select title="group" v-model="group" v-on:change="selectedGroup">
-        <option v-for="aGroup in GitLab.groups" v-bind:value="aGroup">
-          {{ aGroup.path }}
-        </option>
-      </select>
+    <div v-if="this.listBy === 'group'" class="subfilter">
+      <div class="custom-select">
+        <select title="group" v-model="group" v-on:change="selectedGroup">
+          <option v-for="aGroup in GitLab.groups" v-bind:value="aGroup">
+            {{ aGroup.path }}
+          </option>
+        </select>
+      </div>
       /
-      <select title="group project" v-model="gProject" v-on:change="selectedGroupProject">
-        <option v-for="aGroupProject in GitLab.groupProjects" v-bind:value="aGroupProject">
-          {{ aGroupProject.path }}
-        </option>
-      </select>
-    </p>
+      <div class="custom-select">
+        <select title="group project" v-model="gProject" v-on:change="selectedGroupProject">
+          <option v-for="aGroupProject in GitLab.groupProjects" v-bind:value="aGroupProject">
+            {{ aGroupProject.path }}
+          </option>
+        </select>
+      </div>
+    </div>
 
-    <p v-if="this.listBy === 'project'">
-      Select a project: <select title="project" v-model="project" v-on:change="listProjectIssues">
-        <option v-for="aProject in GitLab.projects" v-bind:value="aProject">
-          {{ aProject.path_with_namespace }}
-        </option>
-      </select>
-    </p>
+    <div v-if="this.listBy === 'project'" class="subfilter">
+      <div class="custom-select">
+        <select title="project" v-model="project" v-on:change="listProjectIssues">
+          <option v-for="aProject in GitLab.projects" v-bind:value="aProject">
+            {{ aProject.path_with_namespace }}
+          </option>
+        </select>
+      </div>
+    </div>
 
-    <p v-if="this.paginationLinks.prev || this.paginationLinks.next" class="pagination">
-      <button v-if="this.paginationLinks.prev" v-on:click="paginationPrev">&lt; Prev</button>
-      <span>Page {{ this.GitLab._paginationPage }}</span>
-      <button v-if="this.paginationLinks.next" v-on:click="paginationNext">Next &gt;</button>
-    </p>
+    <div class="standardpadding">
+      <p v-if="downloading" class="downloading"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i></p>
 
-    <p v-if="downloading"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Downloading from GitLab...</p>
+      <gantt v-bind:issues="GitLab.issues" v-if="GitLab.issues != null"></gantt>
 
-    <gantt v-bind:issues="GitLab.issues" v-if="GitLab.issues != null"></gantt>
-
-    <p v-if="this.paginationLinks.prev || this.paginationLinks.next" class="pagination">
-      <button v-if="this.paginationLinks.prev" v-on:click="paginationPrev">&lt; Prev</button>
-      <span>Page {{ this.GitLab._paginationPage }}</span>
-      <button v-if="this.paginationLinks.next" v-on:click="paginationNext">Next &gt;</button>
-    </p>
+      <div v-if="this.paginationLinks.prev || this.paginationLinks.next" class="pagination">
+        <button v-if="this.paginationLinks.prev" v-on:click="paginationPrev">&lt; Prev</button>
+        <span>Page {{ this.GitLab._paginationPage }}</span>
+        <button v-if="this.paginationLinks.next" v-on:click="paginationNext">Next &gt;</button>
+        <div class="perpage">
+          Showing
+          <div class="custom-select">
+            <select v-model="GitLab._paginationPerPage" v-on:change="paginationRefresh">
+              <option v-for="value in [10,20,50,75,100]" v-bind:value="value">{{ value }}</option>
+            </select>
+          </div>
+          issues per page
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -301,10 +300,118 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.downloading {
+  text-align: center;
+  font-size: 2.5em;
+}
+#mainfilter {
+  margin: 0;
+  padding: 8px;
+  background-color:#fafafa;
+  border-bottom: 1px solid #e5e5e5;
+  top: 0;
+  left: 0;
+  height: 26px;
+  line-height: 26px;
+  text-align: center;
+}
+#mainfilter input[type=radio] {
+  display:none;
+}
+#mainfilter input[type=radio] + label {
+  display:inline-block;
+  margin:-2px;
+  padding: 4px 12px;
+  margin-bottom: 0;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border-bottom: 2px solid #fafafa;
+  color: #777;
+}
+#mainfilter input[type=radio]:checked + label {
+  border-bottom: 2px solid #2199e8;
+  color: #2c3e50;
+}
+.subfilter {
+  margin: 0;
+  padding: 8px;
+  background-color:#f5f5f5;
+  border-bottom: 1px solid #e5e5e5;
+  top: 0;
+  left: 0;
+  height: 26px;
+  line-height: 26px;
+  text-align: center;
+}
+.custom-select {
+  position: relative;
+  display: inline-block;
+}
+.custom-select select {
+  display: inline-block;
+  border: 1px solid #bbb;
+  padding: 3px 1px 2px 3px;
+  margin: 0;
+  font: inherit;
+  outline:none;
+  line-height: 1.2;
+  background: #f8f8f8;
+  -webkit-appearance:none;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+  .custom-select select {
+    padding-right:30px;    
+  }
+}
+.custom-select:after {
+  content: "▼";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 90%;
+  line-height: 28px;
+  padding: 0 7px;
+  background: #f8f8f8;
+  color: #777;
+  pointer-events:none;
+  border: 1px solid #bbb;
+  -webkit-border-radius: 0 4px 4px 0;
+  -moz-border-radius: 0 4px 4px 0;
+  border-radius: 0 4px 4px 0;
+}
+.no-pointer-events .custom-select:after {
+  content: none;
+}
 .pagination {
   text-align: center;
 }
 .pagination span {
   margin: 0 20px;
+}
+.perpage {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.8em;
+}
+.perpage .custom-select:after {
+  line-height: 22px;
+}
+button {
+  border: 1px solid #bbb;
+  padding: 2px 4px 0;
+  margin: 0;
+  font: inherit;
+  outline:none;
+  line-height: 1.2;
+  background: #f8f8f8;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 </style>

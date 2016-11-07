@@ -23,7 +23,7 @@
             <span class="server"><transition name="fade"><i v-if="downloading" class="fa fa-circle-o-notch fa-spin downloading" aria-hidden="true"></i></transition> <a v-bind:href="url" target="_blank">{{ url }}</a> <a href="https://gitlab.com/clorichel/ganttlab#how-it-works" target="_blank"><i class="fa fa-question-circle" aria-hidden="true" title="Help"></i></a> <i class="fa fa-times close" aria-hidden="true" v-on:click="reset" title="Close"></i></span>
           </div>
         </div>
-        <selectorWrapper class="standardpadding" v-bind:user="GitLab.user" v-bind:downloading="downloading"></selectorWrapper>
+        <selectorWrapper v-bind:user="GitLab.user" v-bind:downloading="downloading"></selectorWrapper>
       </div>
     </transition>
   </div>
@@ -199,7 +199,6 @@ a:hover {
 #top {
   margin: 0;
   background-color:#fafafa;
-  border-bottom: 1px solid #e5e5e5;
   top: 0;
   left: 0;
   height: 26px;
