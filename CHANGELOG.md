@@ -13,10 +13,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased]
 ### Added
 - Width of Gantt chart is now calculated on browser window width, making it full screen
+- Improved and refined global UI
 - work in progress on [clorichel/ganttlab issues](https://gitlab.com/clorichel/ganttlab/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
 
 ### Changed
 - Today vertical axis on the Gantt chart is now dashed for readability
+- Pagination and issues per page is now shown only at the bottom
 
 ### Fixed
 - A padding problem causing useless horizontal scrolling on the page
