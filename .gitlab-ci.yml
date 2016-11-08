@@ -13,7 +13,7 @@ pages:
     paths:
     - public
   environment:
-    name: GanttLab live
+    name: live.ganttlab.org
     url: https://live.ganttlab.org/
   only:
   - master
