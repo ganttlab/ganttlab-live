@@ -1,6 +1,6 @@
 # GanttLab
 
-An easy to use, fully functional Gantt chart for GitLab.
+The easy to use, fully functional Gantt chart for GitLab.
 
 ![GanttLab](preview.png)
 

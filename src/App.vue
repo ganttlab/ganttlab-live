@@ -4,7 +4,7 @@
       <transition name="fade">
         <div v-if="failed == true || userEmpty">
           <h1>- GanttLab -</h1>
-          <h2>An easy to use, fully functional Gantt chart for GitLab.</h2>
+          <h2>The easy to use, fully functional Gantt chart for GitLab.</h2>
           <p class="input"><span>GitLab instance URL</span><input v-model="url" v-on:keyup.enter="init"></p>
           <p class="input"><span>Your Auth Token</span><input v-model="token" v-on:keyup.enter="init"></p>
           <p class="helper">Use your <a v-bind:href="privateTokenLink" target="_blank" title="/profile/account">Private Token</a>, or a <a v-bind:href="personalTokenLink" target="_blank" title="/profile/personal_access_tokens">Personal Access Token</a></p>
