@@ -9,6 +9,8 @@ pages:
   - sed -i "s/^\(.*GA_TRACKING_CODE:\s\).*$/\1'\"${GA_TRACKING_CODE}\"',/" ./config/prod.env.js
   - npm run build
   - mv dist public
+  - mkdir -p public/.well-known/acme-challenge
+  - echo "${LETS_ENCRYPT_CHALLENGE}" > public/.well-known/acme-challenge/8eQY0flFQV0rh3QijhsUb7N8nBNiNl1YycN0-WcktO0
   artifacts:
     paths:
     - public
