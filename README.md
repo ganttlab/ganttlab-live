@@ -7,11 +7,11 @@ An easy to use, fully functional Gantt chart for GitLab.
 
 ## Run it now!
 
-It is already running live for you at https://live.ganttlab.org/. Type-in your GitLab instance URL (works with https://gitlab.com), your GitLab account [_Private Token_](https://gitlab.com/profile/account) or a [_Personal Access Token_](https://gitlab.com/profile/personal_access_tokens) and enjoy!
+It is already running live for you at https://live.ganttlab.org. Type-in your GitLab instance URL (works with https://gitlab.com), your GitLab account [_Private Token_](https://gitlab.com/profile/account) or a [_Personal Access Token_](https://gitlab.com/profile/personal_access_tokens) and enjoy!
 
 **Safe to run:** the application do NOT store any data, and runs on YOUR browser only, using your own network as if you were running all the requests to your GitLab instance right from your local computer. Unsure of it? Have a look at [the source code](https://gitlab.com/ganttlab/ganttlab-live/tree/master).
 
-**PRO tip:** if you are running an unsecured HTTP instance of GitLab, head to http://live.ganttlab.org/ to avoid your browser blocking the request coming from an HTTPS secured site.
+**PRO tip:** if you are running an unsecured HTTP instance of GitLab, head to http://live.ganttlab.org to avoid your browser blocking the request coming from an HTTPS secured site.
 
 ## How it works
 
