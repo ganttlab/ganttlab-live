@@ -10,7 +10,7 @@
           <p class="helper">Use your <a v-bind:href="privateTokenLink" target="_blank" title="/profile/account">Private Token</a>, or a <a v-bind:href="personalTokenLink" target="_blank" title="/profile/personal_access_tokens">Personal Access Token</a></p>
           <p v-if="userEmpty && downloading" class="downloading"><strong><i v-if="downloading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Connecting to {{ url }}</strong></p>
           <p v-if="failed == true" class="error">Unable to connect to {{ url }}</p>
-          <p class="more"><a href="https://gitlab.com/clorichel/ganttlab" target="_blank">Read more about GanttLab<i class="fa fa-external-link"></i></a></p>
+          <p class="more"><a href="https://gitlab.com/ganttlab/ganttlab-live" target="_blank">Read more about GanttLab<i class="fa fa-external-link"></i></a></p>
           <p class="copyright">&copy; 2016 - <a href="http://clorichel.com/" target="_blank">Pierre-Alexandre Clorichel</a></p>
         </div>
       </transition>
@@ -20,7 +20,7 @@
         <div id="top" class="standardpadding">
           <div v-if="!userEmpty">
             <span class="user"><img v-bind:src="GitLab.user.avatar_url"> {{ GitLab.user.name }}</span>
-            <span class="server"><transition name="fade"><i v-if="downloading" class="fa fa-circle-o-notch fa-spin downloading" aria-hidden="true"></i></transition> <a v-bind:href="url" target="_blank">{{ url }}</a> <a href="https://gitlab.com/clorichel/ganttlab#how-it-works" target="_blank"><i class="fa fa-question-circle" aria-hidden="true" title="Help"></i></a> <i class="fa fa-times close" aria-hidden="true" v-on:click="reset" title="Close"></i></span>
+            <span class="server"><transition name="fade"><i v-if="downloading" class="fa fa-circle-o-notch fa-spin downloading" aria-hidden="true"></i></transition> <a v-bind:href="url" target="_blank">{{ url }}</a> <a href="https://gitlab.com/ganttlab/ganttlab-live#how-it-works" target="_blank"><i class="fa fa-question-circle" aria-hidden="true" title="Help"></i></a> <i class="fa fa-times close" aria-hidden="true" v-on:click="reset" title="Close"></i></span>
           </div>
         </div>
         <selectorWrapper v-bind:user="GitLab.user" v-bind:downloading="downloading"></selectorWrapper>

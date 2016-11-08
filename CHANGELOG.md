@@ -14,11 +14,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - Width of Gantt chart is now calculated on browser window width, making it full screen
 - Improved and refined global UI
-- work in progress on [clorichel/ganttlab issues](https://gitlab.com/clorichel/ganttlab/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
+- work in progress on [ganttlab/ganttlab-live issues](https://gitlab.com/ganttlab/ganttlab-live/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
 
 ### Changed
 - Today vertical axis on the Gantt chart is now dashed for readability
 - Pagination and issues per page is now shown only at the bottom
+- GanttLab has been renamed GanttLab Live and moved to https://gitlab.com/ganttlab/ganttlab-live/
+- GanttLab Live is now hosted on https://live.ganttlab.org/
 
 ### Fixed
 - A padding problem causing useless horizontal scrolling on the page
@@ -48,7 +50,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - A login screen is now asking for GitLab URL and Private Token
 - Application initial behavior has been refined
 - Project has been renamed from "GitLab Gantt" to "GanttLab"
-- Bold red for today label and vertical axis on the gantt graph [clorichel/ganttlab#3](https://gitlab.com/clorichel/ganttlab/issues/3)
+- Bold red for today label and vertical axis on the gantt graph [ganttlab/ganttlab-live#3](https://gitlab.com/ganttlab/ganttlab-live/issues/3)
 
 ### Fixed
 - Issue description could be null if created by GitLab API
@@ -70,4 +72,4 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - README includes a preview, and describes main topics to get started
 - Initial vue-cli scaffolding with webpack plugin
 
-[Unreleased]: https://gitlab.com/clorichel/ganttlab/compare/v0.2.0...master
+[Unreleased]: https://gitlab.com/ganttlab/ganttlab-live/compare/v0.2.0...master

@@ -14,6 +14,6 @@ pages:
     - public
   environment:
     name: GanttLab live
-    url: https://clorichel.gitlab.io/ganttlab/
+    url: https://live.ganttlab.org/
   only:
   - master

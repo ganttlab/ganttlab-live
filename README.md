@@ -7,11 +7,11 @@ An easy to use, fully functional Gantt chart for GitLab.
 
 ## Run it now!
 
-It is already running live for you at https://clorichel.gitlab.io/ganttlab/. Type-in your GitLab instance URL (works with https://gitlab.com), your GitLab account [_Private Token_](https://gitlab.com/profile/account) or a [_Personal Access Token_](https://gitlab.com/profile/personal_access_tokens) and enjoy!
+It is already running live for you at https://live.ganttlab.org/. Type-in your GitLab instance URL (works with https://gitlab.com), your GitLab account [_Private Token_](https://gitlab.com/profile/account) or a [_Personal Access Token_](https://gitlab.com/profile/personal_access_tokens) and enjoy!
 
-**Safe to run:** the application do NOT store any data, and runs on YOUR browser only, using your own network as if you were running all the requests to your GitLab instance right from your local computer. Unsure of it? Have a look at [the source code](https://gitlab.com/clorichel/ganttlab/tree/master).
+**Safe to run:** the application do NOT store any data, and runs on YOUR browser only, using your own network as if you were running all the requests to your GitLab instance right from your local computer. Unsure of it? Have a look at [the source code](https://gitlab.com/ganttlab/ganttlab-live/tree/master).
 
-**PRO tip:** if you are running an unsecured HTTP instance of GitLab, head to http://clorichel.gitlab.io/ganttlab/ to avoid your browser blocking the request coming from an HTTPS secured site.
+**PRO tip:** if you are running an unsecured HTTP instance of GitLab, head to http://live.ganttlab.org/ to avoid your browser blocking the request coming from an HTTPS secured site.
 
 ## How it works
 
@@ -34,7 +34,7 @@ Only your opened issues are displayed. If an issue due date is past, the issue i
 
 Whether you have Docker installed on your local computer ([download and install it](https://www.docker.com/products/docker)), you can try _GanttLab_ right now in four easy steps:
 
-1. `git clone https://gitlab.com/clorichel/ganttlab` will clone this repository
+1. `git clone https://gitlab.com/ganttlab/ganttlab-live` will clone this repository
 1. `cd ganttlab && ./bashInDevEnv.sh` to connect to the development environment
 1. `./bootstrapIt.sh` within the dev environment. You will be prompted for your GitLab instance URL and your Private Token (Wanna try with your GitLab.com account? Your account Private Token [is here](https://gitlab.com/profile/account), or generate a Personal Access Token [out there](https://gitlab.com/profile/personal_access_tokens)!)
 1. `npm run dev`: run _GanttLab_ right now, from the dev environment
@@ -72,13 +72,13 @@ npm run build
 
 ## What's next?
 
-Without any obligation nor due date, one could expect to be done this non-exhaustive [list of improvements grouped on issues labeled `Feature`](https://gitlab.com/clorichel/ganttlab/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature).
+Without any obligation nor due date, one could expect to be done this non-exhaustive [list of improvements grouped on issues labeled `Feature`](https://gitlab.com/ganttlab/ganttlab-live/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature).
 
 You can read on the [Changelog](CHANGELOG.md) too, for historical and upcoming new features, changes, deprecations, removed features, bug and security fixes.
 
 ## Support
 
-Your are free to [open an issue](https://gitlab.com/clorichel/ganttlab/issues/new) right in this GitLab repository whether you should be facing a problem or a bug. Please advise this is not a commercial product, so one could experience random response time. Positive, friendly and productive conversations are expected on the issues. Screenshots and steps to reproduce are highly appreciated. Chances are you may get your issue solved if you follow these simple guidelines.
+Your are free to [open an issue](https://gitlab.com/ganttlab/ganttlab-live/issues/new) right in this GitLab repository whether you should be facing a problem or a bug. Please advise this is not a commercial product, so one could experience random response time. Positive, friendly and productive conversations are expected on the issues. Screenshots and steps to reproduce are highly appreciated. Chances are you may get your issue solved if you follow these simple guidelines.
 
 ## Contributing
 
