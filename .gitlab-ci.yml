@@ -10,7 +10,7 @@ pages:
   - npm run build
   - mv dist public
   - mkdir -p public/.well-known/acme-challenge
-  - echo "${LETS_ENCRYPT_CHALLENGE}" > public/.well-known/acme-challenge/AxHedneyUt9DygvVUsC0GwAWhWWgTF4WuFRtZS668pE
+  - echo "${LETS_ENCRYPT_CHALLENGE}" > public/.well-known/acme-challenge/hh3e-tePRrYQXqhrLA83skBFx8xDTGOpmMpHtmDQ4_4
   artifacts:
     paths:
     - public
