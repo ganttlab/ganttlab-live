@@ -35,7 +35,7 @@ Only your opened issues are displayed. If an issue due date is past, the issue i
 Whether you have Docker installed on your local computer ([download and install it](https://www.docker.com/products/docker)), you can try _GanttLab_ right now in four easy steps:
 
 1. `git clone https://gitlab.com/ganttlab/ganttlab-live` will clone this repository
-1. `cd ganttlab && ./bashInDevEnv.sh` to connect to the development environment
+1. `cd ganttlab-live && ./bashInDevEnv.sh` to connect to the development environment
 1. `./bootstrapIt.sh` within the dev environment. You will be prompted for your GitLab instance URL and your Private Token (Wanna try with your GitLab.com account? Your account Private Token [is here](https://gitlab.com/profile/account), or generate a Personal Access Token [out there](https://gitlab.com/profile/personal_access_tokens)!)
 1. `npm run dev`: run _GanttLab_ right now, from the dev environment
 
