@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - Width of Gantt chart is now calculated on browser window width, making it full screen
 - Improved and refined global UI
+- A button to refresh current display, keeping filtering and pagination state
 - work in progress on [ganttlab/ganttlab-live issues](https://gitlab.com/ganttlab/ganttlab-live/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
 
 ### Changed
@@ -21,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Pagination and issues per page is now shown only at the bottom
 - GanttLab has been renamed GanttLab Live and moved to https://gitlab.com/ganttlab/ganttlab-live/
 - GanttLab Live is now hosted on https://live.ganttlab.org/
+- Main filtering menu has been reordered for a common behavior (first selected option is left)
 
 ### Fixed
 - A padding problem causing useless horizontal scrolling on the page
