@@ -1,9 +1,6 @@
 module.exports = {
   NODE_ENV: '"production"',
 
-  // Specify a Google Analytics tracking code if wanted
-  GA_TRACKING_CODE: '""',
-
   // Place your GitLab instance URL here
   GITLAB_URL: '"https://gitlab.com"',
   // Your GitLab user Private Token or Personal Access Token

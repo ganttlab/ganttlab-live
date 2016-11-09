@@ -26,6 +26,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - A padding problem causing useless horizontal scrolling on the page
 - Today is now always on the Gantt chart, even if it is out of range or not on an existing tick
 
+### Removed
+- Insights to Google Analytics is useless and has been removed
+
 ## 0.2.0 - 2016-11-05
 ### Added
 - A simple pagination system, allowing user to view all issues on the Gantt chart
