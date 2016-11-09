@@ -1,7 +1,8 @@
 <template>
   <div v-if="this.user">
     <div id="mainfilter">
-      <input type="radio" id="inputListByMe" value="me" v-model="listBy" v-on:change="clearAndListByMe"><label for="inputListByMe">Created by me</label><input type="radio" id="inputListByProject" value="project" v-model="listBy" v-on:change="listByProject"><label for="inputListByProject">By projects</label><input type="radio" id="inputListByGroup" value="group" v-model="listBy" v-on:change="listByGroup"><label for="inputListByGroup">By group/project</label>
+      <input type="radio" id="inputListByMe" value="me" v-model="listBy" v-on:change="clearAndListByMe"><label for="inputListByMe">Created by me</label><input type="radio" id="inputListByProject" value="project" v-model="listBy" v-on:change="listByProject"><label for="inputListByProject">By project</label><input type="radio" id="inputListByGroup" value="group" v-model="listBy" v-on:change="listByGroup"><label for="inputListByGroup">By group/project</label>
+      <span v-if="! downloading" v-on:click="refreshIssues" class="refresh"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</span>
     </div>
 
     <div v-if="this.listBy === 'group'" class="subfilter">
@@ -37,7 +38,7 @@
 
       <gantt v-bind:issues="GitLab.issues" v-if="GitLab.issues != null"></gantt>
 
-      <div v-if="this.paginationLinks.prev || this.paginationLinks.next" class="pagination">
+      <div v-if="! downloading && (this.paginationLinks.prev || this.paginationLinks.next)" class="pagination">
         <button v-if="this.paginationLinks.prev" v-on:click="paginationPrev">&lt; Prev</button>
         <span>Page {{ this.GitLab._paginationPage }}</span>
         <button v-if="this.paginationLinks.next" v-on:click="paginationNext">Next &gt;</button>
@@ -266,6 +267,30 @@ export default {
       this.GitLab._paginationPage = 1
       this.GitLab._links = []
       this[this.GitLab._paginating]()
+    },
+    refreshIssues: function (event) {
+      if (this.listBy === 'me') {
+        this.clearAndListByMe()
+      } else if (this.listBy === 'project') {
+        if (this.project === this.defaultUnexistingPath) {
+          // project defined, refreshing projects
+          this.listByProject()
+        } else {
+          // project defined, refreshing its issues!
+          this.listProjectIssues()
+        }
+      } else if (this.listBy === 'group') {
+        if (this.group === this.defaultUnexistingPath && this.gProject === this.defaultAllPath) {
+          // group and groupProject undefined, refreshing groups
+          this.listByGroup()
+        } else if (this.gProject === this.defaultAllPath) {
+          // group undefined, refreshing group issues (for all projects)
+          this.listGroupIssues()
+        } else {
+          // group and groupProject defined, refreshing issues!
+          this.listGroupProjectIssues()
+        }
+      }
     }
   },
   computed: {
@@ -332,6 +357,13 @@ export default {
 #mainfilter input[type=radio]:checked + label {
   border-bottom: 2px solid #2199e8;
   color: #2c3e50;
+}
+.refresh {
+  float: right;
+  position: absolute;
+  right: 10px;
+  font-size: 0.8em;
+  cursor: pointer;
 }
 .subfilter {
   margin: 0;
