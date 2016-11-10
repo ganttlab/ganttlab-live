@@ -120,7 +120,7 @@ export default {
     },
     listByGroup: function (event, cb) {
       // adding window history url
-      window.history.pushState(null, null, 'group')
+      window.history.pushState(null, null, '/?l=group')
 
       this.clearSelection()
 
@@ -139,7 +139,7 @@ export default {
     },
     listByProject: function (event, cb) {
       // adding window history url
-      window.history.pushState(null, null, 'project')
+      window.history.pushState(null, null, '/?l=project')
 
       this.clearSelection()
 
@@ -153,7 +153,7 @@ export default {
     },
     listByMe: function (event) {
       // adding window history url
-      window.history.pushState(null, null, 'me')
+      window.history.pushState(null, null, '/?l=me')
 
       // clearing the issues
       this.GitLab.issues = null
@@ -175,7 +175,7 @@ export default {
     },
     selectedGroup: function (event, cb) {
       // adding window history url
-      window.history.pushState(null, null, 'group?g=' + encodeURI(this.group.path))
+      window.history.pushState(null, null, '/?l=group&g=' + encodeURI(this.group.path))
 
       // clearing the list of groups to default value
       this.GitLab.groupProjects = [ this.defaultAllPath ]
@@ -236,7 +236,7 @@ export default {
     },
     listGroupIssues: function (event) {
       // adding window history url
-      window.history.pushState(null, null, 'group?g=' + encodeURI(this.group.path))
+      window.history.pushState(null, null, '/?l=group&g=' + encodeURI(this.group.path))
 
       // clearing the issues
       this.GitLab.issues = null
@@ -254,7 +254,7 @@ export default {
     },
     listGroupProjectIssues: function (event) {
       // adding window history url
-      window.history.pushState(null, null, 'group?g=' + encodeURI(this.group.path) + '&p=' + encodeURI(this.gProject.path_with_namespace))
+      window.history.pushState(null, null, '/?l=group&g=' + encodeURI(this.group.path) + '&p=' + encodeURI(this.gProject.path_with_namespace))
 
       // clearing the issues
       this.GitLab.issues = null
@@ -272,7 +272,7 @@ export default {
     },
     listProjectIssues: function (event) {
       // adding window history url
-      window.history.pushState(null, null, 'project?p=' + encodeURI(this.project.path_with_namespace))
+      window.history.pushState(null, null, '/?l=project&p=' + encodeURI(this.project.path_with_namespace))
 
       // clearing the issues
       this.GitLab.issues = null
@@ -371,17 +371,13 @@ export default {
     }
   },
   mounted: function () {
-    // parsing window location href (full URL)
-    var parser = document.createElement('a')
-    parser.href = window.location.href
+    // reading user expected listBy method
+    var expectedListBy = this.getParameterByName('l')
+    // reading user expected project (if any)
+    var expectedProject = this.getParameterByName('p')
 
     // authorized "by URL" expected listBy methods
     var authorizedListBy = ['project', 'group']
-
-    // reading user expected listBy method
-    var expectedListBy = parser.pathname.slice(1)
-    // reading user expected project (if any)
-    var expectedProject = this.getParameterByName('p')
 
     if (authorizedListBy.indexOf(expectedListBy) > -1) {
       // we set the listBy method as expected by user
