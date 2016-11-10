@@ -118,7 +118,10 @@ export default {
       // we are not paginating anything
       this.GitLab._paginating = null
     },
-    listByGroup: function (event) {
+    listByGroup: function (event, cb) {
+      // adding window history url
+      window.history.pushState(null, null, 'group')
+
       this.clearSelection()
 
       // clearing the list of groups to default value
@@ -132,9 +135,12 @@ export default {
       this.gProject = this.defaultAllPath
 
       // refreshing the list of groups
-      this.refreshGroups()
+      this.refreshGroups(cb)
     },
-    listByProject: function (event) {
+    listByProject: function (event, cb) {
+      // adding window history url
+      window.history.pushState(null, null, 'project')
+
       this.clearSelection()
 
       // clearing the list of projects to default value
@@ -143,9 +149,12 @@ export default {
       this.project = this.defaultUnexistingPath
 
       // refreshing the list of projects
-      this.refreshProjects()
+      this.refreshProjects(cb)
     },
     listByMe: function (event) {
+      // adding window history url
+      window.history.pushState(null, null, 'me')
+
       // clearing the issues
       this.GitLab.issues = null
 
@@ -164,16 +173,22 @@ export default {
       this.clearSelection()
       this.listByMe()
     },
-    selectedGroup: function (event) {
+    selectedGroup: function (event, cb) {
+      // adding window history url
+      window.history.pushState(null, null, 'group?g=' + encodeURI(this.group.path))
+
       // clearing the list of groups to default value
       this.GitLab.groupProjects = [ this.defaultAllPath ]
       // selecting the default one
       this.gProject = this.defaultAllPath
 
       // refresh the list of projects in this group
-      this.refreshGroupProjects()
-      // default to immediately listing all issues for all projects in this group
-      this.listGroupIssues()
+      this.refreshGroupProjects(cb)
+
+      if (typeof cb === 'undefined') {
+        // default to immediately listing all issues for all projects in this group
+        this.listGroupIssues()
+      }
     },
     selectedGroupProject: function (event) {
       if (this.gProject.path === 'all') {
@@ -184,27 +199,45 @@ export default {
         this.listGroupProjectIssues()
       }
     },
-    refreshGroups: function (event) {
+    refreshGroups: function (cb) {
       // user wants the list of groups
       this.GitLabAPI.get('/groups', {
         'per_page': '100',
         'all_available': 1,
         'search': this.user.username // TODO remove this while implementing an efficient select with search
-      }, [this.GitLab, 'groups'])
+      }, (response) => {
+        this.$set(this.GitLab, 'groups', response.body)
+        if (typeof cb === 'function') {
+          cb()
+        }
+      })
     },
-    refreshGroupProjects: function (event) {
+    refreshGroupProjects: function (cb) {
       // user wants the list of projects in this.group
       this.GitLabAPI.get('/groups/' + this.group.id + '/projects', {
         'per_page': '100'
-      }, [this.GitLab, 'groupProjects'])
+      }, (response) => {
+        this.$set(this.GitLab, 'groupProjects', response.body)
+        if (typeof cb === 'function') {
+          cb()
+        }
+      })
     },
-    refreshProjects: function (event) {
+    refreshProjects: function (cb) {
       // user wants the list of projects
       this.GitLabAPI.get('/projects', {
         'per_page': '100'
-      }, [this.GitLab, 'projects'])
+      }, (response) => {
+        this.$set(this.GitLab, 'projects', response.body)
+        if (typeof cb === 'function') {
+          cb()
+        }
+      })
     },
     listGroupIssues: function (event) {
+      // adding window history url
+      window.history.pushState(null, null, 'group?g=' + encodeURI(this.group.path))
+
       // clearing the issues
       this.GitLab.issues = null
 
@@ -220,6 +253,9 @@ export default {
       })
     },
     listGroupProjectIssues: function (event) {
+      // adding window history url
+      window.history.pushState(null, null, 'group?g=' + encodeURI(this.group.path) + '&p=' + encodeURI(this.gProject.path_with_namespace))
+
       // clearing the issues
       this.GitLab.issues = null
 
@@ -235,6 +271,9 @@ export default {
       })
     },
     listProjectIssues: function (event) {
+      // adding window history url
+      window.history.pushState(null, null, 'project?p=' + encodeURI(this.project.path_with_namespace))
+
       // clearing the issues
       this.GitLab.issues = null
 
@@ -291,6 +330,21 @@ export default {
           this.listGroupProjectIssues()
         }
       }
+    },
+    getParameterByName: function (name, url) {
+      if (!url) {
+        url = window.location.href
+      }
+      name = name.replace(/[[\]]/g, '\\$&')
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+      var results = regex.exec(url)
+      if (!results) {
+        return null
+      }
+      if (!results[2]) {
+        return ''
+      }
+      return decodeURIComponent(results[2].replace(/\+/g, ' '))
     }
   },
   computed: {
@@ -317,8 +371,80 @@ export default {
     }
   },
   mounted: function () {
-    this.listBy = 'me'
-    this.listByMe()
+    // parsing window location href (full URL)
+    var parser = document.createElement('a')
+    parser.href = window.location.href
+
+    // authorized "by URL" expected listBy methods
+    var authorizedListBy = ['project', 'group']
+
+    // reading user expected listBy method
+    var expectedListBy = parser.pathname.slice(1)
+    // reading user expected project (if any)
+    var expectedProject = this.getParameterByName('p')
+
+    if (authorizedListBy.indexOf(expectedListBy) > -1) {
+      // we set the listBy method as expected by user
+      this.listBy = expectedListBy
+
+      if (expectedListBy === 'project') {
+        // user wants to list by project
+
+        // refreshing project list from GitLab
+        this.listByProject(null, () => {
+          for (var i = this.GitLab.projects.length - 1; i >= 0; i--) {
+            if (this.GitLab.projects[i].path_with_namespace === expectedProject) {
+              // expected project found: refreshing its issues!
+              this.project = this.GitLab.projects[i]
+              this.refreshIssues()
+            }
+          }
+          // if expected project is not found, user is on /project view and has to choose
+          // a project (the list has been refreshed by this.listByProject)
+        })
+      } else if (expectedListBy === 'group') {
+        // user wants to list by group and project
+
+        // reading user expected group (if any)
+        var expectedGroup = this.getParameterByName('g')
+
+        // refreshing group list from GitLab
+        this.listByGroup(null, () => {
+          for (var i = this.GitLab.groups.length - 1; i >= 0; i--) {
+            if (this.GitLab.groups[i].path === expectedGroup) {
+              // expected group found
+              this.group = this.GitLab.groups[i]
+              if (expectedProject) {
+                // user expected a project on this group
+
+                // refreshing group projects
+                this.selectedGroup(null, () => {
+                  for (var i = this.GitLab.groupProjects.length - 1; i >= 0; i--) {
+                    if (this.GitLab.groupProjects[i].path_with_namespace === expectedProject) {
+                      // expected gProject found: refreshing its issues!
+                      this.gProject = this.GitLab.groupProjects[i]
+                      this.refreshIssues()
+                    }
+                  }
+                  // if expected project is not found, user is on /group view with selected
+                  // group and has to choose a project (the list has been refreshed by
+                  // this.selectedGroup)
+                })
+              } else {
+                // expected group found, user did not expected project: refreshing group issues!
+                this.selectedGroup()
+              }
+            }
+          }
+          // if expected group is not found, user is on /group view and has to choose
+          // a group (the list has been refreshed by this.listByGroup)
+        })
+      }
+    } else {
+      // user expected listBy is unauthorized, defaults to listing all issues created by user
+      this.listBy = 'me'
+      this.listByMe()
+    }
   }
 }
 </script>

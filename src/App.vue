@@ -62,6 +62,7 @@ export default {
       this.getGitLabUser()
     },
     reset: function (event) {
+      window.history.pushState(null, null, '/')
       this.GitLab.user = {}
       this.failed = false
       this.token = ''
