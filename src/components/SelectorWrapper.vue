@@ -477,7 +477,7 @@ export default {
   color: #777;
 }
 #mainfilter input[type=radio]:checked + label {
-  border-bottom: 2px solid #2199e8;
+  border-bottom: 2px solid #0eade1;
   color: #2c3e50;
 }
 .refresh {
