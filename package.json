@@ -1,6 +1,6 @@
 {
-  "name": "ganttlab",
-  "version": "0.2.0",
+  "name": "ganttlab-live",
+  "version": "0.3.0",
   "description": "The easy to use, fully functional Gantt chart for GitLab.",
   "author": "clorichel <contact@clorichel.com>",
   "private": false,
