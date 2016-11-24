@@ -13,9 +13,11 @@
           :close-on-select="true"
           :show-labels="false"
           :loading="downloading"
-          placeholder="Pick a group"
+          placeholder="Type to search a group"
           label="path"
+          @search-change="searchGroups"
           @input="selectedGroup">
+          <span slot=noResult>No group found with this name</span>
         </multiselect>
       </div>
       <span class="group-separator">/</span>
@@ -26,9 +28,11 @@
           :close-on-select="true"
           :show-labels="false"
           :loading="downloading"
-          placeholder="Choose a project (defaults to all)"
-          label="path"
+          placeholder="Search a project (defaults to all)"
+          label="path_with_namespace"
+          @search-change="searchGroupProjects"
           @input="selectedGroupProject">
+          <span slot=noResult>No project on this group with this name</span>
         </multiselect>
       </div>
     </div>
@@ -71,6 +75,7 @@
 
 <script>
 import Multiselect from 'vue-multiselect'
+import debounce from 'lodash.debounce'
 import Gantt from './Gantt'
 
 export default {
@@ -130,7 +135,7 @@ export default {
       // we are not paginating anything
       this.GitLab._paginating = null
     },
-    listByGroup: function (event, cb) {
+    listByGroup: function (event, cb, query) {
       // adding window history url
       window.history.pushState(null, null, '/?l=group')
 
@@ -145,7 +150,7 @@ export default {
       this.gProject = null
 
       // refreshing the list of groups
-      this.refreshGroups(cb)
+      this.refreshGroups(cb, query)
     },
     listByProject: function (event, cb) {
       // adding window history url
@@ -215,12 +220,22 @@ export default {
         this.listGroupProjectIssues()
       }
     },
-    refreshGroups: function (cb) {
+    searchGroups: debounce(function (query) {
+      if (query.length !== 0) {
+        this.refreshGroups(null, query)
+      }
+    }, 750),
+    searchGroupProjects: debounce(function (query) {
+      if (query.length !== 0) {
+        this.refreshGroupProjects(null, query)
+      }
+    }, 750),
+    refreshGroups: function (cb, search) {
       // user wants the list of groups
       this.GitLabAPI.get('/groups', {
-        'per_page': '100',
+        'per_page': '10',
         'all_available': 1,
-        'search': this.user.username // TODO remove this while implementing an efficient select with search
+        'search': search || this.user.username
       }, (response) => {
         this.$set(this.GitLab, 'groups', response.body)
         if (typeof cb === 'function') {
@@ -228,10 +243,11 @@ export default {
         }
       })
     },
-    refreshGroupProjects: function (cb) {
+    refreshGroupProjects: function (cb, search) {
       // user wants the list of projects in this.group
       this.GitLabAPI.get('/groups/' + this.group.id + '/projects', {
-        'per_page': '100'
+        'per_page': '10',
+        'search': search
       }, (response) => {
         this.$set(this.GitLab, 'groupProjects', response.body)
         if (typeof cb === 'function') {
@@ -454,7 +470,7 @@ export default {
           }
           // if expected group is not found, user is on /group view and has to choose
           // a group (the list has been refreshed by this.listByGroup)
-        })
+        }, expectedGroup)
       }
     } else {
       // user expected listBy is unauthorized, defaults to listing all issues created by user
