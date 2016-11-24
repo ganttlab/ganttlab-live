@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - GanttLab has been renamed GanttLab Live and moved to https://gitlab.com/ganttlab/ganttlab-live/
 - GanttLab Live is now hosted on https://live.ganttlab.org/
 - Main filtering menu has been reordered for a common behavior (first selected option is left)
+- Now using vue-multiselect component to replace and improve vanilla select
 
 ### Fixed
 - A padding problem causing useless horizontal scrolling on the page

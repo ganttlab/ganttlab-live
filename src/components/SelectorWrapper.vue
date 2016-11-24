@@ -6,30 +6,45 @@
     </div>
 
     <div v-if="this.listBy === 'group'" class="subfilter">
-      <div class="custom-select">
-        <select title="group" v-model="group" v-on:change="selectedGroup">
-          <option v-for="aGroup in GitLab.groups" v-bind:value="aGroup">
-            {{ aGroup.path }}
-          </option>
-        </select>
+      <div class="multiselect-container">
+        <multiselect
+          :options="GitLab.groups"
+          :value="group"
+          :close-on-select="true"
+          :show-labels="false"
+          :loading="downloading"
+          placeholder="Pick a group"
+          label="path"
+          @input="selectedGroup">
+        </multiselect>
       </div>
-      /
-      <div class="custom-select">
-        <select title="group project" v-model="gProject" v-on:change="selectedGroupProject">
-          <option v-for="aGroupProject in GitLab.groupProjects" v-bind:value="aGroupProject">
-            {{ aGroupProject.path }}
-          </option>
-        </select>
+      <span class="group-separator">/</span>
+      <div class="multiselect-container">
+        <multiselect
+          :options="GitLab.groupProjects"
+          :value="gProject"
+          :close-on-select="true"
+          :show-labels="false"
+          :loading="downloading"
+          placeholder="Choose a project (defaults to all)"
+          label="path"
+          @input="selectedGroupProject">
+        </multiselect>
       </div>
     </div>
 
     <div v-if="this.listBy === 'project'" class="subfilter">
-      <div class="custom-select">
-        <select title="project" v-model="project" v-on:change="listProjectIssues">
-          <option v-for="aProject in GitLab.projects" v-bind:value="aProject">
-            {{ aProject.path_with_namespace }}
-          </option>
-        </select>
+      <div class="multiselect-container">
+        <multiselect
+          :options="GitLab.projects"
+          :value="project"
+          :close-on-select="true"
+          :show-labels="false"
+          :loading="downloading"
+          placeholder="Pick a project"
+          label="path_with_namespace"
+          @input="listProjectIssues">
+        </multiselect>
       </div>
     </div>
 
@@ -44,11 +59,9 @@
         <button v-if="this.paginationLinks.next" v-on:click="paginationNext">Next &gt;</button>
         <div class="perpage">
           Showing
-          <div class="custom-select">
-            <select v-model="GitLab._paginationPerPage" v-on:change="paginationRefresh">
-              <option v-for="value in [10,20,50,75,100]" v-bind:value="value">{{ value }}</option>
-            </select>
-          </div>
+          <select v-model="GitLab._paginationPerPage" v-on:change="paginationRefresh">
+            <option v-for="value in [10,20,50,75,100]" v-bind:value="value">{{ value }}</option>
+          </select>
           issues per page
         </div>
       </div>
@@ -57,6 +70,7 @@
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect'
 import Gantt from './Gantt'
 
 export default {
@@ -90,21 +104,19 @@ export default {
       // - or by 'me' (all issue connected user created)
       listBy: null,
 
-      defaultUnexistingPath: { path: 'loading...', path_with_namespace: 'loading...' },
-      defaultAllPath: { path: 'all' },
-
       // FILTERING BY 'group'
       // selected group
-      group: this.defaultUnexistingPath,
+      group: null,
       // selected project in this group
-      gProject: this.defaultAllPath,
+      gProject: null,
 
       // FILTERING BY 'project'
       // selected project
-      project: this.defaultUnexistingPath
+      project: null
     }
   },
   components: {
+    Multiselect,
     Gantt
   },
   methods: {
@@ -124,15 +136,13 @@ export default {
 
       this.clearSelection()
 
-      // clearing the list of groups to default value
-      this.GitLab.groups = [ this.defaultUnexistingPath ]
-      // selecting the default one
-      this.group = this.defaultUnexistingPath
+      // clearing the list of groups
+      this.GitLab.groups = []
+      this.group = null
 
-      // clearing the list of group projects to default value
-      this.GitLab.groupProjects = [ this.defaultAllPath ]
-      // selecting the default one
-      this.gProject = this.defaultAllPath
+      // clearing the list of group projects
+      this.GitLab.groupProjects = []
+      this.gProject = null
 
       // refreshing the list of groups
       this.refreshGroups(cb)
@@ -143,10 +153,9 @@ export default {
 
       this.clearSelection()
 
-      // clearing the list of projects to default value
-      this.GitLab.projects = [ this.defaultUnexistingPath ]
-      // selecting the default one
-      this.project = this.defaultUnexistingPath
+      // clearing the list of projects
+      this.GitLab.projects = []
+      this.project = null
 
       // refreshing the list of projects
       this.refreshProjects(cb)
@@ -173,24 +182,31 @@ export default {
       this.clearSelection()
       this.listByMe()
     },
-    selectedGroup: function (event, cb) {
+    selectedGroup: function (selectedGroup, cb) {
+      if (selectedGroup != null) {
+        this.group = selectedGroup
+      }
+
       // adding window history url
       window.history.pushState(null, null, '/?l=group&g=' + encodeURI(this.group.path))
 
-      // clearing the list of groups to default value
-      this.GitLab.groupProjects = [ this.defaultAllPath ]
-      // selecting the default one
-      this.gProject = this.defaultAllPath
+      // clearing the list of groups
+      this.GitLab.groupProjects = []
+      this.gProject = null
 
       // refresh the list of projects in this group
       this.refreshGroupProjects(cb)
 
-      if (typeof cb === 'undefined') {
+      if (typeof cb === 'undefined' || cb == null) {
         // default to immediately listing all issues for all projects in this group
         this.listGroupIssues()
       }
     },
-    selectedGroupProject: function (event) {
+    selectedGroupProject: function (selectedGroupProject) {
+      if (selectedGroupProject != null) {
+        this.gProject = selectedGroupProject
+      }
+
       if (this.gProject.path === 'all') {
         // listing all issues for all projects in this group
         this.listGroupIssues()
@@ -270,7 +286,11 @@ export default {
         this.GitLab.issues = response.body
       })
     },
-    listProjectIssues: function (event) {
+    listProjectIssues: function (selectedProject) {
+      if (selectedProject != null) {
+        this.project = selectedProject
+      }
+
       // adding window history url
       window.history.pushState(null, null, '/?l=project&p=' + encodeURI(this.project.path_with_namespace))
 
@@ -311,18 +331,18 @@ export default {
       if (this.listBy === 'me') {
         this.clearAndListByMe()
       } else if (this.listBy === 'project') {
-        if (this.project === this.defaultUnexistingPath) {
-          // project defined, refreshing projects
+        if (this.project == null) {
+          // project undefined, refreshing projects
           this.listByProject()
         } else {
           // project defined, refreshing its issues!
           this.listProjectIssues()
         }
       } else if (this.listBy === 'group') {
-        if (this.group === this.defaultUnexistingPath && this.gProject === this.defaultAllPath) {
+        if (this.group == null && this.gProject == null) {
           // group and groupProject undefined, refreshing groups
           this.listByGroup()
-        } else if (this.gProject === this.defaultAllPath) {
+        } else if (this.gProject == null) {
           // group undefined, refreshing group issues (for all projects)
           this.listGroupIssues()
         } else {
@@ -446,7 +466,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 .downloading {
   text-align: center;
   font-size: 2.5em;
@@ -477,7 +497,7 @@ export default {
   color: #777;
 }
 #mainfilter input[type=radio]:checked + label {
-  border-bottom: 2px solid #0eade1;
+  border-bottom: 2px solid #00b3e6;
   color: #2c3e50;
 }
 .refresh {
@@ -494,52 +514,30 @@ export default {
   border-bottom: 1px solid #e5e5e5;
   top: 0;
   left: 0;
-  height: 26px;
+  height: 41px;
   line-height: 26px;
   text-align: center;
 }
-.custom-select {
-  position: relative;
+.multiselect-container {
+  width: 300px;
   display: inline-block;
 }
-.custom-select select {
-  display: inline-block;
-  border: 1px solid #bbb;
-  padding: 3px 1px 2px 3px;
-  margin: 0;
-  font: inherit;
-  outline:none;
-  line-height: 1.2;
-  background: #f8f8f8;
-  -webkit-appearance:none;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+.multiselect__spinner:before,
+.multiselect__spinner:after {
+  border-color: #00b3e6 transparent transparent !important;
 }
-@media screen and (-webkit-min-device-pixel-ratio:0) { 
-  .custom-select select {
-    padding-right:30px;    
-  }
+.multiselect__tag {
+  background: #00b3e6 !important;
 }
-.custom-select:after {
-  content: "▼";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  font-size: 90%;
-  line-height: 28px;
-  padding: 0 7px;
-  background: #f8f8f8;
-  color: #777;
-  pointer-events:none;
-  border: 1px solid #bbb;
-  -webkit-border-radius: 0 4px 4px 0;
-  -moz-border-radius: 0 4px 4px 0;
-  border-radius: 0 4px 4px 0;
+.multiselect__option--highlight {
+  background: #00b3e6 !important;
 }
-.no-pointer-events .custom-select:after {
-  content: none;
+.multiselect__option--highlight:after {
+  background: #00b3e6 !important;
+}
+.group-separator {
+  font-weight: bold;
+  font-size: 1.5em;
 }
 .pagination {
   text-align: center;
@@ -551,9 +549,6 @@ export default {
   margin-top: 20px;
   text-align: center;
   font-size: 0.8em;
-}
-.perpage .custom-select:after {
-  line-height: 22px;
 }
 button {
   border: 1px solid #bbb;
