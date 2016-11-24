@@ -17,7 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - A button to refresh current display, keeping filtering and pagination state
 - One can now share or bookmark a GanttLab Live link with full issue filtering configuration
 - The expected "Remember me" checkbox, backed by browser localStorage
-- User is now able to search for groups and projects in this group
+- User is now able to search for projects, or for groups and projects in this group
 - work in progress on [ganttlab/ganttlab-live issues](https://gitlab.com/ganttlab/ganttlab-live/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
 
 ### Changed

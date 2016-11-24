@@ -45,8 +45,9 @@
           :close-on-select="true"
           :show-labels="false"
           :loading="downloading"
-          placeholder="Pick a project"
+          placeholder="Type to search a project"
           label="path_with_namespace"
+          @search-change="searchProjects"
           @input="listProjectIssues">
         </multiselect>
       </div>
@@ -152,7 +153,7 @@ export default {
       // refreshing the list of groups
       this.refreshGroups(cb, query)
     },
-    listByProject: function (event, cb) {
+    listByProject: function (event, cb, query) {
       // adding window history url
       window.history.pushState(null, null, '/?l=project')
 
@@ -230,6 +231,11 @@ export default {
         this.refreshGroupProjects(null, query)
       }
     }, 750),
+    searchProjects: debounce(function (query) {
+      if (query.length !== 0) {
+        this.refreshProjects(null, query)
+      }
+    }, 750),
     refreshGroups: function (cb, search) {
       // user wants the list of groups
       this.GitLabAPI.get('/groups', {
@@ -255,10 +261,11 @@ export default {
         }
       })
     },
-    refreshProjects: function (cb) {
+    refreshProjects: function (cb, search) {
       // user wants the list of projects
       this.GitLabAPI.get('/projects', {
-        'per_page': '100'
+        'per_page': '10',
+        'search': search
       }, (response) => {
         this.$set(this.GitLab, 'projects', response.body)
         if (typeof cb === 'function') {
@@ -433,7 +440,7 @@ export default {
           }
           // if expected project is not found, user is on /project view and has to choose
           // a project (the list has been refreshed by this.listByProject)
-        })
+        }, expectedProject)
       } else if (expectedListBy === 'group') {
         // user wants to list by group and project
 
