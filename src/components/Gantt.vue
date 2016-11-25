@@ -36,10 +36,10 @@ export default {
       for (var i = this.issues.length - 1; i >= 0; i--) {
         var theIssue = this.issues[i]
 
-        // stripping issue title to the first 40 characters
+        // stripping issue title to the first 42 characters
         var title = theIssue.title
-        if (title.length > 40) {
-          title = title.substring(0, 40) + '...'
+        if (title.length > 42) {
+          title = title.substring(0, 42) + '...'
         }
 
         // creating the dataset
@@ -670,124 +670,120 @@ export default {
 
 <style>
 .rect_has_data {
-    /* blocks that have data */
-    fill: #5cb85c;
+  /* blocks that have data */
+  fill: #5cb85c;
 }
 
 .rect_has_data:hover {
-    fill: #449d44
+  fill: #449d44
 }
 
 .rect_has_no_data {
-    /* blocks without data */
-    fill: #d9534d;
+  /* blocks without data */
+  fill: #d9534d;
 }
 
 .rect_has_no_data:hover {
-    fill: #c9302c;
+  fill: #c9302c;
 }
 
 .tooltip_has_data {
-    /* color of symbol in tooltip if there is data */
-    color: #449d44;
+  /* color of symbol in tooltip if there is data */
+  color: #449d44;
 }
 
 .tooltip_has_no_data {
-    /* color of symbol in tooltip if there is no data */
-    color: #c9302c;
+  /* color of symbol in tooltip if there is no data */
+  color: #c9302c;
 }
 
 div.tooltip {
-    position: absolute;
-    text-align: left;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -moz-osx-font-smoothing: grayscale;
-    font-size: 10px;
-    padding-left: 0;
-    width: auto;
-    border: 0;
-    border-left: thin solid #000000;
-    pointer-events: none;
-    line-height: 12px;
-    padding-top: 0;
-    display: block;
+  font-family: 'Anaheim', sans-serif;
+  position: absolute;
+  text-align: left;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 10px;
+  padding-left: 0;
+  width: auto;
+  border: 0;
+  border-left: thin solid #000000;
+  pointer-events: none;
+  line-height: 12px;
+  padding-top: 0;
+  display: block;
 }
 
 .x_tick_emph {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .x_tick_today {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .x_tick_today text {
-    fill: #ff0000 !important;
+  fill: #ff0000 !important;
 }
 
 .ytitle {
-    /* y axis labels */
-    dominant-baseline: middle;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -moz-osx-font-smoothing: grayscale;
-    font-size: 12px;
+  /* y axis labels */
+  dominant-baseline: middle;
+  font-family: 'Quattrocento Sans', sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 12px;
 }
 
 .axis path,
 .axis line {
-    display: none;
+  display: none;
 }
 
 .axis text {
-    font-size: 12px;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -moz-osx-font-smoothing: grayscale;
-    fill: #777;
+  font-size: 12px;
+  -moz-osx-font-smoothing: grayscale;
+  fill: #777;
 }
 
 .vert_grid {
-    fill: none;
-    stroke: #dddddd;
-    stroke-width: 1px;
+  fill: none;
+  stroke: #dddddd;
+  stroke-width: 1px;
 }
 
 .vert_grid_emph {
-    fill: none;
-    stroke: #dddddd;
-    stroke-width: 2px;
+  fill: none;
+  stroke: #dddddd;
+  stroke-width: 2px;
 }
 
 .vert_grid_today {
-    fill: none;
-    stroke: #ff0000;
-    stroke-width: 2px;
+  fill: none;
+  stroke: #ff0000;
+  stroke-width: 2px;
 }
 
 .horz_grid {
-    fill: none;
-    stroke: #dddddd;
-    stroke-width: 1px;
+  fill: none;
+  stroke: #dddddd;
+  stroke-width: 1px;
 }
 
 .heading {
-    font-size: 16px;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: bold;
+  font-size: 16px;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: bold;
 }
 
 .subheading {
-    font-size: 12px;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -moz-osx-font-smoothing: grayscale;
-    fill: #777;
+  font-size: 12px;
+  -moz-osx-font-smoothing: grayscale;
+  fill: #777;
 }
 
 .legend {
-    dominant-baseline: middle;
-    font-size: 12px;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -moz-osx-font-smoothing: grayscale;
-    fill: #777;
+  dominant-baseline: middle;
+  font-size: 12px;
+  -moz-osx-font-smoothing: grayscale;
+  fill: #777;
 }
 </style>

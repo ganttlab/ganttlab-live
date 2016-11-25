@@ -495,6 +495,7 @@ export default {
   font-size: 2.5em;
 }
 #mainfilter {
+  font-family: 'Quattrocento Sans', sans-serif;
   margin: 0;
   padding: 8px;
   background-color:#fafafa;
