@@ -21,6 +21,11 @@ a {
 a:hover {
   color: rgba($lead-color, 1);
 }
+.col{
+  float: left;
+  display: table-column;
+  width: 200px;
+}
 .login {
   width: 60%;
   font-size: 20px;
@@ -29,17 +34,11 @@ a:hover {
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   display: table;
-  width: 60%;
 }
 .login .row{
   display:table-row;
   width:auto;
   clear:both;
-}
-.login .col{
-  float: left;
-  display: table-column;
-  width: 200px;
 }
 .login .welcome {
   width: 60%;
