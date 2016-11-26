@@ -1,6 +1,6 @@
 <template>
   <div id="gantt">
-    <p v-if="tasks.length == 0">No opened tasks out there...</p>
+    <p v-if="tasks.length == 0">No tasks out there...</p>
     <div v-if="tasks.length > 0" id="chart"></div>
   </div>
 </template>
@@ -44,7 +44,7 @@ export default {
 
         // creating the dataset
         var aDataset = {
-          'measure': title,
+          'title': title,
           'link': task.web_url
         }
 
@@ -338,7 +338,7 @@ export default {
               .attr('x', paddingLeft)
               .attr('y', lineSpacing + dataHeight / 2)
               .text(function (d) {
-                return d.measure
+                return d.title
               })
               .attr('transform', function (d, i) {
                 return 'translate(0,' + ((lineSpacing + dataHeight) * i) + ')'
