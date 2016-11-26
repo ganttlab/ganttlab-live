@@ -1,0 +1,224 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+#app {
+  font-family: $main-font;
+  -webkit-font-smoothing: antialiased;
+  color: $text-color;
+  margin: 0;
+  padding: 0;
+}
+h1,
+h2 {
+  font-family: $lead-font;
+}
+a {
+  color: $text-color;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover {
+  color: rgba($lead-color, 1);
+}
+.login {
+  width: 60%;
+  font-size: 20px;
+  position: absolute;
+  top: 48.54%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  display: table;
+  width: 60%;
+}
+.login .row{
+  display:table-row;
+  width:auto;
+  clear:both;
+}
+.login .col{
+  float: left;
+  display: table-column;
+  width: 200px;
+}
+.login .welcome {
+  width: 60%;
+  display: inline-block;
+  font-size: 16px;
+}
+.login .welcome .pad {
+  padding: 0px 40px;
+}
+.login .form {
+  display: inline-block;
+  width: 40%;
+}
+.login h1 {
+  font-size: 2.375rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(21, 21, 21, 0.05);
+  padding: 0 0 0.5rem 1rem;
+  margin: 0 0 2rem;
+}
+.login h2 {
+  font-size: 1.375rem;
+  margin-bottom: 30px;
+}
+.login .error,
+.login .downloading {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 1rem;
+}
+.login .error {
+  color: #a94442;
+}
+.login input,
+.login input[type="checkbox"] {
+  font-family: $main-font;
+  border: 1px solid rgba(21, 21, 21, 0.1);
+  border-radius: 2px;
+  transition: all ease-in-out 0.15s;
+}
+.login .form-input.first {
+  margin-top: 1.7rem;
+}
+.login .form-input input:focus,
+.login input[type="checkbox"]:focus,
+.login button:focus {
+  outline: none;
+  border-color: #00b3e6;
+  box-shadow: 0 0 5px #00b3e6;
+}
+.login .form-input input {
+  display: inline-block;
+  width: 90%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  height: 20px;
+}
+.login .form-input.remember {
+  text-align: left;
+  margin-top: 2rem;
+}
+.login .form-input.remember span {
+  font-size: 1rem;
+}
+.login .form-input.remember input {
+  height: 13px;
+}
+.login .form-input.remember span,
+.login .form-input.remember input {
+  width: auto;
+}
+.login .form-input.remember button {
+  background-color: rgba($lead-color, 1);
+  color: #fff;
+  font-family: $lead-font;
+  border: 1px solid transparent;
+  border-radius: 0;
+  display: inline-block;
+  font-size: 0.8em;
+  padding: 4px 1em;
+  text-align: center;
+  cursor: pointer;
+  margin-right: 10px;
+  float: right;
+  transition: all ease-in-out 0.15s;
+}
+.login .form-input.remember button:hover {
+  background-color: rgba($lead-color, 0.8);
+}
+.helper {
+  text-align: left;
+  font-size: 0.62em;
+  margin: -17px 0 0 5px;
+}
+.helper a {
+  border-bottom: 1px dotted rgba(21, 21, 21, 0.2);
+}
+.helper a:hover {
+  text-decoration: none;
+}
+.more {
+  border-top: 1px solid rgba(21, 21, 21, 0.05);
+  margin-top: 2rem;
+}
+.col.copy,
+.col.social {
+  font-family: $lead-font;
+  font-size: 0.75em;
+}
+.col.copy .pad,
+.col.social .pad {
+  padding: 0.5rem 0 0 1rem;
+}
+.col.copy {
+  font-weight: 700;
+  width: 60%;
+  display: inline-block;
+}
+.col.copy i {
+  margin-left: 5px;
+}
+.copyright {
+  font-family: $main-font;
+  font-weight: normal;
+  font-size: 0.75rem;
+  margin-top: -12px;
+}
+.col.social {
+  font-family: $main-font;
+  font-size: 0.875rem;
+  text-align: right;
+  display: inline-block;
+  width: 40%;
+}
+.col.social p.first {
+  margin-top: 14px;
+}
+.col.social p {
+  margin: 0;
+  line-height: 21px;
+}
+#top {
+  margin: 0;
+  background-color:#fafafa;
+  top: 0;
+  left: 0;
+  height: 26px;
+  line-height: 26px;
+}
+#top p {
+  margin: 0px;
+}
+#top .server i {
+  cursor: pointer;
+  margin-left: 10px;
+}
+#top .server {
+  position: absolute;
+  right: 10px;
+}
+#top .user {
+  font-family: $lead-font;
+}
+#top .user img {
+  vertical-align: middle;
+  margin-right: 10px;
+  height: 26px;
+}
+.standardpadding {
+  padding: 10px;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}

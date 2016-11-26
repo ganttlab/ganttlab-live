@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 - Refined look and feel, drastically improved login screen
+- Styling has been moved from components to SCSS style sheets
 
 ## 0.3.0 - 2016-11-24
 ### Added
