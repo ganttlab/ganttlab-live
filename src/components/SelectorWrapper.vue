@@ -56,7 +56,7 @@
     <div class="standardpadding">
       <p v-if="downloading" class="downloading"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i></p>
 
-      <gantt v-bind:issues="GitLab.issues" v-if="GitLab.issues != null"></gantt>
+      <gantt v-bind:tasks="GitLab.issues" v-if="GitLab.issues != null"></gantt>
 
       <div v-if="! downloading && (this.paginationLinks.prev || this.paginationLinks.next)" class="pagination">
         <button v-if="this.paginationLinks.prev" v-on:click="paginationPrev">&lt; Prev</button>

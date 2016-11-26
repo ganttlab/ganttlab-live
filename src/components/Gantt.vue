@@ -1,7 +1,7 @@
 <template>
   <div id="gantt">
-    <p v-if="issues.length == 0">No opened issues out there...</p>
-    <div v-if="issues.length > 0" id="chart"></div>
+    <p v-if="tasks.length == 0">No opened tasks out there...</p>
+    <div v-if="tasks.length > 0" id="chart"></div>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ import moment from 'moment'
 export default {
   name: 'gantt',
   props: [
-    'issues'
+    'tasks'
   ],
   data () {
     return {
@@ -22,22 +22,22 @@ export default {
     }
   },
   watch: {
-    issues: function (newIssues) {
+    tasks: function (newTasks) {
       this.buildDataSet()
       this.refreshChart()
     }
   },
   methods: {
     buildDataSet: function (event) {
-      // clearing the dataset to build it from issues list
+      // clearing the dataset to build it from tasks list
       this.dataset = []
 
-      // looping on issues
-      for (var i = this.issues.length - 1; i >= 0; i--) {
-        var theIssue = this.issues[i]
+      // looping on tasks
+      for (var i = this.tasks.length - 1; i >= 0; i--) {
+        var task = this.tasks[i]
 
-        // stripping issue title to the first 42 characters
-        var title = theIssue.title
+        // stripping task title to the first 42 characters
+        var title = task.title
         if (title.length > 42) {
           title = title.substring(0, 42) + '...'
         }
@@ -45,51 +45,51 @@ export default {
         // creating the dataset
         var aDataset = {
           'measure': title,
-          'link': theIssue.web_url
+          'link': task.web_url
         }
 
-        // initializing issue start and due date
+        // initializing task start and due date
         var startDate = null
         var dueDate = null
 
-        // reading lines from this issue description to search for ganttStartString and ganttDueString
-        if (theIssue.description != null) {
-          var lines = theIssue.description.split('\r\n')
+        // reading lines from this task description to search for ganttStartString and ganttDueString
+        if (task.description != null) {
+          var lines = task.description.split('\r\n')
           for (var j = 0; j < lines.length; j++) {
             // this description line starts with the ganttStartString
             if (!lines[j].indexOf(this.ganttStartString)) {
-              // this issue start date for gantt view is set to the appropriate date
+              // this task start date for gantt view is set to the appropriate date
               startDate = new Date(lines[j].replace(this.ganttStartString, ''))
             }
 
             // this description line starts with the ganttDueString
             if (!lines[j].indexOf(this.ganttDueString)) {
-              // this issue due date for gantt view is set to the appropriate date
+              // this task due date for gantt view is set to the appropriate date
               dueDate = new Date(lines[j].replace(this.ganttDueString, ''))
             }
           }
         }
 
-        // if start date is still null, we set it from issue creation date
+        // if start date is still null, we set it from task creation date
         if (startDate == null) {
-          startDate = new Date(theIssue.created_at)
+          startDate = new Date(task.created_at)
         }
 
-        // if due date is still null we set it to the issue due date, or to the day after the issue creation date
+        // if due date is still null we set it to the task due date, or to the day after the task creation date
         if (dueDate == null) {
-          dueDate = theIssue.due_date
+          dueDate = task.due_date
           if (dueDate == null) {
-            // the issue due date is unset
-            dueDate = new Date(theIssue.created_at)
-            // the due date is calculated to the day after the issue creation date
+            // the task due date is unset
+            dueDate = new Date(task.created_at)
+            // the due date is calculated to the day after the task creation date
             dueDate.setDate(dueDate.getDate() + 1)
           } else {
-            // the issue due date is used
-            dueDate = new Date(theIssue.due_date)
+            // the task due date is used
+            dueDate = new Date(task.due_date)
           }
         }
 
-        // determining if the issue is late or not
+        // determining if the task is late or not
         var today = new Date()
         var status = 1
         if (dueDate < today) {
@@ -590,7 +590,7 @@ export default {
           legend.append('text')
               .attr('x', width + margin.right - 150 + 20)
               .attr('y', paddingTopHeading + 8.5)
-              .text('On time issues')
+              .text('On time tasks')
               .attr('class', 'legend')
 
           legend.append('rect')
@@ -603,7 +603,7 @@ export default {
           legend.append('text')
               .attr('x', width + margin.right - 150 + 20)
               .attr('y', paddingTopHeading + 8.5 + 15 + 2)
-              .text('Late issues')
+              .text('Late tasks')
               .attr('class', 'legend')
         })
       }
@@ -659,7 +659,7 @@ export default {
     // set Moment.js locale
     moment.locale(process.env.MOMENTJS_LOCALE)
 
-    // build the dataset with the issues
+    // build the dataset with the tasks
     this.buildDataSet()
 
     // refresh the gantt graph
