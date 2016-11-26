@@ -80,7 +80,7 @@ import debounce from 'lodash.debounce'
 import Gantt from './Gantt'
 
 export default {
-  name: 'selectorWrapper',
+  name: 'mainFilter',
   props: [
     'user',
     'downloading'

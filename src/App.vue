@@ -56,14 +56,14 @@
             <span class="server"><transition name="fade"><i v-if="downloading" class="fa fa-circle-o-notch fa-spin downloading" aria-hidden="true"></i></transition> <a v-bind:href="url" target="_blank">{{ url }}</a> <a href="https://gitlab.com/ganttlab/ganttlab-live#how-it-works" target="_blank"><i class="fa fa-question-circle" aria-hidden="true" title="Help"></i></a> <i class="fa fa-times close" aria-hidden="true" v-on:click="logout" title="Close"></i></span>
           </div>
         </div>
-        <selectorWrapper v-bind:user="GitLab.user" v-bind:downloading="downloading"></selectorWrapper>
+        <mainFilter v-bind:user="GitLab.user" v-bind:downloading="downloading"></mainFilter>
       </div>
     </transition>
   </div>
 </template>
 
 <script>
-import SelectorWrapper from './components/SelectorWrapper'
+import MainFilter from './components/MainFilter'
 import 'font-awesome/css/font-awesome.css'
 
 export default {
@@ -80,7 +80,7 @@ export default {
     }
   },
   components: {
-    SelectorWrapper
+    MainFilter
   },
   methods: {
     getGitLabUser: function (event) {
