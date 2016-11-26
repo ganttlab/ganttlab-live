@@ -582,8 +582,6 @@ button {
   outline:none;
   line-height: 1.2;
   background: #f8f8f8;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
   border-radius: 4px;
   cursor: pointer;
 }

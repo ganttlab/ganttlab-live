@@ -166,7 +166,6 @@ body {
 #app {
   font-family: 'Anaheim', sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   color: #151515;
   margin: 0;
   padding: 0;
@@ -178,8 +177,6 @@ h2 {
 a {
   color: #151515;
   text-decoration: none;
-  -webkit-transition: color 0.2s;
-  -o-transition: color 0.2s;
   transition: color 0.2s;
 }
 a:hover {
@@ -242,10 +239,6 @@ a:hover {
   font-family: 'Anaheim', sans-serif;
   border: 1px solid rgba(21, 21, 21, 0.1);
   border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  -webkit-transition: all ease-in-out 0.15s;
-  -o-transition: all ease-in-out 0.15s;
   transition: all ease-in-out 0.15s;
 }
 .login .form-input.first {
@@ -297,8 +290,6 @@ a:hover {
   cursor: pointer;
   margin-right: 10px;
   float: right;
-  -webkit-transition: all ease-in-out 0.15s;
-  -o-transition: all ease-in-out 0.15s;
   transition: all ease-in-out 0.15s;
 }
 .login .form-input.remember button:hover {
