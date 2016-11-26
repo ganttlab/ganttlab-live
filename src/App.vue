@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="fade">
-      <div v-if="failed == true || userEmpty" class="login">
+      <div v-if="failed == true || userEmpty" id="login">
           <h1>GanttLab Live</h1>
 
           <div class="row">
@@ -49,7 +49,7 @@
       </div>
     </transition>
     <transition name="fade">
-      <div v-if="!userEmpty">
+      <div v-if="!userEmpty" id="screen">
         <div id="top" class="standardpadding">
           <div v-if="!userEmpty">
             <span class="user"><img v-bind:src="GitLab.user.avatar_url"> {{ GitLab.user.name }}</span>
