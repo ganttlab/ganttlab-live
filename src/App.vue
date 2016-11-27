@@ -17,15 +17,15 @@
 
             <div class="col form">
               <p class="form-input first">
-                <input tabindex="1" v-model="url" v-on:keyup.enter="init" autofocus>
+                <input tabindex="1" v-model="url" v-on:keyup.enter="signin" autofocus>
               </p>
               <p class="helper">Your GitLab instance URL</p>
               <p class="form-input">
-                <input tabindex="2" v-model="token" v-on:keyup.enter="init">
+                <input tabindex="2" v-model="token" v-on:keyup.enter="signin">
               </p>
               <p class="helper">Use your <a v-bind:href="privateTokenLink" target="_blank" title="/profile/account">Private Token</a>, or a <a v-bind:href="personalTokenLink" target="_blank" title="/profile/personal_access_tokens">Personal Access Token</a></p>
 
-              <p v-if="hasLocalStorage" class="form-input remember"><input tabindex="3" type="checkbox" v-model="rememberMe"> <span>Remember me <i class="fa fa-question-circle-o" aria-hidden="true" title="Don't do that on a public computer!"></i></span> <button tabindex="4" v-on:click="init">Sign-in &nbsp;&gt;</button></p>
+              <p v-if="hasLocalStorage" class="form-input remember"><input tabindex="3" type="checkbox" v-model="rememberMe"> <span>Remember me <i class="fa fa-question-circle-o" aria-hidden="true" title="Don't do that on a public computer!"></i></span> <button tabindex="4" v-on:click="signin">Sign-in &nbsp;&gt;</button></p>
             </div>
           </div>
 
@@ -88,7 +88,7 @@ export default {
         this.failed = true
       })
     },
-    init: function (event) {
+    signin: function (event) {
       this.GitLab.user = {}
       this.failed = false
       this.GitLabAPI.setUrl(this.url)
@@ -152,7 +152,7 @@ export default {
       this.rememberMe = Boolean(window.localStorage.getItem('rememberMe') || false)
     }
     if (this.url && this.token) {
-      this.init()
+      this.signin()
     }
   }
 }
