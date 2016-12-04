@@ -1,7 +1,7 @@
 <template>
   <div id="App">
     <transition name="fade">
-      <div v-if="failed == true || userName == null" id="LoginScreen">
+      <div v-if="loginFailed || userName == null" id="LoginScreen">
           <h1>GanttLab Live</h1>
 
           <div class="row">
@@ -11,7 +11,7 @@
                 <br/>Gantt chart for GitLab.</h2>
                 <p>Provide your teams with the right tool to master time and deadlines. Giving back credit to your project status and issues due dates has never been easier!</p>
                 <p v-if="userName == null && downloading" class="downloading"><strong><i v-if="downloading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Connecting to {{ url }}</strong></p>
-                <p v-if="failed == true" class="error"><i class="fa fa-exclamation-triangle"></i> Unable to connect to {{ url }}</p>
+                <p v-if="loginFailed" class="error"><i class="fa fa-exclamation-triangle"></i> Unable to connect to {{ url }}</p>
               </div>
             </div>
 
@@ -101,8 +101,7 @@ export default {
     return {
       rememberMe: false,
       url: process.env.GITLAB_URL,
-      token: process.env.GITLAB_TOKEN,
-      failed: false
+      token: process.env.GITLAB_TOKEN
     }
   },
   computed: {
@@ -125,13 +124,13 @@ export default {
         this.userName = response.body.name
         this.userAvatarUrl = response.body.avatar_url
       }, (response) => {
-        this.failed = true
+        this.loginFailed = true
       })
     },
     signin: function (event) {
       this.userName = null
       this.userAvatarUrl = null
-      this.failed = false
+      this.loginFailed = false
       this.GitLabAPI.setUrl(this.url)
       this.GitLabAPI.setToken(this.token)
       this.getGitLabUser()
@@ -151,7 +150,7 @@ export default {
       window.history.pushState(null, null, '/')
       this.userName = null
       this.userAvatarUrl = null
-      this.failed = false
+      this.loginFailed = false
       if (!this.rememberMe) {
         this.token = ''
         if (this.hasLocalStorage) {
