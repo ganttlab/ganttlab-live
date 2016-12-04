@@ -7,6 +7,9 @@ module.exports = {
         return false
       }
     },
+    tasks: function () {
+      return this.$store.state.tasks
+    },
     page: {
       get () {
         return this.$store.state.pagination.page

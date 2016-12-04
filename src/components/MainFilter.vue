@@ -52,12 +52,6 @@
         </multiselect>
       </div>
     </div>
-
-    <div class="standardpadding">
-      <p v-if="downloading" class="downloading"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i></p>
-
-      <gantt v-if="ganttDataset != null"></gantt>
-    </div>
   </div>
 </template>
 
@@ -65,7 +59,6 @@
 import SharedStates from '../mixins/SharedStates'
 import Multiselect from 'vue-multiselect'
 import debounce from 'lodash.debounce'
-import Gantt from './Gantt'
 
 export default {
   name: 'mainFilter',
@@ -73,8 +66,7 @@ export default {
     SharedStates
   ],
   components: {
-    Multiselect,
-    Gantt
+    Multiselect
   },
   props: [
     'user'

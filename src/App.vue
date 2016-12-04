@@ -59,6 +59,12 @@
 
         <mainFilter v-bind:user="GitLab.user"></mainFilter>
 
+        <div class="standardpadding">
+          <p v-if="downloading" class="downloading"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i></p>
+
+          <gantt v-if="tasks != null"></gantt>
+        </div>
+
         <div v-if="! downloading && (this.paginationLinks.prev || this.paginationLinks.next)" class="pagination">
           <button v-if="this.paginationLinks.prev" v-on:click="page--">&lt; Prev</button>
           <span>Page {{ this.page }}</span>
@@ -79,6 +85,7 @@
 <script>
 import SharedStates from './mixins/SharedStates'
 import MainFilter from './components/MainFilter'
+import Gantt from './components/Gantt'
 import 'font-awesome/css/font-awesome.css'
 
 export default {
@@ -87,7 +94,8 @@ export default {
     SharedStates
   ],
   components: {
-    MainFilter
+    MainFilter,
+    Gantt
   },
   data () {
     return {
