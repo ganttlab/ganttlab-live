@@ -1,5 +1,5 @@
 <template>
-  <div id="gantt">
+  <div id="Gantt">
     <p v-if="tasks.length == 0">No tasks out there...</p>
     <div v-if="tasks.length > 0" id="chart"></div>
   </div>

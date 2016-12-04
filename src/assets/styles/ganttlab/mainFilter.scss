@@ -2,22 +2,13 @@
   text-align: center;
   font-size: 2.5em;
 }
-#mainfilter {
+#MainFilter {
   font-family: $lead-font;
-  margin: 0;
-  padding: 8px;
-  background-color:#fafafa;
-  border-bottom: 1px solid #e5e5e5;
-  top: 0;
-  left: 0;
-  height: 26px;
-  line-height: 26px;
-  text-align: center;
 }
-#mainfilter input[type=radio] {
+#MainFilter input[type=radio] {
   display:none;
 }
-#mainfilter input[type=radio] + label {
+#MainFilter input[type=radio] + label {
   display:inline-block;
   margin:-2px;
   padding: 4px 12px;
@@ -28,7 +19,7 @@
   border-bottom: 2px solid #fafafa;
   color: #777;
 }
-#mainfilter input[type=radio]:checked + label {
+#MainFilter input[type=radio]:checked + label {
   border-bottom: 2px solid $lead-color;
   color: #2c3e50;
 }
@@ -38,6 +29,17 @@
   right: 10px;
   font-size: 0.8em;
   cursor: pointer;
+}
+.filter {
+  padding: 8px;
+  margin: 0;
+  background-color:#fafafa;
+  border-bottom: 1px solid #e5e5e5;
+  top: 0;
+  left: 0;
+  height: 26px;
+  line-height: 26px;
+  text-align: center;
 }
 .subfilter {
   margin: 0;

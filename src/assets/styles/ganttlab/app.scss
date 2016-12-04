@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
 }
-#app {
+#App {
   font-family: $main-font;
   -webkit-font-smoothing: antialiased;
   color: $text-color;
@@ -26,7 +26,7 @@ a:hover {
   display: table-column;
   width: 200px;
 }
-#login {
+#LoginScreen {
   width: 60%;
   font-size: 20px;
   position: absolute;
@@ -35,61 +35,61 @@ a:hover {
   transform: translateX(-50%) translateY(-50%);
   display: table;
 }
-#login .row{
+#LoginScreen .row{
   display:table-row;
   width:auto;
   clear:both;
 }
-#login .welcome {
+#LoginScreen .welcome {
   width: 60%;
   display: inline-block;
   font-size: 16px;
 }
-#login .welcome .pad {
+#LoginScreen .welcome .pad {
   padding: 0px 40px;
 }
-#login .form {
+#LoginScreen .form {
   display: inline-block;
   width: 40%;
 }
-#login h1 {
+#LoginScreen h1 {
   font-size: 2.375rem;
   text-align: left;
   border-bottom: 1px solid rgba(21, 21, 21, 0.05);
   padding: 0 0 0.5rem 1rem;
   margin: 0 0 2rem;
 }
-#login h2 {
+#LoginScreen h2 {
   font-size: 1.375rem;
   margin-bottom: 30px;
 }
-#login .error,
-#login .downloading {
+#LoginScreen .error,
+#LoginScreen .downloading {
   text-align: center;
   margin-top: 30px;
   font-size: 1rem;
 }
-#login .error {
+#LoginScreen .error {
   color: #a94442;
 }
-#login input,
-#login input[type="checkbox"] {
+#LoginScreen input,
+#LoginScreen input[type="checkbox"] {
   font-family: $main-font;
   border: 1px solid rgba(21, 21, 21, 0.1);
   border-radius: 2px;
   transition: all ease-in-out 0.15s;
 }
-#login .form-input.first {
+#LoginScreen .form-input.first {
   margin-top: 1.7rem;
 }
-#login .form-input input:focus,
-#login input[type="checkbox"]:focus,
-#login button:focus {
+#LoginScreen .form-input input:focus,
+#LoginScreen input[type="checkbox"]:focus,
+#LoginScreen button:focus {
   outline: none;
   border-color: #00b3e6;
   box-shadow: 0 0 5px #00b3e6;
 }
-#login .form-input input {
+#LoginScreen .form-input input {
   display: inline-block;
   width: 90%;
   height: 34px;
@@ -101,21 +101,21 @@ a:hover {
   background-image: none;
   height: 20px;
 }
-#login .form-input.remember {
+#LoginScreen .form-input.remember {
   text-align: left;
   margin-top: 2rem;
 }
-#login .form-input.remember span {
+#LoginScreen .form-input.remember span {
   font-size: 1rem;
 }
-#login .form-input.remember input {
+#LoginScreen .form-input.remember input {
   height: 13px;
 }
-#login .form-input.remember span,
-#login .form-input.remember input {
+#LoginScreen .form-input.remember span,
+#LoginScreen .form-input.remember input {
   width: auto;
 }
-#login .form-input.remember button {
+#LoginScreen .form-input.remember button {
   background-color: rgba($lead-color, 1);
   color: #fff;
   font-family: $lead-font;
@@ -130,7 +130,7 @@ a:hover {
   float: right;
   transition: all ease-in-out 0.15s;
 }
-#login .form-input.remember button:hover {
+#LoginScreen .form-input.remember button:hover {
   background-color: rgba($lead-color, 0.8);
 }
 .helper {

@@ -1,3 +1,7 @@
+#Gantt {
+  font-family: $main-font;
+}
+
 .rect_has_data {
   /* blocks that have data */
   fill: #5cb85c;
@@ -27,7 +31,6 @@
 }
 
 div.tooltip {
-  font-family: $main-font;
   position: absolute;
   text-align: left;
   -moz-osx-font-smoothing: grayscale;
