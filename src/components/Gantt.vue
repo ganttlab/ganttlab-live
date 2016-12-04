@@ -11,12 +11,14 @@ import moment from 'moment'
 
 export default {
   name: 'gantt',
-  props: [
-    'tasks'
-  ],
   data () {
     return {
       //
+    }
+  },
+  computed: {
+    tasks: function () {
+      return this.$store.state.tasks
     }
   },
   watch: {

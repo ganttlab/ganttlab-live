@@ -11,7 +11,16 @@ Vue.use(GitLabAPI)
 
 import App from './App'
 
-const store = new Vuex.Store({})
+const store = new Vuex.Store({
+  state: {
+    tasks: null
+  },
+  mutations: {
+    tasks: function (state, value) {
+      state.tasks = value
+    }
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({

@@ -56,7 +56,7 @@
     <div class="standardpadding">
       <p v-if="downloading" class="downloading"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i></p>
 
-      <gantt v-bind:tasks="ganttDataset" v-if="ganttDataset != null"></gantt>
+      <gantt v-if="ganttDataset != null"></gantt>
 
       <div v-if="! downloading && (this.paginationLinks.prev || this.paginationLinks.next)" class="pagination">
         <button v-if="this.paginationLinks.prev" v-on:click="paginationPrev">&lt; Prev</button>
@@ -243,6 +243,11 @@ export default {
       } else {
         return dataset
       }
+    }
+  },
+  watch: {
+    ganttDataset: function (value) {
+      this.$store.commit('tasks', value)
     }
   },
   methods: {
