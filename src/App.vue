@@ -72,6 +72,9 @@ export default {
   mixins: [
     SharedStates
   ],
+  components: {
+    MainFilter
+  },
   data () {
     return {
       rememberMe: false,
@@ -83,8 +86,22 @@ export default {
       failed: false
     }
   },
-  components: {
-    MainFilter
+  computed: {
+    userEmpty: function () {
+      return !(this.GitLab.hasOwnProperty('user') && this.GitLab.user.hasOwnProperty('name'))
+    },
+    safeUrl: function () {
+      return this.url.replace(/\/$/, '')
+    },
+    privateTokenLink: function () {
+      return this.safeUrl + '/profile/account'
+    },
+    personalTokenLink: function () {
+      return this.safeUrl + '/profile/personal_access_tokens'
+    },
+    hasLocalStorage: function () {
+      return typeof Storage !== 'undefined'
+    }
   },
   methods: {
     getGitLabUser: function (event) {
@@ -122,23 +139,6 @@ export default {
           window.localStorage.removeItem('rememberMe')
         }
       }
-    }
-  },
-  computed: {
-    userEmpty: function () {
-      return !(this.GitLab.hasOwnProperty('user') && this.GitLab.user.hasOwnProperty('name'))
-    },
-    safeUrl: function () {
-      return this.url.replace(/\/$/, '')
-    },
-    privateTokenLink: function () {
-      return this.safeUrl + '/profile/account'
-    },
-    personalTokenLink: function () {
-      return this.safeUrl + '/profile/personal_access_tokens'
-    },
-    hasLocalStorage: function () {
-      return typeof Storage !== 'undefined'
     }
   },
   mounted: function () {

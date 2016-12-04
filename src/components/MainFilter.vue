@@ -85,6 +85,10 @@ export default {
   mixins: [
     SharedStates
   ],
+  components: {
+    Multiselect,
+    Gantt
+  },
   props: [
     'user'
   ],
@@ -126,9 +130,120 @@ export default {
       project: null
     }
   },
-  components: {
-    Multiselect,
-    Gantt
+  computed: {
+    paginationLinks: function () {
+      if (this.GitLab._links.length === 0) {
+        return []
+      }
+
+      // Split parts by comma
+      var parts = this.GitLab._links.split(',')
+      var links = {}
+      // Parse each part into a named link
+      for (var i = 0; i < parts.length; i++) {
+        var section = parts[i].split(';')
+        if (section.length !== 2) {
+          console.error('[GanttLab] GitLab API pagination link header seems to be inaccurate')
+          return []
+        }
+        var url = section[0].replace(/<(.*)>/, '$1').trim()
+        var name = section[1].replace(/rel="(.*)"/, '$1').trim()
+        links[name] = url
+      }
+      return links
+    },
+    tasks: function () {
+      return this.GitLab.issues
+    },
+    ganttDataset: function () {
+      if (this.GitLab.issues == null) {
+        return null
+      }
+
+      // clearing the dataset to build it from tasks list
+      var dataset = []
+
+      // looping on tasks
+      for (var i = this.tasks.length - 1; i >= 0; i--) {
+        var task = this.tasks[i]
+
+        // stripping task title to the first 42 characters
+        var title = task.title
+        if (title.length > 42) {
+          title = title.substring(0, 42) + '...'
+        }
+
+        // creating the dataset
+        var aDataset = {
+          'title': title,
+          'link': task.web_url
+        }
+
+        // initializing task start and due date
+        var startDate = null
+        var dueDate = null
+
+        // reading lines from this task description to search for ganttStartString and ganttDueString
+        if (task.description != null) {
+          var lines = task.description.split('\r\n')
+          for (var j = 0; j < lines.length; j++) {
+            // this description line starts with the ganttStartString
+            if (!lines[j].indexOf(this.ganttStartString)) {
+              // this task start date for gantt view is set to the appropriate date
+              startDate = new Date(lines[j].replace(this.ganttStartString, ''))
+            }
+
+            // this description line starts with the ganttDueString
+            if (!lines[j].indexOf(this.ganttDueString)) {
+              // this task due date for gantt view is set to the appropriate date
+              dueDate = new Date(lines[j].replace(this.ganttDueString, ''))
+            }
+          }
+        }
+
+        // if start date is still null, we set it from task creation date
+        if (startDate == null) {
+          startDate = new Date(task.created_at)
+        }
+
+        // if due date is still null we set it to the task due date, or to the day after the task creation date
+        if (dueDate == null) {
+          dueDate = task.due_date
+          if (dueDate == null) {
+            // the task due date is unset
+            dueDate = new Date(task.created_at)
+            // the due date is calculated to the day after the task creation date
+            dueDate.setDate(dueDate.getDate() + 1)
+          } else {
+            // the task due date is used
+            dueDate = new Date(task.due_date)
+          }
+        }
+
+        // determining if the task is late or not
+        var today = new Date()
+        var status = 1
+        if (dueDate < today) {
+          status = 0
+        }
+
+        // formatting start and due dates for visavail
+        var fDueDate = dueDate.getUTCFullYear() + '-' + this.pad(dueDate.getUTCMonth() + 1) + '-' + this.pad(dueDate.getUTCDate())
+        var fStartDate = startDate.getUTCFullYear() + '-' + this.pad(startDate.getUTCMonth() + 1) + '-' + this.pad(startDate.getUTCDate())
+        aDataset.data = [
+          [ fStartDate, status, fDueDate ]
+        ]
+
+        // adding the dataset built to the main dataset list
+        dataset.push(aDataset)
+      }
+
+      if (dataset === []) {
+        return null
+      } else {
+        return dataset
+      }
+    }
   },
   methods: {
     clearSelection: function (event) {
@@ -400,121 +515,6 @@ export default {
         r = '0' + r
       }
       return r
-    }
-  },
-  computed: {
-    paginationLinks: function () {
-      if (this.GitLab._links.length === 0) {
-        return []
-      }
-
-      // Split parts by comma
-      var parts = this.GitLab._links.split(',')
-      var links = {}
-      // Parse each part into a named link
-      for (var i = 0; i < parts.length; i++) {
-        var section = parts[i].split(';')
-        if (section.length !== 2) {
-          console.error('[GanttLab] GitLab API pagination link header seems to be inaccurate')
-          return []
-        }
-        var url = section[0].replace(/<(.*)>/, '$1').trim()
-        var name = section[1].replace(/rel="(.*)"/, '$1').trim()
-        links[name] = url
-      }
-      return links
-    },
-    tasks: function () {
-      return this.GitLab.issues
-    },
-    ganttDataset: function () {
-      if (this.GitLab.issues == null) {
-        return null
-      }
-
-      // clearing the dataset to build it from tasks list
-      var dataset = []
-
-      // looping on tasks
-      for (var i = this.tasks.length - 1; i >= 0; i--) {
-        var task = this.tasks[i]
-
-        // stripping task title to the first 42 characters
-        var title = task.title
-        if (title.length > 42) {
-          title = title.substring(0, 42) + '...'
-        }
-
-        // creating the dataset
-        var aDataset = {
-          'title': title,
-          'link': task.web_url
-        }
-
-        // initializing task start and due date
-        var startDate = null
-        var dueDate = null
-
-        // reading lines from this task description to search for ganttStartString and ganttDueString
-        if (task.description != null) {
-          var lines = task.description.split('\r\n')
-          for (var j = 0; j < lines.length; j++) {
-            // this description line starts with the ganttStartString
-            if (!lines[j].indexOf(this.ganttStartString)) {
-              // this task start date for gantt view is set to the appropriate date
-              startDate = new Date(lines[j].replace(this.ganttStartString, ''))
-            }
-
-            // this description line starts with the ganttDueString
-            if (!lines[j].indexOf(this.ganttDueString)) {
-              // this task due date for gantt view is set to the appropriate date
-              dueDate = new Date(lines[j].replace(this.ganttDueString, ''))
-            }
-          }
-        }
-
-        // if start date is still null, we set it from task creation date
-        if (startDate == null) {
-          startDate = new Date(task.created_at)
-        }
-
-        // if due date is still null we set it to the task due date, or to the day after the task creation date
-        if (dueDate == null) {
-          dueDate = task.due_date
-          if (dueDate == null) {
-            // the task due date is unset
-            dueDate = new Date(task.created_at)
-            // the due date is calculated to the day after the task creation date
-            dueDate.setDate(dueDate.getDate() + 1)
-          } else {
-            // the task due date is used
-            dueDate = new Date(task.due_date)
-          }
-        }
-
-        // determining if the task is late or not
-        var today = new Date()
-        var status = 1
-        if (dueDate < today) {
-          status = 0
-        }
-
-        // formatting start and due dates for visavail
-        var fDueDate = dueDate.getUTCFullYear() + '-' + this.pad(dueDate.getUTCMonth() + 1) + '-' + this.pad(dueDate.getUTCDate())
-        var fStartDate = startDate.getUTCFullYear() + '-' + this.pad(startDate.getUTCMonth() + 1) + '-' + this.pad(startDate.getUTCDate())
-        aDataset.data = [
-          [ fStartDate, status, fDueDate ]
-        ]
-
-        // adding the dataset built to the main dataset list
-        dataset.push(aDataset)
-      }
-
-      if (dataset === []) {
-        return null
-      } else {
-        return dataset
-      }
     }
   },
   mounted: function () {
