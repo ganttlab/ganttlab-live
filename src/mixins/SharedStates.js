@@ -7,6 +7,22 @@ module.exports = {
         return false
       }
     },
+    url: {
+      get () {
+        return this.$store.state.url
+      },
+      set (value) {
+        this.$store.commit('url', value)
+      }
+    },
+    token: {
+      get () {
+        return this.$store.state.token
+      },
+      set (value) {
+        this.$store.commit('token', value)
+      }
+    },
     userName: {
       get () {
         return this.$store.state.user.name

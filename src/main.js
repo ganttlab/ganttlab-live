@@ -13,6 +13,8 @@ import App from './App'
 
 const store = new Vuex.Store({
   state: {
+    url: null,
+    token: null,
     loginFailed: false,
     user: {
       name: null,
@@ -29,6 +31,12 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
+    url: function (state, value) {
+      state.url = value
+    },
+    token: function (state, value) {
+      state.token = value
+    },
     loginFailed: function (state, value) {
       state.loginFailed = value
     },

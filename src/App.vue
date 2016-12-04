@@ -99,13 +99,14 @@ export default {
   },
   data () {
     return {
-      rememberMe: false,
-      url: process.env.GITLAB_URL,
-      token: process.env.GITLAB_TOKEN
+      rememberMe: false
     }
   },
   computed: {
     safeUrl: function () {
+      if (this.url == null) {
+        return null
+      }
       return this.url.replace(/\/$/, '')
     },
     privateTokenLink: function () {
@@ -162,6 +163,8 @@ export default {
     }
   },
   mounted: function () {
+    this.url = process.env.GITLAB_URL
+    this.token = process.env.GITLAB_TOKEN
     this.GitLabAPI.registerStore(this.$store)
     if (this.hasLocalStorage) {
       this.url = window.localStorage.getItem('url') || process.env.GITLAB_URL
