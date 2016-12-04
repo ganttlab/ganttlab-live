@@ -13,11 +13,22 @@ import App from './App'
 
 const store = new Vuex.Store({
   state: {
-    tasks: null
+    tasks: null,
+    pagination: {
+      page: 1,
+      perPage: 100,
+      links: {
+        prev: null,
+        next: null
+      }
+    }
   },
   mutations: {
     tasks: function (state, value) {
       state.tasks = value
+    },
+    pagination: function (state, value) {
+      state.pagination = value
     }
   }
 })

@@ -221,3 +221,25 @@ a:hover {
 .fade-enter, .fade-leave-active {
   opacity: 0
 }
+.pagination {
+  text-align: center;
+}
+.pagination span {
+  margin: 0 20px;
+}
+.perpage {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.8em;
+}
+button {
+  border: 1px solid #bbb;
+  padding: 2px 4px 0;
+  margin: 0;
+  font: inherit;
+  outline:none;
+  line-height: 1.2;
+  background: #f8f8f8;
+  border-radius: 4px;
+  cursor: pointer;
+}

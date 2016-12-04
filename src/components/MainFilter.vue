@@ -57,19 +57,6 @@
       <p v-if="downloading" class="downloading"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i></p>
 
       <gantt v-if="ganttDataset != null"></gantt>
-
-      <div v-if="! downloading && (this.paginationLinks.prev || this.paginationLinks.next)" class="pagination">
-        <button v-if="this.paginationLinks.prev" v-on:click="paginationPrev">&lt; Prev</button>
-        <span>Page {{ this.GitLab._paginationPage }}</span>
-        <button v-if="this.paginationLinks.next" v-on:click="paginationNext">Next &gt;</button>
-        <div class="perpage">
-          Showing
-          <select v-model="GitLab._paginationPerPage" v-on:change="paginationRefresh">
-            <option v-for="value in [10,20,50,75,100]" v-bind:value="value">{{ value }}</option>
-          </select>
-          issues per page
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -96,6 +83,7 @@ export default {
     return {
       ganttStartString: process.env.GANTT_START_STRING,
       ganttDueString: process.env.GANTT_DUE_STRING,
+      GitLabPaginationLinks: [],
       // main GitLab object, will be filled with data
       GitLab: {
         // list of groups user has access to
@@ -107,10 +95,7 @@ export default {
         // list of issues, sent to <gant> as a `props`
         issues: null,
 
-        _links: [],
-        _paginating: null,
-        _paginationPerPage: 100,
-        _paginationPage: 1
+        _paginating: null
       },
 
       // main filter for listing issues:
@@ -131,27 +116,6 @@ export default {
     }
   },
   computed: {
-    paginationLinks: function () {
-      if (this.GitLab._links.length === 0) {
-        return []
-      }
-
-      // Split parts by comma
-      var parts = this.GitLab._links.split(',')
-      var links = {}
-      // Parse each part into a named link
-      for (var i = 0; i < parts.length; i++) {
-        var section = parts[i].split(';')
-        if (section.length !== 2) {
-          console.error('[GanttLab] GitLab API pagination link header seems to be inaccurate')
-          return []
-        }
-        var url = section[0].replace(/<(.*)>/, '$1').trim()
-        var name = section[1].replace(/rel="(.*)"/, '$1').trim()
-        links[name] = url
-      }
-      return links
-    },
     tasks: function () {
       return this.GitLab.issues
     },
@@ -247,7 +211,57 @@ export default {
   },
   watch: {
     ganttDataset: function (value) {
+      // watch for calculated Gantt Dataset, and commit it in app wide Vuex store
       this.$store.commit('tasks', value)
+    },
+    page: function (value) {
+      // watch for app wide Vuex store pagination.page, and refresh GitLab issues appropriately
+      this.GitLabPaginationLinks = []
+      this[this.GitLab._paginating]()
+      window.scrollTo(0, 0)
+    },
+    perPage: function (value) {
+      // watch for app wide Vuex store pagination.perPage
+      if (this.page === 1) {
+        // if already on page 1, watch.page won't be called: refresh GitLab issues appropriately
+        this.GitLabPaginationLinks = []
+        this[this.GitLab._paginating]()
+        window.scrollTo(0, 0)
+      } else {
+        // if not on page one, just set page 1, and watch.page will refresh GitLab issues
+        this.page = 1
+      }
+    },
+    GitLabPaginationLinks: function (value) {
+      var links = {
+        prev: null,
+        next: null
+      }
+
+      if (value.length === 0) {
+        // update app wide Vuex store
+        this.paginationLinks = links
+        return
+      }
+
+      // Split parts by comma
+      var parts = value.split(',')
+      // Parse each part into a named link
+      for (var i = 0; i < parts.length; i++) {
+        var section = parts[i].split(';')
+        if (section.length !== 2) {
+          console.error('[GanttLab] GitLab API pagination link header seems to be inaccurate')
+          // update app wide Vuex store
+          this.paginationLinks = links
+          return
+        }
+        var url = section[0].replace(/<(.*)>/, '$1').trim()
+        var name = section[1].replace(/rel="(.*)"/, '$1').trim()
+        links[name] = url
+      }
+
+      // update app wide Vuex store
+      this.paginationLinks = links
     }
   },
   methods: {
@@ -255,9 +269,9 @@ export default {
       // clearing the issues
       this.GitLab.issues = null
       // clearing the links header
-      this.GitLab._links = []
+      this.GitLabPaginationLinks = []
       // back to the first pagination page
-      this.GitLab._paginationPage = 1
+      this.page = 1
       // we are not paginating anything
       this.GitLab._paginating = null
     },
@@ -300,11 +314,11 @@ export default {
 
       // user wants issues for all projects created by himself
       this.GitLabAPI.get('/issues', {
-        'page': this.GitLab._paginationPage,
-        'per_page': this.GitLab._paginationPerPage,
+        'page': this.page,
+        'per_page': this.perPage,
         'state': 'opened'
       }, (response) => {
-        this.GitLab._links = response.headers.get('Link')
+        this.GitLabPaginationLinks = response.headers.get('Link')
         this.GitLab._paginating = 'listByMe'
         this.GitLab.issues = response.body
       })
@@ -407,11 +421,11 @@ export default {
 
       // user wants issues for all projects in the selected group
       this.GitLabAPI.get('/groups/' + this.group.id + '/issues', {
-        'page': this.GitLab._paginationPage,
-        'per_page': this.GitLab._paginationPerPage,
+        'page': this.page,
+        'per_page': this.perPage,
         'state': 'opened'
       }, (response) => {
-        this.GitLab._links = response.headers.get('Link')
+        this.GitLabPaginationLinks = response.headers.get('Link')
         this.GitLab._paginating = 'listGroupIssues'
         this.GitLab.issues = response.body
       })
@@ -425,11 +439,11 @@ export default {
 
       // user wants issues for a selected project
       this.GitLabAPI.get('/projects/' + this.gProject.id + '/issues', {
-        'page': this.GitLab._paginationPage,
-        'per_page': this.GitLab._paginationPerPage,
+        'page': this.page,
+        'per_page': this.perPage,
         'state': 'opened'
       }, (response) => {
-        this.GitLab._links = response.headers.get('Link')
+        this.GitLabPaginationLinks = response.headers.get('Link')
         this.GitLab._paginating = 'listGroupProjectIssues'
         this.GitLab.issues = response.body
       })
@@ -447,36 +461,14 @@ export default {
 
       // user wants issues for a selected project
       this.GitLabAPI.get('/projects/' + this.project.id + '/issues', {
-        'page': this.GitLab._paginationPage,
-        'per_page': this.GitLab._paginationPerPage,
+        'page': this.page,
+        'per_page': this.perPage,
         'state': 'opened'
       }, (response) => {
-        this.GitLab._links = response.headers.get('Link')
+        this.GitLabPaginationLinks = response.headers.get('Link')
         this.GitLab._paginating = 'listProjectIssues'
         this.GitLab.issues = response.body
       })
-    },
-    paginationNext: function (event) {
-      if (typeof this.paginationLinks.next !== 'undefined') {
-        this.GitLab._links = []
-        this.GitLab._paginationPage++
-        this[this.GitLab._paginating]()
-        window.scrollTo(0, 0)
-      }
-    },
-    paginationPrev: function (event) {
-      if (typeof this.paginationLinks.prev !== 'undefined') {
-        this.GitLab._links = []
-        this.GitLab._paginationPage--
-        this[this.GitLab._paginating]()
-        window.scrollTo(0, 0)
-      }
-    },
-    paginationRefresh: function (event) {
-      this.GitLab._paginationPage = 1
-      this.GitLab._links = []
-      this[this.GitLab._paginating]()
-      window.scrollTo(0, 0)
     },
     refreshIssues: function (event) {
       if (this.listBy === 'me') {

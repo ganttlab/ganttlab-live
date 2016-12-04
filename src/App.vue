@@ -56,7 +56,21 @@
             <span class="server"><transition name="fade"><i v-if="downloading" class="fa fa-circle-o-notch fa-spin downloading" aria-hidden="true"></i></transition> <a v-bind:href="url" target="_blank">{{ url }}</a> <a href="https://gitlab.com/ganttlab/ganttlab-live#how-it-works" target="_blank"><i class="fa fa-question-circle" aria-hidden="true" title="Help"></i></a> <i class="fa fa-times close" aria-hidden="true" v-on:click="logout" title="Close"></i></span>
           </div>
         </div>
+
         <mainFilter v-bind:user="GitLab.user"></mainFilter>
+
+        <div v-if="! downloading && (this.paginationLinks.prev || this.paginationLinks.next)" class="pagination">
+          <button v-if="this.paginationLinks.prev" v-on:click="page--">&lt; Prev</button>
+          <span>Page {{ this.page }}</span>
+          <button v-if="this.paginationLinks.next" v-on:click="page++">Next &gt;</button>
+          <div class="perpage">
+            Showing
+            <select v-model="perPage">
+              <option v-for="value in [10,20,50,75,100]" v-bind:value="value">{{ value }}</option>
+            </select>
+            issues per page
+          </div>
+        </div>
       </div>
     </transition>
   </div>
