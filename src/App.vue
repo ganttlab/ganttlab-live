@@ -52,12 +52,12 @@
       <div v-if="!userEmpty" id="MainScreen">
         <div id="top" class="standardpadding">
           <div v-if="!userEmpty">
-            <span class="user"><img v-bind:src="GitLab.user.avatar_url"> {{ GitLab.user.name }}</span>
+            <span class="user"><img v-bind:src="userAvatarUrl"> {{ userName }}</span>
             <span class="server"><transition name="fade"><i v-if="downloading" class="fa fa-circle-o-notch fa-spin downloading" aria-hidden="true"></i></transition> <a v-bind:href="url" target="_blank">{{ url }}</a> <a href="https://gitlab.com/ganttlab/ganttlab-live#how-it-works" target="_blank"><i class="fa fa-question-circle" aria-hidden="true" title="Help"></i></a> <i class="fa fa-times close" aria-hidden="true" v-on:click="logout" title="Close"></i></span>
           </div>
         </div>
 
-        <mainFilter v-bind:user="GitLab.user"></mainFilter>
+        <mainFilter></mainFilter>
 
         <div class="standardpadding">
           <p v-if="downloading" class="downloading"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i></p>
@@ -102,15 +102,12 @@ export default {
       rememberMe: false,
       url: process.env.GITLAB_URL,
       token: process.env.GITLAB_TOKEN,
-      GitLab: {
-        user: {} // need to be defined here, or computed property won't work as expected
-      },
       failed: false
     }
   },
   computed: {
     userEmpty: function () {
-      return !(this.GitLab.hasOwnProperty('user') && this.GitLab.user.hasOwnProperty('name'))
+      return this.userName == null
     },
     safeUrl: function () {
       return this.url.replace(/\/$/, '')
@@ -127,12 +124,16 @@ export default {
   },
   methods: {
     getGitLabUser: function (event) {
-      this.GitLabAPI.get('/user', [], [this.GitLab, 'user'], (response) => {
+      this.GitLabAPI.get('/user', [], (response) => {
+        this.userName = response.body.name
+        this.userAvatarUrl = response.body.avatar_url
+      }, (response) => {
         this.failed = true
       })
     },
     signin: function (event) {
-      this.GitLab.user = {}
+      this.userName = null
+      this.userAvatarUrl = null
       this.failed = false
       this.GitLabAPI.setUrl(this.url)
       this.GitLabAPI.setToken(this.token)
@@ -151,7 +152,8 @@ export default {
     },
     logout: function (event) {
       window.history.pushState(null, null, '/')
-      this.GitLab.user = {}
+      this.userName = null
+      this.userAvatarUrl = null
       this.failed = false
       if (!this.rememberMe) {
         this.token = ''

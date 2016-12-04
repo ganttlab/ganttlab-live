@@ -7,6 +7,26 @@ module.exports = {
         return false
       }
     },
+    userName: {
+      get () {
+        return this.$store.state.user.name
+      },
+      set (value) {
+        var user = this.$store.state.user
+        user.name = value
+        this.$store.commit('user', user)
+      }
+    },
+    userAvatarUrl: {
+      get () {
+        return this.$store.state.user.avatarUrl
+      },
+      set (value) {
+        var user = this.$store.state.user
+        user.avatarUrl = value
+        this.$store.commit('user', user)
+      }
+    },
     tasks: function () {
       return this.$store.state.tasks
     },

@@ -13,6 +13,10 @@ import App from './App'
 
 const store = new Vuex.Store({
   state: {
+    user: {
+      name: null,
+      avatarUrl: null
+    },
     tasks: null,
     pagination: {
       page: 1,
@@ -24,6 +28,9 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
+    user: function (state, value) {
+      state.user = value
+    },
     tasks: function (state, value) {
       state.tasks = value
     },
