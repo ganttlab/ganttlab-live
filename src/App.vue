@@ -1,7 +1,7 @@
 <template>
   <div id="App">
     <transition name="fade">
-      <div v-if="failed == true || userEmpty" id="LoginScreen">
+      <div v-if="failed == true || userName == null" id="LoginScreen">
           <h1>GanttLab Live</h1>
 
           <div class="row">
@@ -10,7 +10,7 @@
                 <h2>The easy to use, fully functional
                 <br/>Gantt chart for GitLab.</h2>
                 <p>Provide your teams with the right tool to master time and deadlines. Giving back credit to your project status and issues due dates has never been easier!</p>
-                <p v-if="userEmpty && downloading" class="downloading"><strong><i v-if="downloading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Connecting to {{ url }}</strong></p>
+                <p v-if="userName == null && downloading" class="downloading"><strong><i v-if="downloading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Connecting to {{ url }}</strong></p>
                 <p v-if="failed == true" class="error"><i class="fa fa-exclamation-triangle"></i> Unable to connect to {{ url }}</p>
               </div>
             </div>
@@ -49,9 +49,9 @@
       </div>
     </transition>
     <transition name="fade">
-      <div v-if="!userEmpty" id="MainScreen">
+      <div v-if="userName != null" id="MainScreen">
         <div id="top" class="standardpadding">
-          <div v-if="!userEmpty">
+          <div v-if="userName != null">
             <span class="user"><img v-bind:src="userAvatarUrl"> {{ userName }}</span>
             <span class="server"><transition name="fade"><i v-if="downloading" class="fa fa-circle-o-notch fa-spin downloading" aria-hidden="true"></i></transition> <a v-bind:href="url" target="_blank">{{ url }}</a> <a href="https://gitlab.com/ganttlab/ganttlab-live#how-it-works" target="_blank"><i class="fa fa-question-circle" aria-hidden="true" title="Help"></i></a> <i class="fa fa-times close" aria-hidden="true" v-on:click="logout" title="Close"></i></span>
           </div>
@@ -106,9 +106,6 @@ export default {
     }
   },
   computed: {
-    userEmpty: function () {
-      return this.userName == null
-    },
     safeUrl: function () {
       return this.url.replace(/\/$/, '')
     },
