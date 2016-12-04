@@ -211,6 +211,8 @@ export default {
     paginationPage: function (value) {
       // watch for app wide Vuex store pagination.page, and refresh GitLab issues appropriately
       this.GitLabPaginationLinks = []
+      // reset paginationLinks
+      this.paginationLinks = JSON.parse(JSON.stringify(this.emptyLinks))
       this[this.GitLab._paginating]()
       window.scrollTo(0, 0)
     },
@@ -219,6 +221,8 @@ export default {
       if (this.paginationPage === 1) {
         // if already on page 1, watch.page won't be called: refresh GitLab issues appropriately
         this.GitLabPaginationLinks = []
+        // reset paginationLinks
+        this.paginationLinks = JSON.parse(JSON.stringify(this.emptyLinks))
         this[this.GitLab._paginating]()
         window.scrollTo(0, 0)
       } else {
@@ -227,7 +231,7 @@ export default {
       }
     },
     GitLabPaginationLinks: function (value) {
-      var links = this.emptyLinks
+      var links = JSON.parse(JSON.stringify(this.emptyLinks))
 
       if (value.length === 0) {
         // update app wide Vuex store
