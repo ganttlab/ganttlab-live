@@ -75,6 +75,8 @@ export default {
     return {
       ganttStartString: process.env.GANTT_START_STRING,
       ganttDueString: process.env.GANTT_DUE_STRING,
+      // exact state in the app wide Vuex store during initialization
+      emptyLinks: null,
       GitLabPaginationLinks: [],
       // main GitLab object, will be filled with data
       GitLab: {
@@ -225,10 +227,7 @@ export default {
       }
     },
     GitLabPaginationLinks: function (value) {
-      var links = {
-        prev: null,
-        next: null
-      }
+      var links = this.emptyLinks
 
       if (value.length === 0) {
         // update app wide Vuex store
@@ -510,6 +509,8 @@ export default {
     }
   },
   mounted: function () {
+    // populating the exact initial state
+    this.emptyLinks = this.$store.state.pagination.links
     // reading user expected listBy method
     var expectedListBy = this.getParameterByName('l')
     // reading user expected project (if any)
