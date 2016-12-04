@@ -461,6 +461,7 @@ export default {
         this.GitLab._links = []
         this.GitLab._paginationPage++
         this[this.GitLab._paginating]()
+        window.scrollTo(0, 0)
       }
     },
     paginationPrev: function (event) {
@@ -468,12 +469,14 @@ export default {
         this.GitLab._links = []
         this.GitLab._paginationPage--
         this[this.GitLab._paginating]()
+        window.scrollTo(0, 0)
       }
     },
     paginationRefresh: function (event) {
       this.GitLab._paginationPage = 1
       this.GitLab._links = []
       this[this.GitLab._paginating]()
+      window.scrollTo(0, 0)
     },
     refreshIssues: function (event) {
       if (this.listBy === 'me') {
