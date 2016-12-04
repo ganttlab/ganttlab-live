@@ -5,6 +5,22 @@
       <span v-if="! downloading" v-on:click="refreshIssues" class="refresh"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</span>
     </div>
 
+    <div v-if="this.listBy === 'project'" class="subfilter">
+      <div class="multiselect-container">
+        <multiselect
+          :options="GitLab.projects"
+          :value="project"
+          :close-on-select="true"
+          :show-labels="false"
+          :loading="downloading"
+          placeholder="Type to search a project"
+          label="path_with_namespace"
+          @search-change="searchProjects"
+          @input="listProjectIssues">
+        </multiselect>
+      </div>
+    </div>
+
     <div v-if="this.listBy === 'group'" class="subfilter">
       <div class="multiselect-container">
         <multiselect
@@ -33,22 +49,6 @@
           @search-change="searchGroupProjects"
           @input="selectedGroupProject">
           <span slot=noResult>No project on this group with this name</span>
-        </multiselect>
-      </div>
-    </div>
-
-    <div v-if="this.listBy === 'project'" class="subfilter">
-      <div class="multiselect-container">
-        <multiselect
-          :options="GitLab.projects"
-          :value="project"
-          :close-on-select="true"
-          :show-labels="false"
-          :loading="downloading"
-          placeholder="Type to search a project"
-          label="path_with_namespace"
-          @search-change="searchProjects"
-          @input="listProjectIssues">
         </multiselect>
       </div>
     </div>
