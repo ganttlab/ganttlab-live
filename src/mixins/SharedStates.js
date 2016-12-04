@@ -10,7 +10,7 @@ module.exports = {
     tasks: function () {
       return this.$store.state.tasks
     },
-    page: {
+    paginationPage: {
       get () {
         return this.$store.state.pagination.page
       },
@@ -20,7 +20,7 @@ module.exports = {
         this.$store.commit('pagination', pagination)
       }
     },
-    perPage: {
+    paginationPerPage: {
       get () {
         return this.$store.state.pagination.perPage
       },

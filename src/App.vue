@@ -66,12 +66,12 @@
         </div>
 
         <div v-if="! downloading && (this.paginationLinks.prev || this.paginationLinks.next)" class="pagination">
-          <button v-if="this.paginationLinks.prev" v-on:click="page--">&lt; Prev</button>
-          <span>Page {{ this.page }}</span>
-          <button v-if="this.paginationLinks.next" v-on:click="page++">Next &gt;</button>
+          <button v-if="this.paginationLinks.prev" v-on:click="paginationPage--">&lt; Prev</button>
+          <span>Page {{ this.paginationPage }}</span>
+          <button v-if="this.paginationLinks.next" v-on:click="paginationPage++">Next &gt;</button>
           <div class="perpage">
             Showing
-            <select v-model="perPage">
+            <select v-model="paginationPerPage">
               <option v-for="value in [10,20,50,75,100]" v-bind:value="value">{{ value }}</option>
             </select>
             issues per page

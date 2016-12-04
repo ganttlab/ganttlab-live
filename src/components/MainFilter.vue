@@ -208,22 +208,22 @@ export default {
       // watch for calculated Gantt Dataset, and commit it in app wide Vuex store
       this.$store.commit('tasks', value)
     },
-    page: function (value) {
+    paginationPage: function (value) {
       // watch for app wide Vuex store pagination.page, and refresh GitLab issues appropriately
       this.GitLabPaginationLinks = []
       this[this.GitLab._paginating]()
       window.scrollTo(0, 0)
     },
-    perPage: function (value) {
+    paginationPerPage: function (value) {
       // watch for app wide Vuex store pagination.perPage
-      if (this.page === 1) {
+      if (this.paginationPage === 1) {
         // if already on page 1, watch.page won't be called: refresh GitLab issues appropriately
         this.GitLabPaginationLinks = []
         this[this.GitLab._paginating]()
         window.scrollTo(0, 0)
       } else {
         // if not on page one, just set page 1, and watch.page will refresh GitLab issues
-        this.page = 1
+        this.paginationPage = 1
       }
     },
     GitLabPaginationLinks: function (value) {
@@ -262,7 +262,7 @@ export default {
       // clearing the links header
       this.GitLabPaginationLinks = []
       // back to the first pagination page
-      this.page = 1
+      this.paginationPage = 1
       // we are not paginating anything
       this.GitLab._paginating = null
     },
@@ -305,8 +305,8 @@ export default {
 
       // user wants issues for all projects created by himself
       this.GitLabAPI.get('/issues', {
-        'page': this.page,
-        'per_page': this.perPage,
+        'page': this.paginationPage,
+        'per_page': this.paginationPerPage,
         'state': 'opened'
       }, (response) => {
         this.GitLabPaginationLinks = response.headers.get('Link')
@@ -412,8 +412,8 @@ export default {
 
       // user wants issues for all projects in the selected group
       this.GitLabAPI.get('/groups/' + this.group.id + '/issues', {
-        'page': this.page,
-        'per_page': this.perPage,
+        'page': this.paginationPage,
+        'per_page': this.paginationPerPage,
         'state': 'opened'
       }, (response) => {
         this.GitLabPaginationLinks = response.headers.get('Link')
@@ -430,8 +430,8 @@ export default {
 
       // user wants issues for a selected project
       this.GitLabAPI.get('/projects/' + this.gProject.id + '/issues', {
-        'page': this.page,
-        'per_page': this.perPage,
+        'page': this.paginationPage,
+        'per_page': this.paginationPerPage,
         'state': 'opened'
       }, (response) => {
         this.GitLabPaginationLinks = response.headers.get('Link')
@@ -452,8 +452,8 @@ export default {
 
       // user wants issues for a selected project
       this.GitLabAPI.get('/projects/' + this.project.id + '/issues', {
-        'page': this.page,
-        'per_page': this.perPage,
+        'page': this.paginationPage,
+        'per_page': this.paginationPerPage,
         'state': 'opened'
       }, (response) => {
         this.GitLabPaginationLinks = response.headers.get('Link')
