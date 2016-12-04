@@ -75,9 +75,9 @@ export default {
       // "curDisplayFirstDataset+maxDisplayDatasets"
       var curDisplayFirstDataset = 0
 
-      // global div for tooltip
+      // global div for taskTooltip
       var div = d3.select('body').append('div')
-          .attr('class', 'tooltip')
+          .attr('class', 'taskTooltip')
           .style('opacity', 0)
 
       var definedBlocks = null
@@ -346,9 +346,9 @@ export default {
                 div.html(function () {
                   var output = ''
                   if (d[1] === 1) {
-                    output = '<i class="fa fa-fw fa-check tooltip_has_data"></i>'
+                    output = '<i class="fa fa-fw fa-check taskTooltip_has_data"></i>'
                   } else {
-                    output = '<i class="fa fa-fw fa-times tooltip_has_no_data"></i>'
+                    output = '<i class="fa fa-fw fa-times taskTooltip_has_no_data"></i>'
                   }
                   if (isDateOnlyFormat) {
                     if (d[2] > d3.time.second.offset(d[0], 86400)) {
@@ -561,6 +561,12 @@ export default {
       return chart
     },
     refreshChart: function (event) {
+      // removing all created taskTooltips to avoid useless scrolling
+      var paras = document.getElementsByClassName('taskTooltip')
+      while (paras[0]) {
+        paras[0].parentNode.removeChild(paras[0])
+      }
+
       var chart = this.visavailChart().width(document.body.clientWidth - 290)
 
       d3.select('#chart')

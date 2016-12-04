@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 - An edge case avoiding selection of a group project on large groups
 - A white screen while paginated, due to lack of scroll to top behavior
+- The useless scrolling after lowering number of issues expected per page
 
 ## 0.3.0 - 2016-11-24
 ### Added
