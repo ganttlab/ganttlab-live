@@ -75,15 +75,18 @@
 </template>
 
 <script>
+import SharedStates from '../mixins/SharedStates'
 import Multiselect from 'vue-multiselect'
 import debounce from 'lodash.debounce'
 import Gantt from './Gantt'
 
 export default {
   name: 'mainFilter',
+  mixins: [
+    SharedStates
+  ],
   props: [
-    'user',
-    'downloading'
+    'user'
   ],
   data () {
     return {

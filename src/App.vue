@@ -56,18 +56,22 @@
             <span class="server"><transition name="fade"><i v-if="downloading" class="fa fa-circle-o-notch fa-spin downloading" aria-hidden="true"></i></transition> <a v-bind:href="url" target="_blank">{{ url }}</a> <a href="https://gitlab.com/ganttlab/ganttlab-live#how-it-works" target="_blank"><i class="fa fa-question-circle" aria-hidden="true" title="Help"></i></a> <i class="fa fa-times close" aria-hidden="true" v-on:click="logout" title="Close"></i></span>
           </div>
         </div>
-        <mainFilter v-bind:user="GitLab.user" v-bind:downloading="downloading"></mainFilter>
+        <mainFilter v-bind:user="GitLab.user"></mainFilter>
       </div>
     </transition>
   </div>
 </template>
 
 <script>
+import SharedStates from './mixins/SharedStates'
 import MainFilter from './components/MainFilter'
 import 'font-awesome/css/font-awesome.css'
 
 export default {
   name: 'app',
+  mixins: [
+    SharedStates
+  ],
   data () {
     return {
       rememberMe: false,
@@ -123,13 +127,6 @@ export default {
   computed: {
     userEmpty: function () {
       return !(this.GitLab.hasOwnProperty('user') && this.GitLab.user.hasOwnProperty('name'))
-    },
-    downloading: function () {
-      if (typeof this.$store.state.GitLabAPI !== 'undefined') {
-        return this.$store.state.GitLabAPI.downloading
-      } else {
-        return false
-      }
     },
     safeUrl: function () {
       return this.url.replace(/\/$/, '')
