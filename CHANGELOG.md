@@ -18,6 +18,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Refined look and feel, drastically improved login screen
 - Styling has been moved from components to SCSS style sheets
 
+### Fixed
+- An edge case avoiding selection of a group project on large groups
+
 ## 0.3.0 - 2016-11-24
 ### Added
 - Width of Gantt chart is now calculated on browser window width, making it full screen

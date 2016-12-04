@@ -254,7 +254,7 @@ export default {
     refreshGroupProjects: function (cb, search) {
       // user wants the list of projects in this.group
       this.GitLabAPI.get('/groups/' + this.group.id + '/projects', {
-        'per_page': '10',
+        'per_page': '100',
         'search': search
       }, (response) => {
         this.$set(this.GitLab, 'groupProjects', response.body)
