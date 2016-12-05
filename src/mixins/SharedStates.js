@@ -3,6 +3,8 @@ module.exports = {
     downloading: function () {
       if (typeof this.$store.state.GitLabAPI !== 'undefined') {
         return this.$store.state.GitLabAPI.downloading
+      } else if (typeof this.$store.state.GitHubAPI !== 'undefined') {
+        return this.$store.state.GitHubAPI.downloading
       } else {
         return false
       }

@@ -6,6 +6,8 @@ Vue.use(Vuex)
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
 
+import GitHubAPI from 'vue-github-api'
+Vue.use(GitHubAPI)
 import GitLabAPI from 'vue-gitlab-api'
 Vue.use(GitLabAPI)
 

@@ -1,23 +1,26 @@
 # GanttLab
 
-The easy to use, fully functional Gantt chart for GitLab.
+The easy to use, fully functional Gantt chart for GitLab and GitHub.
 
 ![GanttLab](preview.png)
 
 
 ## Run it now!
 
-It is already running live for you at https://live.ganttlab.org. Type-in your GitLab instance URL (works with https://gitlab.com), your GitLab account [_Private Token_](https://gitlab.com/profile/account) or a [_Personal Access Token_](https://gitlab.com/profile/personal_access_tokens) and enjoy!
+It is already running live for you at https://live.ganttlab.org.
 
-**Safe to run:** the application do NOT store any data, and runs on YOUR browser only, using your own network as if you were running all the requests to your GitLab instance right from your local computer. Unsure of it? Have a look at [the source code](https://gitlab.com/ganttlab/ganttlab-live/tree/master).
+- **GitLab** user? Type-in your GitLab instance URL (works with https://gitlab.com), your GitLab account [_Private Token_](https://gitlab.com/profile/account) or a [_Personal Access Token_](https://gitlab.com/profile/personal_access_tokens) and enjoy!
+- working on **GitHub**? Provide one of your GitHub user [Personal access tokens](https://github.com/settings/tokens) to get the ride!
+
+**Safe to run:** the application do NOT store any data, and runs on YOUR browser only, using your own network as if you were running all the requests to your GitLab instance or to GitHub right from your local computer. Unsure of it? Have a look at [the source code](https://gitlab.com/ganttlab/ganttlab-live/tree/master).
 
 **PRO tip:** if you are running an unsecured HTTP instance of GitLab, head to http://live.ganttlab.org to avoid your browser blocking the request coming from an HTTPS secured site.
 
 ## How it works
 
-_GanttLab_ is a **frontend only** application. It leverages [GitLab awesome API](https://gitlab.com/help/api/README.md) to read your issues, before simply displaying a gantt chart with it.
+_GanttLab_ is a **frontend only** application. It leverages [GitLab API](https://gitlab.com/help/api/README.md) or [GitHub API](https://developer.github.com/v3/) to read your issues, before simply displaying a Gantt chart with it.
 
-The automatically generated [gantt chart](https://en.wikipedia.org/wiki/Gantt_chart) will display each of your issues within a "date area": from a **start date**, to the **due date**. For each issue, the **default start date** is read from the issue creation date. As with GitLab you are not forced to fill in a due date for your issues, the _GanttLab_ **default due date** will be set to the day after the issue creation date, faking all your issues having to be done in one day. For sure, if you insert a due date in your issues, it will be read automatically.
+The automatically generated [Gantt chart](https://en.wikipedia.org/wiki/Gantt_chart) will display each of your issues within a "date area": from a **start date**, to the **due date**. For each issue, the **default start date** is read from the issue creation date. As with GitLab you are not forced to fill in a due date for your issues, and with GitHub you do not even have a due date on issues, the _GanttLab_ **default due date** will be set to the day after the issue creation date, faking all your issues having to be done in one day. For sure, if you insert a due date in your GitLab issues, it will be read automatically.
 
 To give you maximum control over your issues and tasks management practices in the gantt chart, you can override this default values **right from your issue description** with two simple [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) `YYYY-MM-DD` calendar dates:
 
@@ -91,6 +94,7 @@ _GanttLab_ is an open source project: your contribution is very welcomed! Have a
 - Moment.js http://momentjs.com/
 - Evan You for being so clever on developing [Vue.js](http://vuejs.org/) and [vue-cli](https://github.com/vuejs/vue-cli)
 - The [GitLab team](https://about.gitlab.com/team/) for this life changing product called [GitLab](https://about.gitlab.com/)
+- [GitHub, Inc.](https://github.com/) for this incredibly useful and so widely used platform
 
 ## License
 

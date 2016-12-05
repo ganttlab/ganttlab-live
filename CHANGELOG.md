@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
+- Now comes with integrated GitHub support
+- Information about GitHub support in Readme
 - work in progress on [ganttlab/ganttlab-live issues](https://gitlab.com/ganttlab/ganttlab-live/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
 
 ### Changed

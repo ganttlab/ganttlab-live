@@ -8,7 +8,7 @@
             <div class="col welcome">
               <div class="pad">
                 <h2>The easy to use, fully functional
-                <br/>Gantt chart for GitLab.</h2>
+                <br/>Gantt chart for GitLab and GitHub.</h2>
                 <p>Provide your teams with the right tool to master time and deadlines. Giving back credit to your project status and issues due dates has never been easier!</p>
                 <p v-if="!userName && downloading" class="downloading"><strong><i v-if="downloading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Connecting to {{ url }}</strong></p>
                 <p v-if="loginFailed" class="error"><i class="fa fa-exclamation-triangle"></i> Unable to connect to {{ url }}</p>
@@ -16,14 +16,16 @@
             </div>
 
             <div class="col form">
+              <p class="providerchoice"><i class="fa fa-gitlab" v-bind:class="{ selected: isGitLab }" v-on:click="providerName = 'GitLab'"></i><span> or </span><i class="fa fa-github" v-bind:class="{ selected: !isGitLab }" v-on:click="providerName = 'GitHub'"></i></p>
               <p class="form-input first">
-                <input tabindex="1" v-model="url" v-on:keyup.enter="signin" autofocus>
+                <input tabindex="1" v-model="url" v-on:keyup.enter="signin" v-bind:disabled="providerName != 'GitLab'" v-bind:class="{ disabled: providerName != 'GitLab' }" autofocus>
               </p>
-              <p class="helper">Your GitLab instance URL</p>
+              <p class="helper" v-bind:class="{ disabled: providerName != 'GitLab' }">Your GitLab instance URL</p>
               <p class="form-input">
                 <input tabindex="2" v-model="token" v-on:keyup.enter="signin">
               </p>
-              <p class="helper">Use your <a v-bind:href="privateTokenLink" target="_blank" title="/profile/account">Private Token</a>, or a <a v-bind:href="personalTokenLink" target="_blank" title="/profile/personal_access_tokens">Personal Access Token</a></p>
+              <p v-if="providerName == 'GitLab'" class="helper">Use your <a v-bind:href="privateTokenLink" target="_blank" title="/profile/account">Private Token</a>, or a <a v-bind:href="personalTokenLink" target="_blank" title="/profile/personal_access_tokens">Personal Access Token</a></p>
+              <p v-else class="helper">Use one of your <a href="https://github.com/settings/tokens" target="_blank" title="https://github.com/settings/tokens">Personal Access Tokens</a></p>
 
               <p v-if="hasLocalStorage" class="form-input remember"><input tabindex="3" type="checkbox" v-model="rememberMe"> <span>Remember me <i class="fa fa-question-circle-o" aria-hidden="true" title="Don't do that on a public computer!"></i></span> <button tabindex="4" v-on:click="signin">Sign-in &nbsp;&gt;</button></p>
             </div>
@@ -98,10 +100,14 @@ export default {
   data () {
     return {
       rememberMe: false,
+      providerName: 'GitLab',
       provider: null
     }
   },
   computed: {
+    isGitLab: function () {
+      return this.providerName === 'GitLab'
+    },
     safeUrl: function () {
       if (this.url == null) {
         return null
@@ -128,13 +134,30 @@ export default {
         this.loginFailed = true
       })
     },
+    getGitHubUser: function (event) {
+      this.GitHubAPI.get('/user', [], (response) => {
+        this.userName = response.body.login
+        this.userAvatarUrl = response.body.avatar_url
+        this.provider = require('./components/providers/GitHub')
+      }, (response) => {
+        this.loginFailed = true
+      })
+    },
     signin: function (event) {
       this.userName = null
       this.userAvatarUrl = null
       this.loginFailed = false
-      this.GitLabAPI.setUrl(this.url)
-      this.GitLabAPI.setToken(this.token)
-      this.getGitLabUser()
+      if (this.providerName === 'GitLab') {
+        this.GitLabAPI.registerStore(this.$store)
+        this.GitLabAPI.setUrl(this.url)
+        this.GitLabAPI.setToken(this.token)
+        this.getGitLabUser()
+      } else {
+        this.GitHubAPI.registerStore(this.$store)
+        this.GitHubAPI.setToken(this.token)
+        this.getGitHubUser()
+        this.url = 'https://github.com'
+      }
       if (this.hasLocalStorage) {
         if (this.rememberMe) {
           window.localStorage.url = this.url
@@ -165,7 +188,6 @@ export default {
   mounted: function () {
     this.url = process.env.GITLAB_URL
     this.token = process.env.GITLAB_TOKEN
-    this.GitLabAPI.registerStore(this.$store)
     if (this.hasLocalStorage) {
       this.url = window.localStorage.getItem('url') || process.env.GITLAB_URL
       this.token = window.localStorage.getItem('token') || process.env.GITLAB_TOKEN

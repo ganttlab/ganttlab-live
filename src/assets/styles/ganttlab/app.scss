@@ -41,6 +41,7 @@ a:hover {
   clear:both;
 }
 #LoginScreen .welcome {
+  margin-top: 2rem;
   width: 60%;
   display: inline-block;
   font-size: 16px;
@@ -57,7 +58,7 @@ a:hover {
   text-align: left;
   border-bottom: 1px solid rgba(21, 21, 21, 0.05);
   padding: 0 0 0.5rem 1rem;
-  margin: 0 0 2rem;
+  margin: 0 0 1rem;
 }
 #LoginScreen h2 {
   font-size: 1.375rem;
@@ -80,7 +81,7 @@ a:hover {
   transition: all ease-in-out 0.15s;
 }
 #LoginScreen .form-input.first {
-  margin-top: 1.7rem;
+  margin-top: 5px;
 }
 #LoginScreen .form-input input:focus,
 #LoginScreen input[type="checkbox"]:focus,
@@ -100,6 +101,9 @@ a:hover {
   background-color: #fff;
   background-image: none;
   height: 20px;
+}
+#LoginScreen .form-input input.disabled {
+  color: rgba(#555, 0.5);
 }
 #LoginScreen .form-input.remember {
   text-align: left;
@@ -133,6 +137,23 @@ a:hover {
 #LoginScreen .form-input.remember button:hover {
   background-color: rgba($lead-color, 0.8);
 }
+.providerchoice {
+  margin: 0px;
+  font-size: 2em;
+  text-align: center;
+}
+.providerchoice span {
+  font-size: 0.4em;
+  margin: 0 20px;
+}
+.providerchoice i {
+  transition: color 0.2s;
+  cursor: pointer;
+  color: rgba($text-color, 0.3);
+}
+.providerchoice i.selected {
+  color: $text-color;
+}
 .helper {
   text-align: left;
   font-size: 0.62em;
@@ -144,9 +165,12 @@ a:hover {
 .helper a:hover {
   text-decoration: none;
 }
+.helper.disabled {
+  color: rgba($text-color, 0.5)
+}
 .more {
   border-top: 1px solid rgba(21, 21, 21, 0.05);
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 .col.copy,
 .col.social {
