@@ -57,7 +57,7 @@
           </div>
         </div>
 
-        <mainFilter></mainFilter>
+        <component v-bind:is="provider" class="provider"></component>
 
         <div class="standardpadding">
           <p v-if="downloading" class="downloading"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i></p>
@@ -84,7 +84,6 @@
 
 <script>
 import SharedStates from './mixins/SharedStates'
-import MainFilter from './components/MainFilter'
 import Gantt from './components/Gantt'
 import 'font-awesome/css/font-awesome.css'
 
@@ -94,12 +93,12 @@ export default {
     SharedStates
   ],
   components: {
-    MainFilter,
     Gantt
   },
   data () {
     return {
-      rememberMe: false
+      rememberMe: false,
+      provider: null
     }
   },
   computed: {
@@ -124,6 +123,7 @@ export default {
       this.GitLabAPI.get('/user', [], (response) => {
         this.userName = response.body.name
         this.userAvatarUrl = response.body.avatar_url
+        this.provider = require('./components/providers/GitLab')
       }, (response) => {
         this.loginFailed = true
       })

@@ -2,13 +2,13 @@
   text-align: center;
   font-size: 2.5em;
 }
-#MainFilter {
+.provider {
   font-family: $lead-font;
 }
-#MainFilter input[type=radio] {
+.provider input[type=radio] {
   display:none;
 }
-#MainFilter input[type=radio] + label {
+.provider input[type=radio] + label {
   display:inline-block;
   margin:-2px;
   padding: 4px 12px;
@@ -19,7 +19,7 @@
   border-bottom: 2px solid #fafafa;
   color: #777;
 }
-#MainFilter input[type=radio]:checked + label {
+.provider input[type=radio]:checked + label {
   border-bottom: 2px solid $lead-color;
   color: #2c3e50;
 }

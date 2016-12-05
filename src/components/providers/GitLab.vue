@@ -1,5 +1,5 @@
 <template>
-  <div v-if="userName" id="MainFilter">
+  <div v-if="userName" id="GitLab-Provider">
     <div class="filter">
       <input type="radio" id="inputListByMe" value="me" v-model="listBy" v-on:change="clearAndListByMe"><label for="inputListByMe">Created by me</label><input type="radio" id="inputListByProject" value="project" v-model="listBy" v-on:change="listByProject"><label for="inputListByProject">By project</label><input type="radio" id="inputListByGroup" value="group" v-model="listBy" v-on:change="listByGroup"><label for="inputListByGroup">By group/project</label>
       <span v-if="! downloading" v-on:click="refreshIssues" class="refresh"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</span>
@@ -56,12 +56,12 @@
 </template>
 
 <script>
-import SharedStates from '../mixins/SharedStates'
+import SharedStates from '../../mixins/SharedStates'
 import Multiselect from 'vue-multiselect'
 import debounce from 'lodash.debounce'
 
 export default {
-  name: 'mainFilter',
+  name: 'GitLab',
   mixins: [
     SharedStates
   ],
