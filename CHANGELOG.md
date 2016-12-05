@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
+- work in progress on [ganttlab/ganttlab-live issues](https://gitlab.com/ganttlab/ganttlab-live/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
+
+## 0.4.0 - 2016-12-05
+### Added
 - Now comes with integrated GitHub support
 - Information about GitHub support in Readme
 - work in progress on [ganttlab/ganttlab-live issues](https://gitlab.com/ganttlab/ganttlab-live/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
@@ -95,4 +99,4 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - README includes a preview, and describes main topics to get started
 - Initial vue-cli scaffolding with webpack plugin
 
-[Unreleased]: https://gitlab.com/ganttlab/ganttlab-live/compare/v0.3.0...master
+[Unreleased]: https://gitlab.com/ganttlab/ganttlab-live/compare/v0.4.0...master
