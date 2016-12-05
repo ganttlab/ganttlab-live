@@ -23,6 +23,14 @@ module.exports = {
         this.$store.commit('token', value)
       }
     },
+    loginFailed: {
+      get () {
+        return this.$store.state.loginFailed
+      },
+      set (value) {
+        this.$store.commit('loginFailed', value)
+      }
+    },
     userName: {
       get () {
         return this.$store.state.user.name
