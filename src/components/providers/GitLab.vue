@@ -155,7 +155,7 @@ export default {
 
         // reading lines from this task description to search for ganttStartString and ganttDueString
         if (task.description != null) {
-          var lines = task.description.split('\r\n')
+          var lines = task.description.split('\n')
           for (var j = 0; j < lines.length; j++) {
             // this description line starts with the ganttStartString
             if (!lines[j].indexOf(this.ganttStartString)) {

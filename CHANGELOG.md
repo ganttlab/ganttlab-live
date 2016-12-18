@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## Fixed
 - A bug with malformed GanttStart or GanttDue dates causing rendering to fail
+- Weird case with GitLab issues descriptions coming with different line break characters
 
 ## [0.4.0] - 2016-12-05
 ### Added
