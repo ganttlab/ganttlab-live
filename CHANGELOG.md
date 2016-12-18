@@ -14,11 +14,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - work in progress on [ganttlab/ganttlab-live issues](https://gitlab.com/ganttlab/ganttlab-live/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
 
-## 0.4.0 - 2016-12-05
+## Fixed
+- A bug with malformed GanttStart or GanttDue dates causing rendering to fail
+
+## [0.4.0] - 2016-12-05
 ### Added
 - Now comes with integrated GitHub support
 - Information about GitHub support in Readme
-- work in progress on [ganttlab/ganttlab-live issues](https://gitlab.com/ganttlab/ganttlab-live/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
 
 ### Changed
 - Refined look and feel, drastically improved login screen
@@ -29,7 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - A white screen while paginated, due to lack of scroll to top behavior
 - The useless scrolling after lowering number of issues expected per page
 
-## 0.3.0 - 2016-11-24
+## [0.3.0] - 2016-11-24
 ### Added
 - Width of Gantt chart is now calculated on browser window width, making it full screen
 - Improved and refined global UI
@@ -53,7 +55,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Removed
 - Insights to Google Analytics is useless and has been removed
 
-## 0.2.0 - 2016-11-05
+## [0.2.0] - 2016-11-05
 ### Added
 - A simple pagination system, allowing user to view all issues on the Gantt chart
 - An option to let user choose how many issues will be shown on the Gantt chart
@@ -100,3 +102,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Initial vue-cli scaffolding with webpack plugin
 
 [Unreleased]: https://gitlab.com/ganttlab/ganttlab-live/compare/v0.4.0...master
+[0.4.0]: https://gitlab.com/ganttlab/ganttlab-live/compare/v0.3.0...v0.4.0
+[0.3.0]: https://gitlab.com/ganttlab/ganttlab-live/compare/v0.2.0...v0.3.0
+[0.2.0]: https://gitlab.com/ganttlab/ganttlab-live/compare/v0.1.0...v0.2.0

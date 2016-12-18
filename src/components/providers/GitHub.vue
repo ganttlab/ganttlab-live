@@ -52,6 +52,18 @@
         </multiselect>
       </div>
     </div>
+
+    <transition name="fade">
+      <div v-if="this.malformed.length" class="standardpadding">
+        <p class="alert alert-danger">
+          Some of your GitHub issues comes with malformed GanttStart or GanttDue dates:
+          <ul>
+            <li v-for="issue in this.malformed"><a v-bind:href="issue.web_url" target="_blank">{{ issue.title }}</a></li>
+          </ul>
+          Please use <a href="https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates" target="_blank">ISO 8601 calendar dates</a> to plan your issues start and due dates: <em>GanttStart: YYYY-MM-DD</em> and/or <em>GanttDue: YYYY-MM-DD</em>.
+        </p>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -103,7 +115,10 @@ export default {
 
       // FILTERING BY 'project'
       // selected project
-      project: null
+      project: null,
+
+      // issues coming with malformed GanttStart or GanttDue dates
+      malformed: []
     }
   },
   computed: {
@@ -179,6 +194,14 @@ export default {
         // formatting start and due dates for visavail
         var fDueDate = dueDate.getUTCFullYear() + '-' + this.pad(dueDate.getUTCMonth() + 1) + '-' + this.pad(dueDate.getUTCDate())
         var fStartDate = startDate.getUTCFullYear() + '-' + this.pad(startDate.getUTCMonth() + 1) + '-' + this.pad(startDate.getUTCDate())
+
+        // filtering invalid start or due date
+        var invalid = 'NaN-NaN-NaN'
+        if (fDueDate === invalid || fStartDate === invalid) {
+          this.malformed.push(task)
+          continue
+        }
+
         aDataset.data = [
           [ fStartDate, status, fDueDate ]
         ]
@@ -461,6 +484,7 @@ export default {
       })
     },
     refreshIssues: function (event) {
+      this.malformed = []
       if (this.listBy === 'me') {
         this.clearAndListByMe()
       } else if (this.listBy === 'project') {
