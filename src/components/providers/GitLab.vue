@@ -78,13 +78,13 @@ export default {
       // main GitLab object, will be filled with data
       GitLab: {
         // list of groups user has access to
-        groups: null,
+        groups: [],
         // list of projects in the group selected by the user
-        groupProjects: null,
+        groupProjects: [],
         // list of projects
-        projects: null,
+        projects: [],
         // list of issues, sent to <gant> as a `props`
-        issues: null,
+        issues: [],
 
         _paginating: null
       },
