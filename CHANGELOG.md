@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - work in progress on [ganttlab/ganttlab-live issues](https://gitlab.com/ganttlab/ganttlab-live/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
 
 ## Fixed
+- vue-multiselect styles [are now contained in a separate file](https://github.com/monterail/vue-multiselect/releases)
 - Default values causing vue-multiselect to fail !2 (jabis)
 - A bug with malformed GanttStart or GanttDue dates causing rendering to fail
 - Weird case with GitLab issues descriptions coming with different line break characters
