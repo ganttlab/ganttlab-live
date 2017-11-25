@@ -20,7 +20,7 @@ It is already running live for you at https://live.ganttlab.org.
 
 _GanttLab_ is a **frontend only** application. It leverages [GitLab API](https://gitlab.com/help/api/README.md) or [GitHub API](https://developer.github.com/v3/) to read your issues, before simply displaying a Gantt chart with it.
 
-The automatically generated [Gantt chart](https://en.wikipedia.org/wiki/Gantt_chart) will display each of your issues within a "date area": from a **start date**, to the **due date**. For each issue, the **default start date** is read from the issue creation date. As with GitLab you are not forced to fill in a due date for your issues, and with GitHub you do not even have a due date on issues, the _GanttLab_ **default due date** will be set to the day after the issue creation date, faking all your issues having to be done in one day. For sure, if you insert a due date in your GitLab issues, it will be read automatically.
+The automatically generated [Gantt chart](https://en.wikipedia.org/wiki/Gantt_chart) will display each of your issues within a "date area": from a **start date**, to a **due date**.
 
 To give you maximum control over your issues and tasks management practices in the gantt chart, you can override this default values **right from your issue description** with two simple [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) `YYYY-MM-DD` calendar dates:
 
@@ -30,6 +30,13 @@ GanttDue: 2016-10-25
 ```
 
 The values of `GanttStart` and `GanttDue`, each on one dedicated line of your issue description (whether on top or bottom of the description), are considered as the _single source of truth_ if present to generate the gantt chart.
+
+If you don't do that or omit one of those values, for each issue the **default start date** is read from the issue creation date. As with GitLab you are not forced to fill in a due date for your issues, and with GitHub you do not even have a due date on issues, here is the logic in place about the **due date**:
+
+1. if set, the `GanttDue` value is used first,
+1. if this single source of truth is not set but you've set a due date on the issue, the issue due date will be used,
+1. _(GitLab only)_ if your issue has no due date but is attached to a milestone that has a due date, the milestone due date is used,
+1. ultimately, the _GanttLab_ **default due date** will be set to the day after the issue start date, faking all your issues having to be done in one day. 
 
 Only your opened issues are displayed. If an issue due date is past, the issue is marked late and **colored red**. If not, the issue is **shown green** as being on time.
 
