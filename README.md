@@ -18,11 +18,9 @@ It is already running live for you at https://live.ganttlab.org.
 
 ## How it works
 
-_GanttLab_ is a **frontend only** application. It leverages [GitLab API](https://gitlab.com/help/api/README.md) or [GitHub API](https://developer.github.com/v3/) to read your issues, before simply displaying a Gantt chart with it.
+_GanttLab_ is a **frontend only** application. It leverages [GitLab API](https://gitlab.com/help/api/README.md) or [GitHub API](https://developer.github.com/v3/) to read your issues, before simply displaying a Gantt chart with it. The automatically generated [Gantt chart](https://en.wikipedia.org/wiki/Gantt_chart) will display each of your issues within a "date area": from a **start date** defaulting to the issue creation date, to a **due date** defaulting to the day after that.
 
-The automatically generated [Gantt chart](https://en.wikipedia.org/wiki/Gantt_chart) will display each of your issues within a "date area": from a **start date**, to a **due date**.
-
-To give you maximum control over your issues and tasks management practices in the gantt chart, you can override this default values **right from your issue description** with two simple [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) `YYYY-MM-DD` calendar dates:
+To give you maximum control over your issues and tasks management practices in the gantt chart, you can override those default values **right from your issue description** with two simple [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) `YYYY-MM-DD` calendar dates:
 
 ```
 GanttStart: 2016-09-26
@@ -31,7 +29,7 @@ GanttDue: 2016-10-25
 
 The values of `GanttStart` and `GanttDue`, each on one dedicated line of your issue description (whether on top or bottom of the description), are considered as the _single source of truth_ if present to generate the gantt chart.
 
-By default, a Gantt chart will be created without you having to update all of your issues descriptions to set those values: for each issue the **default start date** is read from the issue creation date. As with GitLab you are not forced to fill in a due date for your issues, and with GitHub you do not even have a due date on issues, here is the logic in place about the **default due date**:
+As mentioned, for a better user experience, a default Gantt chart will be created without you having to update all of your issues description to set those values: for each issue the **default start date** is read from the issue creation date. As with GitLab you are not forced to fill in a due date for your issues, and with GitHub you do not even have a due date on issues, here is the logic in place about the **default due date**:
 
 1. if set, the `GanttDue` value is used first,
 1. _(GitLab only)_ if this single source of truth is not set but you've set a due date on the issue itself, the issue due date will be used,
