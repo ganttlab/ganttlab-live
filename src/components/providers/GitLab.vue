@@ -176,18 +176,22 @@ export default {
           startDate = new Date(task.created_at)
         }
 
-        // if due date is still null we set it to the task due date, or to the day after the task creation date
+        // if due date is still null we set it to the task due date
+        if (dueDate == null && task.due_date != null) {
+          dueDate = new Date(task.due_date)
+        }
+
+        // if due date is still null but task has a milestone with a due date itself, we set it to the milestone due date
+        if (dueDate == null && task.milestone != null && task.milestone.due_date != null) {
+          dueDate = new Date(task.milestone.due_date)
+        }
+
+        // if due date is still null we fallback to the day after the startDate
         if (dueDate == null) {
-          dueDate = task.due_date
-          if (dueDate == null) {
-            // the task due date is unset
-            dueDate = new Date(task.created_at)
-            // the due date is calculated to the day after the task creation date
-            dueDate.setDate(dueDate.getDate() + 1)
-          } else {
-            // the task due date is used
-            dueDate = new Date(task.due_date)
-          }
+          // the task due date is unset
+          dueDate = new Date(startDate)
+          // the due date is calculated to the day after the task creation date
+          dueDate.setDate(dueDate.getDate() + 1)
         }
 
         // determining if the task is late or not
