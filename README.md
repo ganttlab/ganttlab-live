@@ -31,10 +31,10 @@ GanttDue: 2016-10-25
 
 The values of `GanttStart` and `GanttDue`, each on one dedicated line of your issue description (whether on top or bottom of the description), are considered as the _single source of truth_ if present to generate the gantt chart.
 
-If you don't do that or omit one of those values, for each issue the **default start date** is read from the issue creation date. As with GitLab you are not forced to fill in a due date for your issues, and with GitHub you do not even have a due date on issues, here is the logic in place about the **due date**:
+By default, a Gantt chart will be created without you having to update all of your issues descriptions to set those values: for each issue the **default start date** is read from the issue creation date. As with GitLab you are not forced to fill in a due date for your issues, and with GitHub you do not even have a due date on issues, here is the logic in place about the **default due date**:
 
 1. if set, the `GanttDue` value is used first,
-1. if this single source of truth is not set but you've set a due date on the issue, the issue due date will be used,
+1. _(GitLab only)_ if this single source of truth is not set but you've set a due date on the issue itself, the issue due date will be used,
 1. _(GitLab only)_ if your issue has no due date but is attached to a milestone that has a due date, the milestone due date is used,
 1. ultimately, the _GanttLab_ **default due date** will be set to the day after the issue start date, faking all your issues having to be done in one day. 
 
