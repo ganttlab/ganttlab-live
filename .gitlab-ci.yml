@@ -1,21 +1,43 @@
-image: node:6
+stages:
+  - build
+  - deploy
 
-pages:
-  stage: deploy
+NPM stuff:
+  stage: build
+  image: node:6
   script:
-  - npm install --silent
-  - mv ./config/dev.env.example.js ./config/dev.env.js
-  - mv ./config/prod.env.example.js ./config/prod.env.js
-  - sed -i "s#^\(.*mounted.*function.*$\)#\1\n${GA_TRACKING}#" ./src/App.vue
-  - npm run build
-  - mv dist public
-  - mkdir -p public/.well-known/acme-challenge
-  - echo "${LETS_ENCRYPT_CHALLENGE}" > public/.well-known/acme-challenge/1iyXI0K0Rt10BNk55p1zGAa8H-L4XlV-nkP90FSalm4
+    - npm install --silent
+    - mv ./config/dev.env.example.js ./config/dev.env.js
+    - mv ./config/prod.env.example.js ./config/prod.env.js
+    - sed -i "s#^\(.*mounted.*function.*$\)#\1\n${GA_TRACKING}#" ./src/App.vue
+    - npm run build
   artifacts:
     paths:
-    - public
+      - dist
   environment:
     name: live.ganttlab.org
     url: https://live.ganttlab.org/
   only:
-  - master
+    - master
+
+AWS Stack:
+  stage: deploy
+  image: alpine:3.7
+  script:
+    # install the bare minimum for the AWS CLI to be fully operational
+    - apk -v --no-cache add python py-pip groff less
+    - pip --no-cache-dir install --upgrade awscli s3cmd python-magic
+    # setting up variable driving names
+    - THE_ENVIRONMENT=$(if [ "$CI_COMMIT_REF_NAME" == "master" ]; then echo "production"; fi)
+    - THE_STACK_NAME="live-dot-ganttlab-dot-org-${THE_ENVIRONMENT}"
+    - THE_S3_BUCKET="${THE_STACK_NAME}"
+    # create/update the deployment CloudFormation stack
+    - aws cloudformation deploy --stack-name ${THE_STACK_NAME} --template-file devops/deploy/AWS/CloudFormation/stack.yaml --no-fail-on-empty-changeset --tags billing-project=live-dot-ganttlab-dot-org
+    - aws cloudformation update-termination-protection --enable-termination-protection --stack-name ${THE_STACK_NAME}
+    # sync (with deletion) the built website from the artifacts of former pipeline stage right into the S3 bucket
+    - aws s3 sync dist/ "s3://${THE_S3_BUCKET}" --delete
+  environment:
+    name: live.ganttlab.org
+    url: https://live.ganttlab.org/
+  only:
+    - master
