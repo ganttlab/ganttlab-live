@@ -54,11 +54,19 @@ a:hover {
   width: 40%;
 }
 #LoginScreen h1 {
+  position: relative;
   font-size: 2.375rem;
   text-align: left;
   border-bottom: 1px solid rgba(21, 21, 21, 0.05);
   padding: 0 0 0.5rem 1rem;
   margin: 0 0 1rem;
+}
+#LoginScreen h1 .timezone {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0;
+  font-size: 0.35em;
+  font-weight: normal;
 }
 #LoginScreen h2 {
   font-size: 1.375rem;

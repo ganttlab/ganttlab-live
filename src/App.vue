@@ -2,7 +2,7 @@
   <div id="App">
     <transition name="fade">
       <div v-if="loginFailed || !userName" id="LoginScreen">
-          <h1>GanttLab Live</h1>
+          <h1>GanttLab Live<span class="timezone"><i class="fa fa-clock-o"></i> {{ timezone }}</span></h1>
 
           <div class="row">
             <div class="col welcome">
@@ -186,6 +186,7 @@ export default {
     }
   },
   mounted: function () {
+    this.timezone = process.env.MOMENTJS_TIMEZONE
     this.url = process.env.GITLAB_URL
     this.token = process.env.GITLAB_TOKEN
     if (this.hasLocalStorage) {

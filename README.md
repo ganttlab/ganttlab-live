@@ -27,6 +27,8 @@ GanttStart: 2016-09-26
 GanttDue: 2016-10-25
 ```
 
+**PRO tip:** the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format also covers times and timezones, and GanttLab will use the time information if provided (default to 12:00:00AM midnight UTC). Feel free to add _down to the second_ based `GanttStart` and `GanttDue` like `2018-06-20T14:00:00+02:00` for UTC+2, `2018-05-15T04:00:00-04:00` in UTC-4 or `2018-05-15T04:00:00Z` for UTC/GMT.
+
 The values of `GanttStart` and `GanttDue`, each on one dedicated line of your issue description (whether on top or bottom of the description), are considered as the _single source of truth_ if present to generate the gantt chart.
 
 As mentioned, for a better user experience, a default Gantt chart will be created without you having to update all of your issues description to set those values: for each issue the **default start date** is read from the issue creation date. As with GitLab you are not forced to fill in a due date for your issues, and with GitHub you do not even have a due date on issues, here is the logic in place about the **default due date**:

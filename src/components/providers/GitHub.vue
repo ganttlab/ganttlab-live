@@ -192,8 +192,8 @@ export default {
         }
 
         // formatting start and due dates for visavail
-        var fDueDate = dueDate.getUTCFullYear() + '-' + this.pad(dueDate.getUTCMonth() + 1) + '-' + this.pad(dueDate.getUTCDate())
-        var fStartDate = startDate.getUTCFullYear() + '-' + this.pad(startDate.getUTCMonth() + 1) + '-' + this.pad(startDate.getUTCDate())
+        var fDueDate = dueDate.getFullYear() + '-' + this.pad(dueDate.getMonth() + 1) + '-' + this.pad(dueDate.getDate()) + ' ' + this.pad(dueDate.getHours()) + ':' + this.pad(dueDate.getMinutes()) + ':' + this.pad(dueDate.getSeconds())
+        var fStartDate = startDate.getFullYear() + '-' + this.pad(startDate.getMonth() + 1) + '-' + this.pad(startDate.getDate()) + ' ' + this.pad(startDate.getHours()) + ':' + this.pad(startDate.getMinutes()) + ':' + this.pad(startDate.getSeconds())
 
         // filtering invalid start or due date
         var invalid = 'NaN-NaN-NaN'

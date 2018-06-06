@@ -7,7 +7,7 @@
 
 <script>
 import * as d3 from 'd3'
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 export default {
   name: 'gantt',
@@ -575,8 +575,9 @@ export default {
     }
   },
   mounted: function () {
-    // set Moment.js locale
+    // set Moment.js locale and timezone
     moment.locale(process.env.MOMENTJS_LOCALE)
+    moment.tz.setDefault(process.env.MOMENTJS_TIMEZONE)
 
     // refresh the gantt graph
     this.refreshChart()

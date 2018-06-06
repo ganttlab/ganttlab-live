@@ -6,8 +6,9 @@ module.exports = {
   // Your GitLab user Private Token or Personal Access Token
   GITLAB_TOKEN: '""',
   
-  // Moment.js locale configuration
+  // Moment.js locale and timezone configuration
   MOMENTJS_LOCALE: '"en"',
+  MOMENTJS_TIMEZONE: '"Etc/Universal"',
   
   // You are free to configure any string for gantt start/due dates,
   // which are read in your issues descriptions
