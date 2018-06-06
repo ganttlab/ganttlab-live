@@ -51,7 +51,7 @@ Docker Hub Image:
     DOCKER_DRIVER: overlay2
   script:
     - docker info
-    - docker login -u "$DOCKER_HUB_USER" -p "$DOCKER_HUB_PASSWORD" index.docker.io
+    - docker login -u "${DOCKER_HUB_USER}" -p "${DOCKER_HUB_PASSWORD}" docker.io
     - docker build -f devops/deploy/DockerHub/Dockerfile -t "ganttlab/ganttlab-live:latest" .
     - docker push index.docker.io/ganttlab/ganttlab-live:latest
   only:
