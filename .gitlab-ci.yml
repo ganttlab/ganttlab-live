@@ -41,3 +41,18 @@ AWS Stack:
     url: https://live.ganttlab.org/
   only:
     - master
+
+Docker Hub Image:
+  stage: deploy
+  image: docker:git
+  services:
+    - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay2
+  script:
+    - docker info
+    - docker login -u "$DOCKER_HUB_USER" -p "$DOCKER_HUB_PASSWORD" index.docker.io
+    - docker build -f devops/deploy/DockerHub/Dockerfile -t "ganttlab/ganttlab-live:latest" .
+    - docker push ganttlab/ganttlab-live:latest
+  only:
+    - master
