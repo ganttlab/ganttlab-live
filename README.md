@@ -45,7 +45,7 @@ Only your opened issues are displayed. If an issue due date is past, the issue i
 Whether you have Docker installed on your local computer ([download and install it](https://www.docker.com/products/docker)), you can run _GanttLab Live_ right now from the [official Docker image](https://hub.docker.com/r/ganttlab/ganttlab-live/) with this one liner in your console:
 
 ```
-docker run -p 8181:80 docker pull ganttlab/ganttlab-live
+docker run -p 8181:80 ganttlab/ganttlab-live
 ```
 
 Enjoy it on http://localhost:8181
