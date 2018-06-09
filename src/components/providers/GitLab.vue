@@ -423,6 +423,7 @@ export default {
       // user wants the list of projects
       this.GitLabAPI.get('/projects', {
         'per_page': '10',
+        'membership': 'true',
         'search': search
       }, (response) => {
         this.$set(this.GitLab, 'projects', response.body)
