@@ -213,7 +213,10 @@ export default {
       if (dataset === []) {
         return null
       } else {
-        return dataset
+        // return the dataset after sorting tasks by due date
+        return dataset.sort(function (a, b) {
+          return new Date(a.data[0][2]) - new Date(b.data[0][2])
+        })
       }
     }
   },
