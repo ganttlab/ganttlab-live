@@ -36,6 +36,9 @@ AWS Stack:
     - aws cloudformation update-termination-protection --enable-termination-protection --stack-name ${THE_STACK_NAME}
     # sync (with deletion) the built website from the artifacts of former pipeline stage right into the S3 bucket
     - aws s3 sync dist/ "s3://${THE_S3_BUCKET}" --delete
+    # invalidate /index.html from CloudFront for users to get the latest version straight away
+    - CLOUDFRONT_DISTRIBUTION_ID=$(aws cloudformation describe-stack-resource --stack-name ${THE_STACK_NAME} --logical-resource-id CloudFrontDistribution | grep PhysicalResourceId | cut -d \" -f4)
+    - aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths /index.html
   environment:
     name: live.ganttlab.org
     url: https://live.ganttlab.org/
