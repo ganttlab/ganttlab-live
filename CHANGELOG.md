@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
+- work in progress on [ganttlab/ganttlab-live issues](https://gitlab.com/ganttlab/ganttlab-live/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
+
+## [0.5.0] - 2018-06-09
+### Added
 - GanttStart and GanttDue now support time and timezones !5 (khartahk)
 - Now using milestone due date before using a fallback due date set to "start + 1 day" !3 (Marzn)
 - work in progress on [ganttlab/ganttlab-live issues](https://gitlab.com/ganttlab/ganttlab-live/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
@@ -107,7 +111,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - README includes a preview, and describes main topics to get started
 - Initial vue-cli scaffolding with webpack plugin
 
-[Unreleased]: https://gitlab.com/ganttlab/ganttlab-live/compare/v0.4.0...master
+[Unreleased]: https://gitlab.com/ganttlab/ganttlab-live/compare/v0.5.0...master
+[0.5.0]: https://gitlab.com/ganttlab/ganttlab-live/compare/v0.4.0...v0.5.0
 [0.4.0]: https://gitlab.com/ganttlab/ganttlab-live/compare/v0.3.0...v0.4.0
 [0.3.0]: https://gitlab.com/ganttlab/ganttlab-live/compare/v0.2.0...v0.3.0
 [0.2.0]: https://gitlab.com/ganttlab/ganttlab-live/compare/v0.1.0...v0.2.0
