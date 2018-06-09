@@ -14,6 +14,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - work in progress on [ganttlab/ganttlab-live issues](https://gitlab.com/ganttlab/ganttlab-live/issues?scope=all&state=opened&utf8=%E2%9C%93&label_name%5B%5D=Feature)...
 
+### Fixed
+- Avoid a GitLab API 502 failure if there are too many projects in a group
+
 ## [0.6.0] - 2018-06-09
 ### Changed
 - Updated vue-gitlab-api to use the newest GitLab API v4
