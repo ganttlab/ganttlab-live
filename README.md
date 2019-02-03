@@ -52,7 +52,7 @@ Enjoy it on http://localhost:8181
 
 ## Configuring
 
-If you want to configure _GanttLab Live_ more before runnning it, follow those four easy steps:
+If you want to configure _GanttLab Live_ more before running it, follow those four easy steps:
 
 1. `git clone https://gitlab.com/ganttlab/ganttlab-live` will clone this repository
 1. `cd ganttlab-live && ./bashInDevEnv.sh` to connect to the development environment
