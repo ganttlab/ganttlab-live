@@ -64,7 +64,7 @@ Resources:
               HTTPSPort: "443"
               OriginProtocolPolicy: http-only
         DefaultCacheBehavior:
-          ViewerProtocolPolicy: redirect-to-https
+          ViewerProtocolPolicy: allow-all
           ForwardedValues:
             QueryString: true
           TargetOriginId: !Sub S3-${AWS::StackName}
