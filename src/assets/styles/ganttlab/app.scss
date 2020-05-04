@@ -26,6 +26,52 @@ a:hover {
   display: table-column;
   width: 200px;
 }
+#NewGanttLab {
+  text-align: center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & h1 {
+    margin-bottom: 1em;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(21, 21, 21, 0.05);
+  }
+
+  & .tweet {
+    margin-top: 1.5em;
+    margin-bottom: 2em;
+  }
+
+  & .links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-top: 1rem;
+    border-top: 1px solid rgba(21, 21, 21, 0.05);
+
+    & a.stick {
+      color: rgba($text-color, 0.5);
+    }
+
+    & a.rediscover {
+      background-color: rgba($lead-color, 1);
+      color: #fff;
+      font-family: $lead-font;
+      border: 1px solid transparent;
+      border-radius: 0;
+      display: inline-block;
+      font-size: 1.1em;
+      padding: 4px 0.7em;
+      text-align: center;
+      cursor: pointer;
+      transition: all ease-in-out 0.15s;
+    }
+  }
+}
 #LoginScreen {
   width: 60%;
   font-size: 20px;

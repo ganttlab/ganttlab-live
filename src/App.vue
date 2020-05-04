@@ -1,57 +1,65 @@
 <template>
   <div id="App">
     <transition name="fade">
-      <div v-if="loginFailed || !userName" id="LoginScreen">
-          <h1>GanttLab Live<span class="timezone"><i class="fa fa-clock-o"></i> {{ timezone }}</span></h1>
+      <div v-if="useLegacy === false" id="NewGanttLab">
+        <div>
+          <h1>GanttLab got better!</h1>
+          <p><iframe id="ytplayer" type="text/html" width="400" height="225" src="https://www.youtube.com/embed/mk0OseE61H0" frameborder="0" allowfullscreen /></p>
+          <p class="tweet"><a href="https://twitter.com/GanttLab" target="_blank">Latest announcements <i class="fa fa-twitter"></i></a></p>
+          <p class="links"><a class="stick" href="#" v-on:click.prevent="useLegacy = true">Stick to Legacy</a><a class="rediscover" href="https://app.ganttlab.org/">Rediscover GanttLab &nbsp;&gt;</a></p>
+        </div>
+      </div>
+      <div v-if="useLegacy && (loginFailed || !userName)" id="LoginScreen">
+        <h1>GanttLab Live<span class="timezone"><i class="fa fa-clock-o"></i> {{ timezone }}</span></h1>
 
-          <div class="row">
-            <div class="col welcome">
-              <div class="pad">
-                <h2>The easy to use, fully functional
-                <br/>Gantt chart for GitLab and GitHub.</h2>
-                <p>Provide your teams with the right tool to master time and deadlines. Giving back credit to your project status and issues due dates has never been easier!</p>
-                <p v-if="!userName && downloading" class="downloading"><strong><i v-if="downloading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Connecting to {{ url }}</strong></p>
-                <p v-if="loginFailed" class="error"><i class="fa fa-exclamation-triangle"></i> Unable to connect to {{ url }}</p>
-              </div>
-            </div>
-
-            <div class="col form">
-              <p class="providerchoice"><i class="fa fa-gitlab" v-bind:class="{ selected: isGitLab }" v-on:click="providerName = 'GitLab'"></i><span> or </span><i class="fa fa-github" v-bind:class="{ selected: !isGitLab }" v-on:click="providerName = 'GitHub'"></i></p>
-              <p class="form-input first">
-                <input tabindex="1" v-model="url" v-on:keyup.enter="signin" v-bind:disabled="providerName != 'GitLab'" v-bind:class="{ disabled: providerName != 'GitLab' }" autofocus>
-              </p>
-              <p class="helper" v-bind:class="{ disabled: providerName != 'GitLab' }">Your GitLab instance URL</p>
-              <p class="form-input">
-                <input tabindex="2" v-model="token" v-on:keyup.enter="signin">
-              </p>
-              <p v-if="providerName == 'GitLab'" class="helper">Use your <a v-bind:href="privateTokenLink" target="_blank" title="/profile/account">Private Token</a>, or a <a v-bind:href="personalTokenLink" target="_blank" title="/profile/personal_access_tokens">Personal Access Token</a></p>
-              <p v-else class="helper">Use one of your <a href="https://github.com/settings/tokens" target="_blank" title="https://github.com/settings/tokens">Personal Access Tokens</a></p>
-
-              <p v-if="hasLocalStorage" class="form-input remember"><input tabindex="3" type="checkbox" v-model="rememberMe"> <span>Remember me <i class="fa fa-question-circle-o" aria-hidden="true" title="Don't do that on a public computer!"></i></span> <button tabindex="4" v-on:click="signin">Sign-in &nbsp;&gt;</button></p>
+        <div class="row">
+          <div class="col welcome">
+            <div class="pad">
+              <h2>The easy to use, fully functional
+              <br/>Gantt chart for GitLab and GitHub.</h2>
+              <p>Provide your teams with the right tool to master time and deadlines. Giving back credit to your project status and issues due dates has never been easier!</p>
+              <p v-if="!userName && downloading" class="downloading"><strong><i v-if="downloading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Connecting to {{ url }}</strong></p>
+              <p v-if="loginFailed" class="error"><i class="fa fa-exclamation-triangle"></i> Unable to connect to {{ url }}</p>
             </div>
           </div>
 
-          <div class="more"></div>
+          <div class="col form">
+            <p class="providerchoice"><i class="fa fa-gitlab" v-bind:class="{ selected: isGitLab }" v-on:click="providerName = 'GitLab'"></i><span> or </span><i class="fa fa-github" v-bind:class="{ selected: !isGitLab }" v-on:click="providerName = 'GitHub'"></i></p>
+            <p class="form-input first">
+              <input tabindex="1" v-model="url" v-on:keyup.enter="signin" v-bind:disabled="providerName != 'GitLab'" v-bind:class="{ disabled: providerName != 'GitLab' }" autofocus>
+            </p>
+            <p class="helper" v-bind:class="{ disabled: providerName != 'GitLab' }">Your GitLab instance URL</p>
+            <p class="form-input">
+              <input tabindex="2" v-model="token" v-on:keyup.enter="signin">
+            </p>
+            <p v-if="providerName == 'GitLab'" class="helper">Use your <a v-bind:href="privateTokenLink" target="_blank" title="/profile/account">Private Token</a>, or a <a v-bind:href="personalTokenLink" target="_blank" title="/profile/personal_access_tokens">Personal Access Token</a></p>
+            <p v-else class="helper">Use one of your <a href="https://github.com/settings/tokens" target="_blank" title="https://github.com/settings/tokens">Personal Access Tokens</a></p>
 
-          <div class="row">
-            <div class="col copy">
-              <div class="pad">
-                <p><a href="https://www.ganttlab.org" target="_blank">Read more about GanttLab<i class="fa fa-external-link"></i></a></p>
-                <p class="copyright">&copy; 2016 <a href="http://clorichel.com/" target="_blank">Pierre-Alexandre Clorichel</a></p>
-              </div>
-            </div>
+            <p v-if="hasLocalStorage" class="form-input remember"><input tabindex="3" type="checkbox" v-model="rememberMe"> <span>Remember me <i class="fa fa-question-circle-o" aria-hidden="true" title="Don't do that on a public computer!"></i></span> <button tabindex="4" v-on:click="signin">Sign-in &nbsp;&gt;</button></p>
+          </div>
+        </div>
 
-            <div class="col social">
-              <div class="pad">
-                <p class="first"><a href="https://twitter.com/GanttLab" target="_blank">Twitter</a></p>
-                <p><a href="https://www.facebook.com/GanttLab-324440334610008/" target="_blank">Facebook</a></p>
-              </div>
+        <div class="more"></div>
+
+        <div class="row">
+          <div class="col copy">
+            <div class="pad">
+              <p><a href="https://www.ganttlab.org" target="_blank">Read more about GanttLab<i class="fa fa-external-link"></i></a></p>
+              <p class="copyright">&copy; 2016-2020 <a href="http://clorichel.com/" target="_blank">Pierre-Alexandre Clorichel</a></p>
             </div>
           </div>
+
+          <div class="col social">
+            <div class="pad">
+              <p class="first"><a href="https://twitter.com/GanttLab" target="_blank">Twitter</a></p>
+              <p><a href="https://www.facebook.com/GanttLab-324440334610008/" target="_blank">Facebook</a></p>
+            </div>
+          </div>
+        </div>
       </div>
     </transition>
     <transition name="fade">
-      <div v-if="userName" id="MainScreen">
+      <div v-if="useLegacy && userName" id="MainScreen">
         <div id="top" class="standardpadding">
           <div v-if="userName">
             <span class="user"><img v-bind:src="userAvatarUrl"> {{ userName }}</span>
@@ -99,6 +107,7 @@ export default {
   },
   data () {
     return {
+      useLegacy: false,
       rememberMe: false,
       providerName: 'GitLab',
       provider: null
