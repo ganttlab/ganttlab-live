@@ -2,27 +2,35 @@ stages:
   - build
   - deploy
 
-NPM stuff:
+.stage_image_beforeScript_artifacts_only_webapp: &stage_image_beforeScript_artifacts_only_webapp
   stage: build
   image: node:6
-  script:
+  before_script:
     - npm install --silent
     - mv ./config/dev.env.example.js ./config/dev.env.js
     - mv ./config/prod.env.example.js ./config/prod.env.js
-    - sed -i "s#^\(.*mounted.*function.*$\)#\1\n${GA_TRACKING}#" ./src/App.vue
-    - npm run build
   artifacts:
     paths:
       - dist
-  environment:
-    name: live.ganttlab.org
-    url: https://live.ganttlab.org/
   only:
     - master
+
+webapp:ga:
+  <<: *stage_image_beforeScript_artifacts_only_webapp
+  script:
+    - sed -i "s#^\(.*mounted.*function.*$\)#\1\n${GA_TRACKING}#" ./src/App.vue
+    - npm run build
+
+webapp:
+  <<: *stage_image_beforeScript_artifacts_only_webapp
+  script:
+    - npm run build
 
 AWS Stack:
   stage: deploy
   image: alpine:3.7
+  dependencies:
+    - webapp:ga
   script:
     # install the bare minimum for the AWS CLI to be fully operational
     - apk -v --no-cache add python py-pip groff less
@@ -48,6 +56,8 @@ AWS Stack:
 Docker Hub Image:
   stage: deploy
   image: docker:git
+  dependencies:
+    - webapp
   services:
     - docker:dind
   variables:
