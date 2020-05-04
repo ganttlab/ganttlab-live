@@ -1,4 +1,12 @@
-# GanttLab Live
+> # A new GanttLab is out 🎉
+>
+> It's already waiting for you on https://app.ganttlab.org/. This repository hosts the Legacy version, head to https://gitlab.com/ganttlab/ganttlab to know more about the new GanttLab.
+>
+> Docker user? A shiny [`ganttlab/ganttlab` image](https://hub.docker.com/r/ganttlab/ganttlab) is already out there!
+>
+> Follow [@GanttLab on Twitter](https://twitter.com/GanttLab) for the latest announcements 📰
+
+# Legacy GanttLab Live
 
 The easy to use, fully functional Gantt chart for GitLab and GitHub.
 
@@ -36,7 +44,7 @@ As mentioned, for a better user experience, a default Gantt chart will be create
 1. if set, the `GanttDue` value is used first,
 1. _(GitLab only)_ if this single source of truth is not set but you've set a due date on the issue itself, the issue due date will be used,
 1. _(GitLab only)_ if your issue has no due date but is attached to a milestone that has a due date, the milestone due date is used,
-1. ultimately, the _GanttLab Live_ **default due date** will be set to the day after the issue start date, faking all your issues having to be done in one day. 
+1. ultimately, the _GanttLab Live_ **default due date** will be set to the day after the issue start date, faking all your issues having to be done in one day.
 
 Only your opened issues are displayed. If an issue due date is past, the issue is marked late and **colored red**. If not, the issue is **shown green** as being on time.
 
